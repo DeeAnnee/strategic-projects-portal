@@ -83,13 +83,11 @@ export const readChangeManagementStore = async (): Promise<ChangeManagementStore
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as ChangeManagementStore;
-    const normalized = normalizeStore(parsed);
-    await fs.writeFile(storeFile, JSON.stringify(normalized, null, 2), "utf8");
-    return normalized;
+    return normalizeStore(parsed);
   } catch {
-    const seeded = defaultStore();
-    await fs.writeFile(storeFile, JSON.stringify(seeded, null, 2), "utf8");
-    return seeded;
+    // In hosted/serverless environments (e.g., Vercel), the deployed filesystem
+    // is read-only. Reads must never attempt to seed/write local JSON files.
+    return defaultStore();
   }
 };
 
