@@ -10,6 +10,7 @@ import type {
   CopilotJsonEnvelope
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
+import { cloneJson, isReadonlyFsError, safePersistJson } from "@/lib/storage/json-file";
 
 export type CopilotConversationRecord = {
   id: string;
@@ -122,6 +123,7 @@ const emptyStore = (): CopilotFileStore => ({
 });
 
 let writeChain: Promise<void> = Promise.resolve();
+let inMemoryCopilotStore: CopilotFileStore | null = null;
 
 const nowIso = () => new Date().toISOString();
 const asDate = (value: string) => new Date(value);
@@ -169,16 +171,25 @@ const waitForWrites = async () => {
 };
 
 const ensureStoreDir = async () => {
-  await fs.mkdir(storeDir, { recursive: true });
+  try {
+    await fs.mkdir(storeDir, { recursive: true });
+  } catch (error) {
+    if (!isReadonlyFsError(error)) {
+      throw error;
+    }
+  }
 };
 
 const readStore = async (): Promise<CopilotFileStore> => {
+  if (inMemoryCopilotStore) {
+    return cloneJson(inMemoryCopilotStore);
+  }
   await waitForWrites();
   await ensureStoreDir();
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as Partial<CopilotFileStore>;
-    return {
+    const normalized = {
       projects: Array.isArray(parsed.projects) ? parsed.projects : [],
       conversations: Array.isArray(parsed.conversations) ? parsed.conversations : [],
       messages: Array.isArray(parsed.messages) ? parsed.messages : [],
@@ -186,16 +197,19 @@ const readStore = async (): Promise<CopilotFileStore> => {
       feedback: Array.isArray(parsed.feedback) ? parsed.feedback : [],
       auditLogs: Array.isArray(parsed.auditLogs) ? parsed.auditLogs : []
     };
+    inMemoryCopilotStore = cloneJson(normalized);
+    return normalized;
   } catch {
     const initial = emptyStore();
-    await fs.writeFile(storeFile, JSON.stringify(initial, null, 2), "utf8");
+    inMemoryCopilotStore = cloneJson(initial);
     return initial;
   }
 };
 
 const persistStore = async (store: CopilotFileStore) => {
+  inMemoryCopilotStore = cloneJson(store);
   await ensureStoreDir();
-  await fs.writeFile(storeFile, JSON.stringify(store, null, 2), "utf8");
+  await safePersistJson(storeFile, store);
 };
 
 const mutateStore = async <T>(mutator: (store: CopilotFileStore) => Promise<T> | T): Promise<T> => {

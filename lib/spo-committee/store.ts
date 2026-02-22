@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { addNotification } from "@/lib/notifications/store";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { calculateFinancialMetrics, calculateNetBenefitsByYear } from "@/lib/submissions/financial-metrics";
 import { getSubmissionById, listSubmissions, runWorkflowAction } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
@@ -13,24 +14,33 @@ import type {
 } from "@/lib/spo-committee/types";
 
 const storeFile = path.join(process.cwd(), "data", "spo-committee.json");
+let inMemorySpoCommitteeState: SpoCommitteeState | null = null;
 
 const emptyState = (): SpoCommitteeState => ({ rows: [], versions: [] });
 
 const readStore = async (): Promise<SpoCommitteeState> => {
+  if (inMemorySpoCommitteeState) {
+    return cloneJson(inMemorySpoCommitteeState);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as Partial<SpoCommitteeState>;
-    return {
+    const state = {
       rows: Array.isArray(parsed.rows) ? parsed.rows : [],
       versions: Array.isArray(parsed.versions) ? parsed.versions : []
     };
+    inMemorySpoCommitteeState = cloneJson(state);
+    return state;
   } catch {
-    return emptyState();
+    const state = emptyState();
+    inMemorySpoCommitteeState = cloneJson(state);
+    return state;
   }
 };
 
 const writeStore = async (value: SpoCommitteeState) => {
-  await fs.writeFile(storeFile, JSON.stringify(value, null, 2), "utf8");
+  inMemorySpoCommitteeState = cloneJson(value);
+  await safePersistJson(storeFile, value);
 };
 
 const round2 = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100;

@@ -1,6 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+
 export type GovernanceAuditOutcome = "SUCCESS" | "FAILED" | "DENIED";
 export type GovernanceAuditArea =
   | "SUBMISSIONS"
@@ -27,6 +29,7 @@ export type GovernanceAuditEntry = {
 
 const storeFile = path.join(process.cwd(), "data", "governance-audit-log.json");
 const maxEntries = 5000;
+let inMemoryGovernanceAudit: GovernanceAuditEntry[] | null = null;
 
 const normalizeMetadata = (
   input?: Record<string, unknown>
@@ -47,17 +50,24 @@ const normalizeMetadata = (
 };
 
 const readStore = async (): Promise<GovernanceAuditEntry[]> => {
+  if (inMemoryGovernanceAudit) {
+    return cloneJson(inMemoryGovernanceAudit);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as GovernanceAuditEntry[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryGovernanceAudit = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryGovernanceAudit = [];
     return [];
   }
 };
 
 const writeStore = async (rows: GovernanceAuditEntry[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryGovernanceAudit = cloneJson(rows);
+  await safePersistJson(storeFile, rows);
 };
 
 export const appendGovernanceAuditLog = async (

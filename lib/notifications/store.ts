@@ -1,6 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+
 export type NotificationItem = {
   id: string;
   title: string;
@@ -12,19 +14,27 @@ export type NotificationItem = {
 };
 
 const storeFile = path.join(process.cwd(), "data", "notifications.json");
+let inMemoryNotifications: NotificationItem[] | null = null;
 
 const readStore = async (): Promise<NotificationItem[]> => {
+  if (inMemoryNotifications) {
+    return cloneJson(inMemoryNotifications);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as NotificationItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryNotifications = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryNotifications = [];
     return [];
   }
 };
 
 const writeStore = async (rows: NotificationItem[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryNotifications = cloneJson(rows);
+  await safePersistJson(storeFile, rows);
 };
 
 export const listNotifications = async (recipientEmail?: string) => {

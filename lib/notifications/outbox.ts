@@ -1,6 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+
 export type OutboundChannel = "email" | "teams";
 
 export type OutboundMessage = {
@@ -15,19 +17,27 @@ export type OutboundMessage = {
 };
 
 const storeFile = path.join(process.cwd(), "data", "message-outbox.json");
+let inMemoryOutbox: OutboundMessage[] | null = null;
 
 const readStore = async (): Promise<OutboundMessage[]> => {
+  if (inMemoryOutbox) {
+    return cloneJson(inMemoryOutbox);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as OutboundMessage[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryOutbox = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryOutbox = [];
     return [];
   }
 };
 
 const writeStore = async (rows: OutboundMessage[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryOutbox = cloneJson(rows);
+  await safePersistJson(storeFile, rows);
 };
 
 export const queueOutboundMessage = async (

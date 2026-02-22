@@ -19,26 +19,35 @@ import type {
   SavedTemplate,
   TemplatesStore
 } from "@/lib/reporting/types";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const reportingDatasetsFile = path.join(process.cwd(), "data", "reporting-datasets.json");
 const reportingReportsFile = path.join(process.cwd(), "data", "reporting-reports.json");
 const reportingTemplatesFile = path.join(process.cwd(), "data", "reporting-templates.json");
+const inMemoryReportingStore = new Map<string, unknown>();
 
 const nowIso = () => new Date().toISOString();
 const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCase();
 
 const readJson = async <T,>(filePath: string, fallback: T): Promise<T> => {
+  if (inMemoryReportingStore.has(filePath)) {
+    return cloneJson(inMemoryReportingStore.get(filePath) as T);
+  }
   try {
     const raw = await fs.readFile(filePath, "utf8");
-    return JSON.parse(raw) as T;
+    const parsed = JSON.parse(raw) as T;
+    inMemoryReportingStore.set(filePath, cloneJson(parsed));
+    return parsed;
   } catch {
-    await fs.writeFile(filePath, JSON.stringify(fallback, null, 2), "utf8");
-    return fallback;
+    const seeded = cloneJson(fallback);
+    inMemoryReportingStore.set(filePath, cloneJson(seeded));
+    return seeded;
   }
 };
 
 const writeJson = async <T,>(filePath: string, payload: T) => {
-  await fs.writeFile(filePath, JSON.stringify(payload, null, 2), "utf8");
+  inMemoryReportingStore.set(filePath, cloneJson(payload));
+  await safePersistJson(filePath, payload);
 };
 
 export const readDatasetRegistry = async (): Promise<DatasetRegistryStore> => {

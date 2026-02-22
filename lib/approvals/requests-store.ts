@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { findUserByEmail } from "@/lib/auth/users";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { resolveCanonicalWorkflowState } from "@/lib/submissions/workflow";
 import type {
   ApprovalRequestStageContext,
@@ -14,23 +15,31 @@ import type {
 } from "@/lib/submissions/types";
 
 const storeFile = path.join(process.cwd(), "data", "approval-requests.json");
+let inMemoryApprovalRequests: ApprovalRequestRecord[] | null = null;
 
 const nowIso = () => new Date().toISOString();
 const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCase();
 const normalizeId = (value?: string | null) => (value ?? "").trim();
 
 const readStore = async (): Promise<ApprovalRequestRecord[]> => {
+  if (inMemoryApprovalRequests) {
+    return cloneJson(inMemoryApprovalRequests);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as ApprovalRequestRecord[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryApprovalRequests = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryApprovalRequests = [];
     return [];
   }
 };
 
 const writeStore = async (rows: ApprovalRequestRecord[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryApprovalRequests = cloneJson(rows);
+  await safePersistJson(storeFile, rows);
 };
 
 const roleContextToStageMap: Record<WorkflowApprovalRoleContext, ApprovalStageCode> = {

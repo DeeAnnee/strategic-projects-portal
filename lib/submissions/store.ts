@@ -37,10 +37,24 @@ import {
   resolveWorkflowLifecycleStatus
 } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkTask } from "@/lib/operations/types";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const storeFile = path.join(process.cwd(), "data", "submissions.json");
 const operationsBoardFile = path.join(process.cwd(), "data", "operations-board.json");
 const projectManagementTaskFile = path.join(process.cwd(), "data", "project-management-tasks.json");
+let inMemorySubmissions: ProjectSubmission[] | null = null;
+let inMemoryOperationsBoard: WorkCard[] | null = null;
+let inMemoryProjectManagementTasks:
+  | Array<{
+      id: string;
+      projectId: string;
+      fundingRequestId: string;
+      taskType: "ASSIGN_PROJECT_MANAGER";
+      status: "OPEN" | "CLOSED";
+      createdAt: string;
+      updatedAt: string;
+    }>
+  | null = null;
 
 const LEGACY_STAGE_MAP: Record<string, ProjectStage> = {
   Intake: "PROPOSAL",
@@ -1584,13 +1598,18 @@ const demoData = (): ProjectSubmission[] => {
 };
 
 const readStore = async (): Promise<ProjectSubmission[]> => {
+  if (inMemorySubmissions) {
+    return cloneJson(inMemorySubmissions);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as Partial<ProjectSubmission>[];
     const normalized = Array.isArray(parsed) ? parsed.map(normalizeSubmission) : [];
+    inMemorySubmissions = cloneJson(normalized);
     return normalized;
   } catch {
     const seeded = demoData();
+    inMemorySubmissions = cloneJson(seeded);
     await writeStore(seeded);
     for (const submission of seeded) {
       const lifecycleStatus = resolveWorkflowLifecycleStatus(submission);
@@ -1616,7 +1635,8 @@ const readStore = async (): Promise<ProjectSubmission[]> => {
 };
 
 const writeStore = async (submissions: ProjectSubmission[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(submissions, null, 2), "utf8");
+  inMemorySubmissions = cloneJson(submissions);
+  await safePersistJson(storeFile, submissions);
 };
 
 const nextCaseId = (submissions: ProjectSubmission[]) => {
@@ -1986,11 +2006,17 @@ export const updateSubmissionSponsors = async (
 };
 
 const readOperationsBoard = async (): Promise<WorkCard[]> => {
+  if (inMemoryOperationsBoard) {
+    return cloneJson(inMemoryOperationsBoard);
+  }
   try {
     const raw = await fs.readFile(operationsBoardFile, "utf8");
     const parsed = JSON.parse(raw) as WorkCard[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryOperationsBoard = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryOperationsBoard = [];
     return [];
   }
 };
@@ -2038,6 +2064,9 @@ const readProjectManagementTasks = async (): Promise<
     updatedAt: string;
   }>
 > => {
+  if (inMemoryProjectManagementTasks) {
+    return cloneJson(inMemoryProjectManagementTasks);
+  }
   try {
     const raw = await fs.readFile(projectManagementTaskFile, "utf8");
     const parsed = JSON.parse(raw) as Array<{
@@ -2049,8 +2078,11 @@ const readProjectManagementTasks = async (): Promise<
       createdAt: string;
       updatedAt: string;
     }>;
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryProjectManagementTasks = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryProjectManagementTasks = [];
     return [];
   }
 };
@@ -2066,7 +2098,8 @@ const writeProjectManagementTasks = async (
     updatedAt: string;
   }>
 ) => {
-  await fs.writeFile(projectManagementTaskFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryProjectManagementTasks = cloneJson(rows);
+  await safePersistJson(projectManagementTaskFile, rows);
 };
 
 const ensureProjectManagementAssignmentTask = async (submission: ProjectSubmission) => {

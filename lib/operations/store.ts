@@ -2,11 +2,13 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { addNotification } from "@/lib/notifications/store";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { listSubmissions, reconcileSubmissionWorkflow } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkComment, WorkTask } from "@/lib/operations/types";
 
 const storeFile = path.join(process.cwd(), "data", "operations-board.json");
+let inMemoryBoardCards: WorkCard[] | null = null;
 const PROPOSAL_GATING_TASK_TITLE = "Conduct proposal placemat gating review";
 const FUNDING_GATING_TASK_TITLE = "Conduct project funding gating review";
 const PROPOSAL_DEFAULT_DUE_DAYS = 5;
@@ -68,17 +70,24 @@ const normalizeDueDate = (
 };
 
 const readStore = async (): Promise<WorkCard[]> => {
+  if (inMemoryBoardCards) {
+    return cloneJson(inMemoryBoardCards);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as WorkCard[];
-    return Array.isArray(parsed) ? parsed : [];
+    const rows = Array.isArray(parsed) ? parsed : [];
+    inMemoryBoardCards = cloneJson(rows);
+    return rows;
   } catch {
+    inMemoryBoardCards = [];
     return [];
   }
 };
 
 const writeStore = async (rows: WorkCard[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(rows, null, 2), "utf8");
+  inMemoryBoardCards = cloneJson(rows);
+  await safePersistJson(storeFile, rows);
 };
 
 const makeDefaultGovernanceTasks = (

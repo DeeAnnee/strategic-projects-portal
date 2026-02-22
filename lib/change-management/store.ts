@@ -12,8 +12,10 @@ import type {
   ChangeTemplate,
   ChangeThresholds
 } from "@/lib/change-management/types";
+import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const storeFile = path.join(process.cwd(), "data", "change-requests.json");
+let inMemoryChangeManagementStore: ChangeManagementStore | null = null;
 
 const defaultTemplates = (): ChangeTemplate[] => [
   {
@@ -80,19 +82,27 @@ const normalizeStore = (store: Partial<ChangeManagementStore> | null | undefined
 });
 
 export const readChangeManagementStore = async (): Promise<ChangeManagementStore> => {
+  if (inMemoryChangeManagementStore) {
+    return cloneJson(inMemoryChangeManagementStore);
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as ChangeManagementStore;
-    return normalizeStore(parsed);
+    const normalized = normalizeStore(parsed);
+    inMemoryChangeManagementStore = cloneJson(normalized);
+    return normalized;
   } catch {
     // In hosted/serverless environments (e.g., Vercel), the deployed filesystem
     // is read-only. Reads must never attempt to seed/write local JSON files.
-    return defaultStore();
+    const seeded = defaultStore();
+    inMemoryChangeManagementStore = cloneJson(seeded);
+    return seeded;
   }
 };
 
 export const writeChangeManagementStore = async (store: ChangeManagementStore) => {
-  await fs.writeFile(storeFile, JSON.stringify(store, null, 2), "utf8");
+  inMemoryChangeManagementStore = cloneJson(store);
+  await safePersistJson(storeFile, store);
 };
 
 const sortedByNewest = <T extends { createdAt?: string; updatedAt?: string }>(rows: T[]): T[] =>
