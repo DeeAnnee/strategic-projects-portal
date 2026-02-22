@@ -3628,22 +3628,21 @@ export default function IntakeForm({ initialData, forceReadOnly = false }: Props
         }
 
         const routed = await routeToNextWorkflowStage(createdPayload.data.id);
+        const routedId = routed.id || createdPayload.data.id;
+        if (!routedId) {
+          throw new Error("Submission saved but the project ID was not returned.");
+        }
         setWorkflowState(routed.workflow);
         setCurrentStage(routed.stage);
         setCurrentStatus(routed.status);
         setSubmissionAuditTrail(routed.auditTrail ?? []);
         setSuccess(
           isBusinessCaseMode
-            ? `Funding request created and submitted for approvals: ${routed.id}`
-            : `Submission created and sent for sponsor approval: ${routed.id}`
+            ? `Funding request created and submitted for approvals: ${routedId}`
+            : `Submission created and sent for sponsor approval: ${routedId}`
         );
         setDirty(false);
-        router.push(
-          isBusinessCaseMode
-            ? `/submissions/${routed.id}/edit`
-            : `/submissions/${routed.id}/edit`
-        );
-        router.refresh();
+        router.replace(`/submissions/${encodeURIComponent(routedId)}/edit`);
         return;
       }
 

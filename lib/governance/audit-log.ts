@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 export type GovernanceAuditOutcome = "SUCCESS" | "FAILED" | "DENIED";
@@ -27,7 +27,7 @@ export type GovernanceAuditEntry = {
   metadata?: Record<string, string | number | boolean | null>;
 };
 
-const storeFile = path.join(process.cwd(), "data", "governance-audit-log.json");
+const storeFile = getDataStorePath("governance-audit-log.json");
 const maxEntries = 5000;
 let inMemoryGovernanceAudit: GovernanceAuditEntry[] | null = null;
 

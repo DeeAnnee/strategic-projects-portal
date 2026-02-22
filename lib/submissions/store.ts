@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import {
   cancelPendingApprovalRequestsForSubmission,
@@ -37,11 +36,12 @@ import {
   resolveWorkflowLifecycleStatus
 } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkTask } from "@/lib/operations/types";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
-const storeFile = path.join(process.cwd(), "data", "submissions.json");
-const operationsBoardFile = path.join(process.cwd(), "data", "operations-board.json");
-const projectManagementTaskFile = path.join(process.cwd(), "data", "project-management-tasks.json");
+const storeFile = getDataStorePath("submissions.json");
+const operationsBoardFile = getDataStorePath("operations-board.json");
+const projectManagementTaskFile = getDataStorePath("project-management-tasks.json");
 let inMemorySubmissions: ProjectSubmission[] | null = null;
 let inMemoryOperationsBoard: WorkCard[] | null = null;
 let inMemoryProjectManagementTasks:

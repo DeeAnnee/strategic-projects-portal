@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import { findUserByEmail } from "@/lib/auth/users";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { resolveCanonicalWorkflowState } from "@/lib/submissions/workflow";
 import type {
@@ -14,7 +14,7 @@ import type {
   WorkflowApprovalRoleContext
 } from "@/lib/submissions/types";
 
-const storeFile = path.join(process.cwd(), "data", "approval-requests.json");
+const storeFile = getDataStorePath("approval-requests.json");
 let inMemoryApprovalRequests: ApprovalRequestRecord[] | null = null;
 
 const nowIso = () => new Date().toISOString();

@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import type {
   ChangeManagementStore,
@@ -12,9 +11,10 @@ import type {
   ChangeTemplate,
   ChangeThresholds
 } from "@/lib/change-management/types";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
-const storeFile = path.join(process.cwd(), "data", "change-requests.json");
+const storeFile = getDataStorePath("change-requests.json");
 let inMemoryChangeManagementStore: ChangeManagementStore | null = null;
 
 const defaultTemplates = (): ChangeTemplate[] => [

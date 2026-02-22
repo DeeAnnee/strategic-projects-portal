@@ -1,11 +1,11 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import {
   defaultReferenceData,
   type ReferenceData,
   type ReferenceDataKey
 } from "@/lib/admin/reference-data-config";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 
 export {
   defaultReferenceData,
@@ -13,7 +13,7 @@ export {
 } from "@/lib/admin/reference-data-config";
 export type { ReferenceData, ReferenceDataKey } from "@/lib/admin/reference-data-config";
 
-const storeFile = path.join(process.cwd(), "data", "reference-data.json");
+const storeFile = getDataStorePath("reference-data.json");
 let inMemoryReferenceData: ReferenceData | null = null;
 
 const isReadonlyFsError = (error: unknown) => {

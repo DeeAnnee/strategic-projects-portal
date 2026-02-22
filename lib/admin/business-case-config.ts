@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import {
   defaultBusinessCaseConfig,
@@ -9,8 +8,9 @@ import {
   type KpiMetricMap,
   type PayGradeMonthlySalaryMap
 } from "@/lib/admin/business-case-config-defs";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 
-const storeFile = path.join(process.cwd(), "data", "business-case-config.json");
+const storeFile = getDataStorePath("business-case-config.json");
 let inMemoryBusinessCaseConfig: BusinessCaseConfig | null = null;
 
 const isReadonlyFsError = (error: unknown) => {

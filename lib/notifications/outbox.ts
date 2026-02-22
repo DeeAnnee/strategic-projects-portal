@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 export type OutboundChannel = "email" | "teams";
@@ -16,7 +16,7 @@ export type OutboundMessage = {
   createdAt: string;
 };
 
-const storeFile = path.join(process.cwd(), "data", "message-outbox.json");
+const storeFile = getDataStorePath("message-outbox.json");
 let inMemoryOutbox: OutboundMessage[] | null = null;
 
 const readStore = async (): Promise<OutboundMessage[]> => {

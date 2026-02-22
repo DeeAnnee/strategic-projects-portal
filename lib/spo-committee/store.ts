@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import { addNotification } from "@/lib/notifications/store";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { calculateFinancialMetrics, calculateNetBenefitsByYear } from "@/lib/submissions/financial-metrics";
 import { getSubmissionById, listSubmissions, runWorkflowAction } from "@/lib/submissions/store";
@@ -13,7 +13,7 @@ import type {
   SpoCommitteeVersion
 } from "@/lib/spo-committee/types";
 
-const storeFile = path.join(process.cwd(), "data", "spo-committee.json");
+const storeFile = getDataStorePath("spo-committee.json");
 let inMemorySpoCommitteeState: SpoCommitteeState | null = null;
 
 const emptyState = (): SpoCommitteeState => ({ rows: [], versions: [] });

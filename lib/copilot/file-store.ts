@@ -1,5 +1,5 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
+import { dirname } from "node:path";
 import { randomUUID } from "node:crypto";
 
 import type {
@@ -10,6 +10,7 @@ import type {
   CopilotStorageArtifactType
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, isReadonlyFsError, safePersistJson } from "@/lib/storage/json-file";
 
 export type CopilotConversationRecord = {
@@ -110,8 +111,8 @@ type CopilotFileStore = {
   auditLogs: FileAuditLog[];
 };
 
-const storeFile = path.join(process.cwd(), "data", "copilot-store.json");
-const storeDir = path.dirname(storeFile);
+const storeFile = getDataStorePath("copilot-store.json");
+const storeDir = dirname(storeFile);
 
 const emptyStore = (): CopilotFileStore => ({
   projects: [],

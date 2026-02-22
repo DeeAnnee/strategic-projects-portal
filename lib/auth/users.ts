@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import { FUNCTION_RIGHTS, type FunctionAccess, type FunctionRight } from "@/lib/auth/access-config";
 import type { RoleType } from "@/lib/auth/roles";
 import { normalizeRoleType } from "@/lib/auth/roles";
 import { canAccessModule, projectVisibilityScope } from "@/lib/auth/rbac";
 import { isStagingAppEnv } from "@/lib/runtime/app-env";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { STAGING_TEST_ACCOUNTS, type TestAccount } from "@/lib/staging/test-accounts";
 
 export type PortalUser = {
@@ -53,7 +53,7 @@ type LegacyUserShape = {
   updatedAt?: string;
 };
 
-const storeFile = path.join(process.cwd(), "data", "users.json");
+const storeFile = getDataStorePath("users.json");
 let inMemoryUsers: PortalUser[] | null = null;
 
 const nowIso = () => new Date().toISOString();

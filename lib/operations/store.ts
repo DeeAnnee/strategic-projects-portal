@@ -1,13 +1,13 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import { addNotification } from "@/lib/notifications/store";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { listSubmissions, reconcileSubmissionWorkflow } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkComment, WorkTask } from "@/lib/operations/types";
 
-const storeFile = path.join(process.cwd(), "data", "operations-board.json");
+const storeFile = getDataStorePath("operations-board.json");
 let inMemoryBoardCards: WorkCard[] | null = null;
 const PROPOSAL_GATING_TASK_TITLE = "Conduct proposal placemat gating review";
 const FUNDING_GATING_TASK_TITLE = "Conduct project funding gating review";

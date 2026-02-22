@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import { filterSubmissionsByAccess } from "@/lib/auth/project-access";
 import type { RbacUser } from "@/lib/auth/rbac";
@@ -30,8 +29,9 @@ import type {
   PmSummaryResponse,
   PmTask
 } from "@/lib/pm-dashboard/types";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 
-const pmDashboardStoreFile = path.join(process.cwd(), "data", "pm-dashboard.json");
+const pmDashboardStoreFile = getDataStorePath("pm-dashboard.json");
 const CACHE_TTL_MS = 20_000;
 
 const allLabel = "All";

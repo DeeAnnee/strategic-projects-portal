@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 import type { ApiPrincipal } from "@/lib/auth/api";
 import { normalizeRoleType } from "@/lib/auth/roles";
@@ -19,11 +18,12 @@ import type {
   SavedTemplate,
   TemplatesStore
 } from "@/lib/reporting/types";
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
-const reportingDatasetsFile = path.join(process.cwd(), "data", "reporting-datasets.json");
-const reportingReportsFile = path.join(process.cwd(), "data", "reporting-reports.json");
-const reportingTemplatesFile = path.join(process.cwd(), "data", "reporting-templates.json");
+const reportingDatasetsFile = getDataStorePath("reporting-datasets.json");
+const reportingReportsFile = getDataStorePath("reporting-reports.json");
+const reportingTemplatesFile = getDataStorePath("reporting-templates.json");
 const inMemoryReportingStore = new Map<string, unknown>();
 
 const nowIso = () => new Date().toISOString();

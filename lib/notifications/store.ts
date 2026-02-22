@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
+import { getDataStorePath } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 export type NotificationItem = {
@@ -13,7 +13,7 @@ export type NotificationItem = {
   createdAt: string;
 };
 
-const storeFile = path.join(process.cwd(), "data", "notifications.json");
+const storeFile = getDataStorePath("notifications.json");
 let inMemoryNotifications: NotificationItem[] | null = null;
 
 const readStore = async (): Promise<NotificationItem[]> => {
