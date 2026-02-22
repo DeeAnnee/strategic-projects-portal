@@ -17,27 +17,27 @@ const base = {
 };
 
 describe("getSubmissionStatusLabel", () => {
-  it("returns stage-specific review label while both reviews are pending", () => {
-    expect(getSubmissionStatusLabel(base)).toBe("PGO & Finance Review");
+  it("returns canonical review label while both reviews are pending", () => {
+    expect(getSubmissionStatusLabel(base)).toBe("PGO/FGO Review");
   });
 
-  it("returns reviewer-specific pending labels when one side is complete", () => {
+  it("returns canonical review label when one reviewer is complete", () => {
     expect(
       getSubmissionStatusLabel({
         ...base,
         workflow: { ...base.workflow, pgoDecision: "Approved" }
       })
-    ).toBe("PGO Review Complete - Finance Pending");
+    ).toBe("PGO/FGO Review");
 
     expect(
       getSubmissionStatusLabel({
         ...base,
         workflow: { ...base.workflow, financeDecision: "Approved" }
       })
-    ).toBe("Finance Review Complete - PGO Pending");
+    ).toBe("PGO/FGO Review");
   });
 
-  it("falls back to regular status outside PGO and Finance stage", () => {
+  it("returns canonical approved label outside PGO/FGO review stage", () => {
     expect(
       getSubmissionStatusLabel({
         ...base,
@@ -49,10 +49,10 @@ describe("getSubmissionStatusLabel", () => {
           lifecycleStatus: "FR_APPROVED"
         }
       })
-    ).toBe("Funding Approved");
+    ).toBe("Approved");
   });
 
-  it("shows At SPO Review label when item is submitted in SPO stage", () => {
+  it("shows canonical SPO review label when item is submitted in SPO stage", () => {
     expect(
       getSubmissionStatusLabel({
         ...base,
@@ -63,6 +63,6 @@ describe("getSubmissionStatusLabel", () => {
           lifecycleStatus: "AT_SPO_REVIEW"
         }
       })
-    ).toBe("At SPO Review");
+    ).toBe("SPO Review");
   });
 });
