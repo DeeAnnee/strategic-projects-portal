@@ -14,6 +14,15 @@ export {
 export type { ReferenceData, ReferenceDataKey } from "@/lib/admin/reference-data-config";
 
 const storeFile = path.join(process.cwd(), "data", "reference-data.json");
+let inMemoryReferenceData: ReferenceData | null = null;
+
+const isReadonlyFsError = (error: unknown) => {
+  if (!error || typeof error !== "object" || !("code" in error)) {
+    return false;
+  }
+  const code = String((error as NodeJS.ErrnoException).code ?? "");
+  return code === "EROFS" || code === "EACCES" || code === "EPERM";
+};
 
 const cleanValues = (values: string[]) => {
   const deduped = new Set<string>();
@@ -60,6 +69,9 @@ const normalizeReferenceData = (input?: Partial<ReferenceData>): ReferenceData =
 };
 
 const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
+  if (inMemoryReferenceData) {
+    return inMemoryReferenceData;
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     return JSON.parse(raw) as Partial<ReferenceData>;
@@ -69,19 +81,20 @@ const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
 };
 
 const writeStore = async (data: ReferenceData) => {
-  await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
+  inMemoryReferenceData = data;
+  try {
+    await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
+  } catch (error) {
+    if (!isReadonlyFsError(error)) {
+      throw error;
+    }
+  }
 };
 
 export const getReferenceData = async (): Promise<ReferenceData> => {
   const current = await readRawStore();
-  if (!current) {
-    const seeded = normalizeReferenceData();
-    await writeStore(seeded);
-    return seeded;
-  }
-
-  const normalized = normalizeReferenceData(current);
-  await writeStore(normalized);
+  const normalized = normalizeReferenceData(current ?? undefined);
+  inMemoryReferenceData = normalized;
   return normalized;
 };
 

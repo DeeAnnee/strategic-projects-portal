@@ -54,10 +54,19 @@ type LegacyUserShape = {
 };
 
 const storeFile = path.join(process.cwd(), "data", "users.json");
+let inMemoryUsers: PortalUser[] | null = null;
 
 const nowIso = () => new Date().toISOString();
 const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCase();
 const normalizeText = (value?: string | null) => (value ?? "").trim();
+
+const isReadonlyFsError = (error: unknown) => {
+  if (!error || typeof error !== "object" || !("code" in error)) {
+    return false;
+  }
+  const code = String((error as NodeJS.ErrnoException).code ?? "");
+  return code === "EROFS" || code === "EACCES" || code === "EPERM";
+};
 
 const deriveAzureObjectId = (row: LegacyUserShape, email: string, id: string) =>
   normalizeText(row.azure_object_id) || normalizeText(row.azureObjectId) || `legacy-${email || id}`;
@@ -205,7 +214,14 @@ const seedStagingUsers = (): PortalUser[] => {
 };
 
 const writeStore = async (users: PortalUser[]) => {
-  await fs.writeFile(storeFile, JSON.stringify(users, null, 2), "utf8");
+  inMemoryUsers = users.map((user) => ({ ...user }));
+  try {
+    await fs.writeFile(storeFile, JSON.stringify(users, null, 2), "utf8");
+  } catch (error) {
+    if (!isReadonlyFsError(error)) {
+      throw error;
+    }
+  }
 };
 
 const mergeMissingStagingUsers = async (users: PortalUser[]) => {
@@ -236,11 +252,16 @@ const mergeMissingStagingUsers = async (users: PortalUser[]) => {
 };
 
 const readStore = async (): Promise<PortalUser[]> => {
+  if (inMemoryUsers) {
+    return mergeMissingStagingUsers(inMemoryUsers.map((user) => ({ ...user })));
+  }
+
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as LegacyUserShape[];
     if (Array.isArray(parsed)) {
       const normalized = parsed.map(normalizeUser);
+      inMemoryUsers = normalized.map((user) => ({ ...user }));
       return mergeMissingStagingUsers(normalized);
     }
     const seeded = isStagingAppEnv() ? seedStagingUsers() : seedUsers();

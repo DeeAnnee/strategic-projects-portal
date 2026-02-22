@@ -11,6 +11,15 @@ import {
 } from "@/lib/admin/business-case-config-defs";
 
 const storeFile = path.join(process.cwd(), "data", "business-case-config.json");
+let inMemoryBusinessCaseConfig: BusinessCaseConfig | null = null;
+
+const isReadonlyFsError = (error: unknown) => {
+  if (!error || typeof error !== "object" || !("code" in error)) {
+    return false;
+  }
+  const code = String((error as NodeJS.ErrnoException).code ?? "");
+  return code === "EROFS" || code === "EACCES" || code === "EPERM";
+};
 
 const cleanList = (values: string[]) => {
   const deduped = new Set<string>();
@@ -98,6 +107,9 @@ const normalizeBusinessCaseConfig = (input?: Partial<BusinessCaseConfig>): Busin
 };
 
 const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
+  if (inMemoryBusinessCaseConfig) {
+    return inMemoryBusinessCaseConfig;
+  }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     return JSON.parse(raw) as Partial<BusinessCaseConfig>;
@@ -107,19 +119,20 @@ const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
 };
 
 const writeStore = async (data: BusinessCaseConfig) => {
-  await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
+  inMemoryBusinessCaseConfig = data;
+  try {
+    await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
+  } catch (error) {
+    if (!isReadonlyFsError(error)) {
+      throw error;
+    }
+  }
 };
 
 export const getBusinessCaseConfig = async (): Promise<BusinessCaseConfig> => {
   const current = await readRawStore();
-  if (!current) {
-    const seeded = normalizeBusinessCaseConfig();
-    await writeStore(seeded);
-    return seeded;
-  }
-
-  const normalized = normalizeBusinessCaseConfig(current);
-  await writeStore(normalized);
+  const normalized = normalizeBusinessCaseConfig(current ?? undefined);
+  inMemoryBusinessCaseConfig = normalized;
   return normalized;
 };
 
