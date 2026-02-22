@@ -230,3 +230,10 @@ model CopilotAuditLog {
   @@index([userId, projectId, createdAt])
   @@index([conversationId, createdAt])
 }
+
+model JsonStore {
+  key       String   @id
+  payload   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

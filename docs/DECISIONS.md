@@ -1,5 +1,10 @@
 # Architecture Decisions
 
+## 2026-02-22: Serverless JSON persistence promoted to Postgres-backed shared store
+- Decision: Route JSON-backed module persistence through a shared `JsonStore` Postgres table (keyed by store filename) via `safePersistJson` + `safeReadJsonText`, with filesystem fallback preserved for local development.
+- Rationale: Vercel/serverless functions do not share local filesystem state across routes, which caused writes to appear successful but disappear on subsequent reads in other functions.
+- Tradeoffs: Runtime uses lightweight SQL upsert/query for JSON blobs (not yet fully normalized domain tables), so data durability is restored immediately while keeping existing store interfaces stable.
+
 ## 2026-02-22: STRATOS Copilot moved to schema-first artifact generation with strict context injection
 - Decision: Add a dedicated `/api/copilot` endpoint that enforces project-scoped context grounding, role-aware artifact generation permissions, and schema validation/retry for canonical STRATOS artifacts.
 - Rationale: Governance workflows require deterministic, auditable artifacts and prevention of hallucinated project facts; the old prompt style was too permissive for enterprise control needs.

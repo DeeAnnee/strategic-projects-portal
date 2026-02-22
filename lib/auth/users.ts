@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import { promises as fs } from "node:fs";
 
 import { FUNCTION_RIGHTS, type FunctionAccess, type FunctionRight } from "@/lib/auth/access-config";
 import type { RoleType } from "@/lib/auth/roles";
@@ -7,7 +6,7 @@ import { normalizeRoleType } from "@/lib/auth/roles";
 import { canAccessModule, projectVisibilityScope } from "@/lib/auth/rbac";
 import { isStagingAppEnv } from "@/lib/runtime/app-env";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { safePersistJson } from "@/lib/storage/json-file";
+import { safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 import { STAGING_TEST_ACCOUNTS, type TestAccount } from "@/lib/staging/test-accounts";
 
 export type PortalUser = {
@@ -244,7 +243,7 @@ const readStore = async (): Promise<PortalUser[]> => {
   }
 
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as LegacyUserShape[];
     if (Array.isArray(parsed)) {
       const normalized = parsed.map(normalizeUser);

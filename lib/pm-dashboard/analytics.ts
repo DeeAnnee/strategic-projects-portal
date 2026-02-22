@@ -1,5 +1,3 @@
-import { promises as fs } from "node:fs";
-
 import { filterSubmissionsByAccess } from "@/lib/auth/project-access";
 import type { RbacUser } from "@/lib/auth/rbac";
 import {
@@ -30,6 +28,7 @@ import type {
   PmTask
 } from "@/lib/pm-dashboard/types";
 import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { safeReadJsonText } from "@/lib/storage/json-file";
 
 const pmDashboardStoreFile = getDataStorePath("pm-dashboard.json");
 const CACHE_TTL_MS = 20_000;
@@ -268,7 +267,7 @@ const toProjectHealth = (
 
 const readPmDashboardSeed = async (): Promise<PmDashboardSeedData> => {
   try {
-    const raw = await fs.readFile(pmDashboardStoreFile, "utf8");
+    const raw = await safeReadJsonText(pmDashboardStoreFile);
     const parsed = JSON.parse(raw) as PmDashboardSeedData;
     return parsed && typeof parsed === "object" ? parsed : {};
   } catch {

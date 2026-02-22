@@ -1,8 +1,6 @@
-import { promises as fs } from "node:fs";
-
 import { addNotification } from "@/lib/notifications/store";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 import { calculateFinancialMetrics, calculateNetBenefitsByYear } from "@/lib/submissions/financial-metrics";
 import { getSubmissionById, listSubmissions, runWorkflowAction } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
@@ -23,7 +21,7 @@ const readStore = async (): Promise<SpoCommitteeState> => {
     return cloneJson(inMemorySpoCommitteeState);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as Partial<SpoCommitteeState>;
     const state = {
       rows: Array.isArray(parsed.rows) ? parsed.rows : [],

@@ -1,12 +1,10 @@
-import { promises as fs } from "node:fs";
-
 import {
   defaultReferenceData,
   type ReferenceData,
   type ReferenceDataKey
 } from "@/lib/admin/reference-data-config";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { safePersistJson } from "@/lib/storage/json-file";
+import { safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 export {
   defaultReferenceData,
@@ -66,7 +64,7 @@ const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
     return inMemoryReferenceData;
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     return JSON.parse(raw) as Partial<ReferenceData>;
   } catch {
     return null;

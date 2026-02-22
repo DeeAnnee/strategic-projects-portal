@@ -1,5 +1,3 @@
-import { promises as fs } from "node:fs";
-
 import type {
   ChangeManagementStore,
   ChangeRequestApproval,
@@ -12,7 +10,7 @@ import type {
   ChangeThresholds
 } from "@/lib/change-management/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("change-requests.json");
 let inMemoryChangeManagementStore: ChangeManagementStore | null = null;
@@ -86,7 +84,7 @@ export const readChangeManagementStore = async (): Promise<ChangeManagementStore
     return cloneJson(inMemoryChangeManagementStore);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as ChangeManagementStore;
     const normalized = normalizeStore(parsed);
     inMemoryChangeManagementStore = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;

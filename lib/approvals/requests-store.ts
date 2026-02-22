@@ -1,8 +1,6 @@
-import { promises as fs } from "node:fs";
-
 import { findUserByEmail } from "@/lib/auth/users";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 import { resolveCanonicalWorkflowState } from "@/lib/submissions/workflow";
 import type {
   ApprovalRequestStageContext,
@@ -26,7 +24,7 @@ const readStore = async (): Promise<ApprovalRequestRecord[]> => {
     return cloneJson(inMemoryApprovalRequests);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as ApprovalRequestRecord[];
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;

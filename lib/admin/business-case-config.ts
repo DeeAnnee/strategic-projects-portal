@@ -1,5 +1,3 @@
-import { promises as fs } from "node:fs";
-
 import {
   defaultBusinessCaseConfig,
   type BusinessCaseConfig,
@@ -9,7 +7,7 @@ import {
   type PayGradeMonthlySalaryMap
 } from "@/lib/admin/business-case-config-defs";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { safePersistJson } from "@/lib/storage/json-file";
+import { safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("business-case-config.json");
 let inMemoryBusinessCaseConfig: BusinessCaseConfig | null = null;
@@ -104,7 +102,7 @@ const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
     return inMemoryBusinessCaseConfig;
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     return JSON.parse(raw) as Partial<BusinessCaseConfig>;
   } catch {
     return null;

@@ -1,5 +1,3 @@
-import { promises as fs } from "node:fs";
-
 import type { ApiPrincipal } from "@/lib/auth/api";
 import { normalizeRoleType } from "@/lib/auth/roles";
 import {
@@ -19,7 +17,7 @@ import type {
   TemplatesStore
 } from "@/lib/reporting/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 const reportingDatasetsFile = getDataStorePath("reporting-datasets.json");
 const reportingReportsFile = getDataStorePath("reporting-reports.json");
@@ -34,7 +32,7 @@ const readJson = async <T,>(filePath: string, fallback: T): Promise<T> => {
     return cloneJson(inMemoryReportingStore.get(filePath) as T);
   }
   try {
-    const raw = await fs.readFile(filePath, "utf8");
+    const raw = await safeReadJsonText(filePath);
     const parsed = JSON.parse(raw) as T;
     if (shouldUseMemoryStoreCache()) {
       inMemoryReportingStore.set(filePath, cloneJson(parsed));

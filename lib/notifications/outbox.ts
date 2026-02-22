@@ -1,7 +1,5 @@
-import { promises as fs } from "node:fs";
-
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 export type OutboundChannel = "email" | "teams";
 
@@ -24,7 +22,7 @@ const readStore = async (): Promise<OutboundMessage[]> => {
     return cloneJson(inMemoryOutbox);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as OutboundMessage[];
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryOutbox = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;

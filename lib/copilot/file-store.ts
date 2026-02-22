@@ -11,7 +11,7 @@ import type {
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, isReadonlyFsError, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, isReadonlyFsError, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 export type CopilotConversationRecord = {
   id: string;
@@ -188,7 +188,7 @@ const readStore = async (): Promise<CopilotFileStore> => {
   await waitForWrites();
   await ensureStoreDir();
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as Partial<CopilotFileStore>;
     const normalized = {
       projects: Array.isArray(parsed.projects) ? parsed.projects : [],

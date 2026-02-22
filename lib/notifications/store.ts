@@ -1,7 +1,5 @@
-import { promises as fs } from "node:fs";
-
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 export type NotificationItem = {
   id: string;
@@ -21,7 +19,7 @@ const readStore = async (): Promise<NotificationItem[]> => {
     return cloneJson(inMemoryNotifications);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as NotificationItem[];
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryNotifications = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;

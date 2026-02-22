@@ -1,5 +1,3 @@
-import { promises as fs } from "node:fs";
-
 import {
   cancelPendingApprovalRequestsForSubmission,
   createApprovalRequestsForSubmission,
@@ -37,7 +35,7 @@ import {
 } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkTask } from "@/lib/operations/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
+import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("submissions.json");
 const operationsBoardFile = getDataStorePath("operations-board.json");
@@ -1602,7 +1600,7 @@ const readStore = async (): Promise<ProjectSubmission[]> => {
     return cloneJson(inMemorySubmissions);
   }
   try {
-    const raw = await fs.readFile(storeFile, "utf8");
+    const raw = await safeReadJsonText(storeFile);
     const parsed = JSON.parse(raw) as Partial<ProjectSubmission>[];
     const normalized = Array.isArray(parsed) ? parsed.map(normalizeSubmission) : [];
     inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
@@ -2010,7 +2008,7 @@ const readOperationsBoard = async (): Promise<WorkCard[]> => {
     return cloneJson(inMemoryOperationsBoard);
   }
   try {
-    const raw = await fs.readFile(operationsBoardFile, "utf8");
+    const raw = await safeReadJsonText(operationsBoardFile);
     const parsed = JSON.parse(raw) as WorkCard[];
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryOperationsBoard = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
@@ -2068,7 +2066,7 @@ const readProjectManagementTasks = async (): Promise<
     return cloneJson(inMemoryProjectManagementTasks);
   }
   try {
-    const raw = await fs.readFile(projectManagementTaskFile, "utf8");
+    const raw = await safeReadJsonText(projectManagementTaskFile);
     const parsed = JSON.parse(raw) as Array<{
       id: string;
       projectId: string;
