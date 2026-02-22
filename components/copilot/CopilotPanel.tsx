@@ -169,23 +169,26 @@ const getArtifactCitations = (payload: unknown): CopilotCitation[] => {
   return payload.citations.filter((item): item is CopilotCitation => isObject(item) && typeof item.source === "string");
 };
 
-const sseChunkToEvents = (chunk: string) =>
-  chunk
-    .split("\n\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
+const splitSseBuffer = (buffer: string) => {
+  const normalized = buffer.replace(/\r\n/g, "\n");
+  const parts = normalized.split("\n\n");
+  const remainder = parts.pop() ?? "";
+  const events = parts.map((line) => line.trim()).filter(Boolean);
+  return { events, remainder };
+};
 
 const parseSseEvent = (raw: string): CopilotSseEvent | null => {
-  const line = raw
-    .split("\n")
+  const payloadLines = raw
+    .split(/\r?\n/)
     .map((item) => item.trim())
-    .find((item) => item.startsWith("data:"));
+    .filter((item) => item.startsWith("data:"))
+    .map((line) => line.replace(/^data:\s*/, ""));
 
-  if (!line) {
+  if (payloadLines.length === 0) {
     return null;
   }
 
-  const jsonText = line.replace(/^data:\s*/, "");
+  const jsonText = payloadLines.join("\n").trim();
   if (!jsonText || jsonText === "[DONE]") {
     return null;
   }
@@ -416,6 +419,8 @@ export default function CopilotPanel({
   const transcriptRef = useRef<HTMLDivElement | null>(null);
   const projectSwitchRef = useRef<string>(projectId ?? "");
   const projectLocked = Boolean(projectId);
+  const STREAM_TOTAL_TIMEOUT_MS = 65000;
+  const STREAM_IDLE_TIMEOUT_MS = 18000;
 
   const selectedArtifact = useMemo(
     () => artifacts.find((artifact) => artifact.id === selectedArtifactId) ?? null,
@@ -664,7 +669,33 @@ export default function CopilotPanel({
     setMessages((prev) => [...prev, optimisticMessage]);
     setInput("");
 
+    const streamAbortController = new AbortController();
+    let totalTimeoutRef: ReturnType<typeof setTimeout> | null = null;
+    let idleTimeoutRef: ReturnType<typeof setTimeout> | null = null;
+    const clearStreamTimers = () => {
+      if (totalTimeoutRef) {
+        clearTimeout(totalTimeoutRef);
+        totalTimeoutRef = null;
+      }
+      if (idleTimeoutRef) {
+        clearTimeout(idleTimeoutRef);
+        idleTimeoutRef = null;
+      }
+    };
+    const resetIdleTimeout = () => {
+      if (idleTimeoutRef) {
+        clearTimeout(idleTimeoutRef);
+      }
+      idleTimeoutRef = setTimeout(() => {
+        streamAbortController.abort("STREAM_IDLE_TIMEOUT");
+      }, STREAM_IDLE_TIMEOUT_MS);
+    };
+
     try {
+      totalTimeoutRef = setTimeout(() => {
+        streamAbortController.abort("STREAM_TOTAL_TIMEOUT");
+      }, STREAM_TOTAL_TIMEOUT_MS);
+
       const response = await fetch("/api/copilot/chat", {
         method: "POST",
         headers: {
@@ -676,7 +707,8 @@ export default function CopilotPanel({
           mode,
           message: text,
           stream: true
-        })
+        }),
+        signal: streamAbortController.signal
       });
 
       if (!response.ok) {
@@ -728,6 +760,7 @@ export default function CopilotPanel({
       let activeConversationId = conversationId;
       let hasAssistantDraft = false;
       let doneReceived = false;
+      resetIdleTimeout();
 
       while (true) {
         const { value, done } = await reader.read();
@@ -735,17 +768,13 @@ export default function CopilotPanel({
           break;
         }
 
+        resetIdleTimeout();
         streamBuffer += decoder.decode(value, { stream: true });
 
-        const segments = sseChunkToEvents(streamBuffer);
-        const endsWithDelimiter = streamBuffer.endsWith("\n\n");
-        if (!endsWithDelimiter) {
-          streamBuffer = segments.pop() ?? "";
-        } else {
-          streamBuffer = "";
-        }
+        const { events, remainder } = splitSseBuffer(streamBuffer);
+        streamBuffer = remainder;
 
-        for (const segment of segments) {
+        for (const segment of events) {
           const event = parseSseEvent(segment);
           if (!event) {
             continue;
@@ -808,8 +837,26 @@ export default function CopilotPanel({
         }
       }
 
+      const trailingEvent = parseSseEvent(streamBuffer.trim());
+      if (trailingEvent?.type === "done") {
+        doneReceived = true;
+        setConversationId(trailingEvent.conversationId);
+        setMessages((prev) => {
+          const withoutDraft = prev.filter((message) => message.id !== assistantDraftId);
+          return [...withoutDraft, trailingEvent.assistantMessage];
+        });
+        setArtifacts((prev) => mergeArtifacts(prev, trailingEvent.artifacts));
+        setSelectedMessageId(trailingEvent.assistantMessage.id);
+        if (trailingEvent.artifacts.length > 0) {
+          setSelectedArtifactId(trailingEvent.artifacts[0].id);
+        }
+      } else if (trailingEvent?.type === "error") {
+        throw new Error(trailingEvent.message);
+      }
+
       if (!doneReceived) {
         setMessages((prev) => prev.filter((message) => message.id !== assistantDraftId));
+        throw new Error("STRATOS stream closed before completion. Please retry.");
       }
 
       try {
@@ -818,12 +865,29 @@ export default function CopilotPanel({
         setError(loadError instanceof Error ? loadError.message : "Could not refresh conversation list.");
       }
     } catch (sendError) {
-      setError(sendError instanceof Error ? sendError.message : "Copilot request failed.");
+      const isAbort = sendError instanceof Error && sendError.name === "AbortError";
+      setError(
+        isAbort
+          ? "STRATOS response timed out. Please retry."
+          : sendError instanceof Error
+            ? sendError.message
+            : "Copilot request failed."
+      );
       setMessages((prev) => prev.filter((message) => message.id !== optimisticUserId));
     } finally {
+      clearStreamTimers();
       setLoading(false);
     }
-  }, [conversationId, input, loadConversations, loading, mode, selectedProjectId]);
+  }, [
+    STREAM_IDLE_TIMEOUT_MS,
+    STREAM_TOTAL_TIMEOUT_MS,
+    conversationId,
+    input,
+    loadConversations,
+    loading,
+    mode,
+    selectedProjectId
+  ]);
 
   useEffect(() => {
     void loadTemplates();

@@ -27,6 +27,28 @@ type ProviderConfig =
   | { kind: "NONE" };
 
 const textDecoder = new TextDecoder();
+const COMPLETION_TIMEOUT_MS = Number(process.env.COPILOT_COMPLETION_TIMEOUT_MS ?? 30000);
+const STREAM_TIMEOUT_MS = Number(process.env.COPILOT_STREAM_TIMEOUT_MS ?? 55000);
+
+const fetchWithTimeout = async (
+  url: string,
+  init: RequestInit,
+  timeoutMs: number,
+  label: string
+) => {
+  const controller = new AbortController();
+  const timeoutRef = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`${label} timed out after ${Math.round(timeoutMs / 1000)}s.`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutRef);
+  }
+};
 
 const getProviderConfig = (): ProviderConfig => {
   const azureEndpoint = process.env.AZURE_OPENAI_ENDPOINT?.trim();
@@ -122,7 +144,7 @@ const readSseChunks = async function* (response: Response): AsyncGenerator<strin
       break;
     }
 
-    buffer += textDecoder.decode(value, { stream: true });
+    buffer += textDecoder.decode(value, { stream: true }).replace(/\r\n/g, "\n");
     const lines = buffer.split("\n");
     buffer = lines.pop() ?? "";
 
@@ -192,7 +214,7 @@ export const generateCompletion = async (messages: LlmChatMessage[], options?: C
   }
 
   const request = buildRequest(config, messages, false, options);
-  const response = await fetch(request.url, request.init);
+  const response = await fetchWithTimeout(request.url, request.init, COMPLETION_TIMEOUT_MS, "LLM completion");
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`LLM completion failed (${response.status}): ${errorText.slice(0, 300)}`);
@@ -218,7 +240,7 @@ export const streamCompletion = async function* (
   }
 
   const request = buildRequest(config, messages, true, options);
-  const response = await fetch(request.url, request.init);
+  const response = await fetchWithTimeout(request.url, request.init, STREAM_TIMEOUT_MS, "LLM stream");
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`LLM stream failed (${response.status}): ${errorText.slice(0, 300)}`);
