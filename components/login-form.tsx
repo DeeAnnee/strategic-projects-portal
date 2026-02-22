@@ -4,22 +4,15 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-type DemoAccount = {
-  label: string;
-  email: string;
-  password: string;
-};
-
 type LoginFormProps = {
   defaultEmail: string;
-  demoAccounts: DemoAccount[];
   showStagingGuide?: boolean;
 };
 
-export default function LoginForm({ defaultEmail, demoAccounts, showStagingGuide = false }: LoginFormProps) {
+export default function LoginForm({ defaultEmail, showStagingGuide = false }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState(defaultEmail);
-  const [password, setPassword] = useState("password123");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -85,24 +78,14 @@ export default function LoginForm({ defaultEmail, demoAccounts, showStagingGuide
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
-      <div className="mt-6 rounded-lg bg-slate-50 p-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Demo accounts</p>
-        <ul className="mt-2 space-y-1 text-xs text-slate-700">
-          {demoAccounts.map((account) => (
-            <li key={account.email}>
-              {account.label}: {account.email} / {account.password}
-            </li>
-          ))}
-        </ul>
-        {showStagingGuide ? (
-          <p className="mt-2 text-xs text-slate-600">
-            Full staging workflow guide:{" "}
-            <a className="font-semibold text-brand-700 underline underline-offset-2" href="/staging-guide">
-              /staging-guide
-            </a>
-          </p>
-        ) : null}
-      </div>
+      {showStagingGuide ? (
+        <p className="mt-4 text-xs text-slate-600">
+          Staging workflow guide:{" "}
+          <a className="font-semibold text-brand-700 underline underline-offset-2" href="/staging-guide">
+            /staging-guide
+          </a>
+        </p>
+      ) : null}
     </div>
   );
 }
