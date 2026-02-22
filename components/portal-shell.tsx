@@ -32,7 +32,7 @@ type NavItem = {
   icon: (props: { className?: string }) => ReactNode;
 };
 
-const IconBrand = ({ className = "h-6 w-6" }: { className?: string }) => (
+const IconBrand = ({ className = "h-8 w-8" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 512 512" aria-hidden="true">
     <defs>
       <linearGradient id="portal-nav-icon-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -40,24 +40,24 @@ const IconBrand = ({ className = "h-6 w-6" }: { className?: string }) => (
         <stop offset="100%" stopColor="#870824" />
       </linearGradient>
     </defs>
-    <rect width="512" height="512" rx="120" fill="url(#portal-nav-icon-bg)" />
-    <circle cx="256" cy="256" r="120" fill="none" stroke="#FFFFFF" strokeWidth="32" />
+    <rect width="512" height="512" rx="112" fill="url(#portal-nav-icon-bg)" />
+    <circle cx="256" cy="256" r="152" fill="none" stroke="#FFFFFF" strokeWidth="44" />
     <path
-      d="M300 180 L300 340
-      M300 180
-      C360 180, 360 250, 300 250"
+      d="M332 162 L332 356
+      M332 162
+      C408 162, 408 256, 332 256"
       fill="none"
       stroke="#FFFFFF"
-      strokeWidth="32"
+      strokeWidth="44"
       strokeLinecap="round"
     />
     <path
-      d="M200 200
-      C160 200, 160 240, 200 240
-      C240 240, 240 280, 200 280"
+      d="M180 186
+      C122 186, 122 252, 182 252
+      C252 252, 252 326, 178 326"
       fill="none"
       stroke="#FFFFFF"
-      strokeWidth="32"
+      strokeWidth="44"
       strokeLinecap="round"
     />
   </svg>
@@ -316,7 +316,7 @@ export default function PortalShell({ session, children }: Props) {
         <aside className="sidebar-ombre relative z-20 hidden flex-col overflow-visible border-r border-white/30 py-4 text-white md:sticky md:top-0 md:flex md:h-screen md:self-start">
           <div className={`sidebar-brand relative mb-5 ${collapsed ? "justify-center px-2" : "px-4"}`}>
             <div className="flex items-center gap-2">
-              <IconBrand className="h-6 w-6 text-white/95" />
+              <IconBrand className="h-8 w-8 text-white/95" />
               {!collapsed ? <p className="text-[16px] font-semibold leading-none tracking-[0.01em] text-white/95">Strategic Projects</p> : null}
             </div>
             <button

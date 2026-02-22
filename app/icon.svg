@@ -5,24 +5,24 @@
       <stop offset="100%" stop-color="#870824"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
-  <circle cx="256" cy="256" r="120" fill="none" stroke="#FFFFFF" stroke-width="32"/>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="152" fill="none" stroke="#FFFFFF" stroke-width="44"/>
   <path
-    d="M300 180 L300 340
-    M300 180
-    C360 180, 360 250, 300 250"
+    d="M332 162 L332 356
+    M332 162
+    C408 162, 408 256, 332 256"
     fill="none"
     stroke="#FFFFFF"
-    stroke-width="32"
+    stroke-width="44"
     stroke-linecap="round"
   />
   <path
-    d="M200 200
-    C160 200, 160 240, 200 240
-    C240 240, 240 280, 200 280"
+    d="M180 186
+    C122 186, 122 252, 182 252
+    C252 252, 252 326, 178 326"
     fill="none"
     stroke="#FFFFFF"
-    stroke-width="32"
+    stroke-width="44"
     stroke-linecap="round"
   />
 </svg>
