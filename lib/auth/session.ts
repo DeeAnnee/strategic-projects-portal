@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -19,7 +20,7 @@ type SessionUserShape = {
   photoUrl?: string;
 };
 
-const roleHomePaths: Array<{ module: ModuleName; href: string }> = [
+const roleHomePaths: Array<{ module: ModuleName; href: Route }> = [
   { module: "projects", href: "/submissions" },
   { module: "dashboard", href: "/dashboard" },
   { module: "stratos_lab", href: "/ai-helper" },
@@ -30,7 +31,7 @@ const roleHomePaths: Array<{ module: ModuleName; href: string }> = [
   { module: "user_admin", href: "/admin" }
 ];
 
-export const getDefaultPortalPath = (user: SessionUserShape): string => {
+export const getDefaultPortalPath = (user: SessionUserShape): Route => {
   const accessible = roleHomePaths.find((entry) => canAccessModule(user, entry.module));
   return accessible?.href ?? "/";
 };

@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next tsconfig.tsbuildinfo",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "db:seed": "node prisma/seed.cjs",
