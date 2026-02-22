@@ -10,7 +10,7 @@ import type {
   CopilotStorageArtifactType
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, isReadonlyFsError, safePersistJson } from "@/lib/storage/json-file";
 
 export type CopilotConversationRecord = {
@@ -182,7 +182,7 @@ const ensureStoreDir = async () => {
 };
 
 const readStore = async (): Promise<CopilotFileStore> => {
-  if (inMemoryCopilotStore) {
+  if (shouldUseMemoryStoreCache() && inMemoryCopilotStore) {
     return cloneJson(inMemoryCopilotStore);
   }
   await waitForWrites();
@@ -198,17 +198,17 @@ const readStore = async (): Promise<CopilotFileStore> => {
       feedback: Array.isArray(parsed.feedback) ? parsed.feedback : [],
       auditLogs: Array.isArray(parsed.auditLogs) ? parsed.auditLogs : []
     };
-    inMemoryCopilotStore = cloneJson(normalized);
+    inMemoryCopilotStore = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
   } catch {
     const initial = emptyStore();
-    inMemoryCopilotStore = cloneJson(initial);
+    inMemoryCopilotStore = shouldUseMemoryStoreCache() ? cloneJson(initial) : null;
     return initial;
   }
 };
 
 const persistStore = async (store: CopilotFileStore) => {
-  inMemoryCopilotStore = cloneJson(store);
+  inMemoryCopilotStore = shouldUseMemoryStoreCache() ? cloneJson(store) : null;
   await ensureStoreDir();
   await safePersistJson(storeFile, store);
 };

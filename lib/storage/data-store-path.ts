@@ -15,6 +15,15 @@ const shouldUseServerlessDataDir = () => {
   return false;
 };
 
+export const isServerlessRuntime = () => shouldUseServerlessDataDir();
+
+export const shouldUseMemoryStoreCache = () => {
+  if (hasValue(process.env.DATA_STORE_DISABLE_MEMORY_CACHE)) {
+    return false;
+  }
+  return !isServerlessRuntime();
+};
+
 export const getDataStoreDir = () => {
   const configured = process.env.DATA_STORE_DIR?.trim();
   if (configured) {

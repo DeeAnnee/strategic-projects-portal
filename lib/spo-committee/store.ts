@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 
 import { addNotification } from "@/lib/notifications/store";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { calculateFinancialMetrics, calculateNetBenefitsByYear } from "@/lib/submissions/financial-metrics";
 import { getSubmissionById, listSubmissions, runWorkflowAction } from "@/lib/submissions/store";
@@ -19,7 +19,7 @@ let inMemorySpoCommitteeState: SpoCommitteeState | null = null;
 const emptyState = (): SpoCommitteeState => ({ rows: [], versions: [] });
 
 const readStore = async (): Promise<SpoCommitteeState> => {
-  if (inMemorySpoCommitteeState) {
+  if (shouldUseMemoryStoreCache() && inMemorySpoCommitteeState) {
     return cloneJson(inMemorySpoCommitteeState);
   }
   try {
@@ -29,17 +29,17 @@ const readStore = async (): Promise<SpoCommitteeState> => {
       rows: Array.isArray(parsed.rows) ? parsed.rows : [],
       versions: Array.isArray(parsed.versions) ? parsed.versions : []
     };
-    inMemorySpoCommitteeState = cloneJson(state);
+    inMemorySpoCommitteeState = shouldUseMemoryStoreCache() ? cloneJson(state) : null;
     return state;
   } catch {
     const state = emptyState();
-    inMemorySpoCommitteeState = cloneJson(state);
+    inMemorySpoCommitteeState = shouldUseMemoryStoreCache() ? cloneJson(state) : null;
     return state;
   }
 };
 
 const writeStore = async (value: SpoCommitteeState) => {
-  inMemorySpoCommitteeState = cloneJson(value);
+  inMemorySpoCommitteeState = shouldUseMemoryStoreCache() ? cloneJson(value) : null;
   await safePersistJson(storeFile, value);
 };
 

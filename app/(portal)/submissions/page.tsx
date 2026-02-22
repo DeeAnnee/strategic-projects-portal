@@ -8,6 +8,9 @@ import { getSessionOrRedirect } from "@/lib/auth/session";
 import { listSubmissions } from "@/lib/submissions/store";
 import SubmissionsTable from "@/components/submissions/submissions-table";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type Props = {
   searchParams?: Promise<{ draftSaved?: string; caseId?: string }>;
 };

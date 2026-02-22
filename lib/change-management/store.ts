@@ -11,7 +11,7 @@ import type {
   ChangeTemplate,
   ChangeThresholds
 } from "@/lib/change-management/types";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("change-requests.json");
@@ -82,26 +82,26 @@ const normalizeStore = (store: Partial<ChangeManagementStore> | null | undefined
 });
 
 export const readChangeManagementStore = async (): Promise<ChangeManagementStore> => {
-  if (inMemoryChangeManagementStore) {
+  if (shouldUseMemoryStoreCache() && inMemoryChangeManagementStore) {
     return cloneJson(inMemoryChangeManagementStore);
   }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as ChangeManagementStore;
     const normalized = normalizeStore(parsed);
-    inMemoryChangeManagementStore = cloneJson(normalized);
+    inMemoryChangeManagementStore = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
   } catch {
     // In hosted/serverless environments (e.g., Vercel), the deployed filesystem
     // is read-only. Reads must never attempt to seed/write local JSON files.
     const seeded = defaultStore();
-    inMemoryChangeManagementStore = cloneJson(seeded);
+    inMemoryChangeManagementStore = shouldUseMemoryStoreCache() ? cloneJson(seeded) : null;
     return seeded;
   }
 };
 
 export const writeChangeManagementStore = async (store: ChangeManagementStore) => {
-  inMemoryChangeManagementStore = cloneJson(store);
+  inMemoryChangeManagementStore = shouldUseMemoryStoreCache() ? cloneJson(store) : null;
   await safePersistJson(storeFile, store);
 };
 

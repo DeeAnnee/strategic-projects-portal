@@ -6,7 +6,7 @@ import type { RoleType } from "@/lib/auth/roles";
 import { normalizeRoleType } from "@/lib/auth/roles";
 import { canAccessModule, projectVisibilityScope } from "@/lib/auth/rbac";
 import { isStagingAppEnv } from "@/lib/runtime/app-env";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { STAGING_TEST_ACCOUNTS, type TestAccount } from "@/lib/staging/test-accounts";
 
 export type PortalUser = {
@@ -214,7 +214,7 @@ const seedStagingUsers = (): PortalUser[] => {
 };
 
 const writeStore = async (users: PortalUser[]) => {
-  inMemoryUsers = users.map((user) => ({ ...user }));
+  inMemoryUsers = shouldUseMemoryStoreCache() ? users.map((user) => ({ ...user })) : null;
   try {
     await fs.writeFile(storeFile, JSON.stringify(users, null, 2), "utf8");
   } catch (error) {
@@ -252,7 +252,7 @@ const mergeMissingStagingUsers = async (users: PortalUser[]) => {
 };
 
 const readStore = async (): Promise<PortalUser[]> => {
-  if (inMemoryUsers) {
+  if (shouldUseMemoryStoreCache() && inMemoryUsers) {
     return mergeMissingStagingUsers(inMemoryUsers.map((user) => ({ ...user })));
   }
 
@@ -261,7 +261,7 @@ const readStore = async (): Promise<PortalUser[]> => {
     const parsed = JSON.parse(raw) as LegacyUserShape[];
     if (Array.isArray(parsed)) {
       const normalized = parsed.map(normalizeUser);
-      inMemoryUsers = normalized.map((user) => ({ ...user }));
+      inMemoryUsers = shouldUseMemoryStoreCache() ? normalized.map((user) => ({ ...user })) : null;
       return mergeMissingStagingUsers(normalized);
     }
     const seeded = isStagingAppEnv() ? seedStagingUsers() : seedUsers();

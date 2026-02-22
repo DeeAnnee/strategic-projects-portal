@@ -18,7 +18,7 @@ import type {
   SavedTemplate,
   TemplatesStore
 } from "@/lib/reporting/types";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const reportingDatasetsFile = getDataStorePath("reporting-datasets.json");
@@ -30,23 +30,35 @@ const nowIso = () => new Date().toISOString();
 const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCase();
 
 const readJson = async <T,>(filePath: string, fallback: T): Promise<T> => {
-  if (inMemoryReportingStore.has(filePath)) {
+  if (shouldUseMemoryStoreCache() && inMemoryReportingStore.has(filePath)) {
     return cloneJson(inMemoryReportingStore.get(filePath) as T);
   }
   try {
     const raw = await fs.readFile(filePath, "utf8");
     const parsed = JSON.parse(raw) as T;
-    inMemoryReportingStore.set(filePath, cloneJson(parsed));
+    if (shouldUseMemoryStoreCache()) {
+      inMemoryReportingStore.set(filePath, cloneJson(parsed));
+    } else {
+      inMemoryReportingStore.delete(filePath);
+    }
     return parsed;
   } catch {
     const seeded = cloneJson(fallback);
-    inMemoryReportingStore.set(filePath, cloneJson(seeded));
+    if (shouldUseMemoryStoreCache()) {
+      inMemoryReportingStore.set(filePath, cloneJson(seeded));
+    } else {
+      inMemoryReportingStore.delete(filePath);
+    }
     return seeded;
   }
 };
 
 const writeJson = async <T,>(filePath: string, payload: T) => {
-  inMemoryReportingStore.set(filePath, cloneJson(payload));
+  if (shouldUseMemoryStoreCache()) {
+    inMemoryReportingStore.set(filePath, cloneJson(payload));
+  } else {
+    inMemoryReportingStore.delete(filePath);
+  }
   await safePersistJson(filePath, payload);
 };
 

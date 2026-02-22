@@ -36,7 +36,7 @@ import {
   resolveWorkflowLifecycleStatus
 } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkTask } from "@/lib/operations/types";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("submissions.json");
@@ -1598,18 +1598,18 @@ const demoData = (): ProjectSubmission[] => {
 };
 
 const readStore = async (): Promise<ProjectSubmission[]> => {
-  if (inMemorySubmissions) {
+  if (shouldUseMemoryStoreCache() && inMemorySubmissions) {
     return cloneJson(inMemorySubmissions);
   }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as Partial<ProjectSubmission>[];
     const normalized = Array.isArray(parsed) ? parsed.map(normalizeSubmission) : [];
-    inMemorySubmissions = cloneJson(normalized);
+    inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
   } catch {
     const seeded = demoData();
-    inMemorySubmissions = cloneJson(seeded);
+    inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(seeded) : null;
     await writeStore(seeded);
     for (const submission of seeded) {
       const lifecycleStatus = resolveWorkflowLifecycleStatus(submission);
@@ -1635,7 +1635,7 @@ const readStore = async (): Promise<ProjectSubmission[]> => {
 };
 
 const writeStore = async (submissions: ProjectSubmission[]) => {
-  inMemorySubmissions = cloneJson(submissions);
+  inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(submissions) : null;
   await safePersistJson(storeFile, submissions);
 };
 
@@ -2006,17 +2006,17 @@ export const updateSubmissionSponsors = async (
 };
 
 const readOperationsBoard = async (): Promise<WorkCard[]> => {
-  if (inMemoryOperationsBoard) {
+  if (shouldUseMemoryStoreCache() && inMemoryOperationsBoard) {
     return cloneJson(inMemoryOperationsBoard);
   }
   try {
     const raw = await fs.readFile(operationsBoardFile, "utf8");
     const parsed = JSON.parse(raw) as WorkCard[];
     const rows = Array.isArray(parsed) ? parsed : [];
-    inMemoryOperationsBoard = cloneJson(rows);
+    inMemoryOperationsBoard = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
   } catch {
-    inMemoryOperationsBoard = [];
+    inMemoryOperationsBoard = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
 };
@@ -2064,7 +2064,7 @@ const readProjectManagementTasks = async (): Promise<
     updatedAt: string;
   }>
 > => {
-  if (inMemoryProjectManagementTasks) {
+  if (shouldUseMemoryStoreCache() && inMemoryProjectManagementTasks) {
     return cloneJson(inMemoryProjectManagementTasks);
   }
   try {
@@ -2079,10 +2079,10 @@ const readProjectManagementTasks = async (): Promise<
       updatedAt: string;
     }>;
     const rows = Array.isArray(parsed) ? parsed : [];
-    inMemoryProjectManagementTasks = cloneJson(rows);
+    inMemoryProjectManagementTasks = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
   } catch {
-    inMemoryProjectManagementTasks = [];
+    inMemoryProjectManagementTasks = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
 };
@@ -2098,7 +2098,7 @@ const writeProjectManagementTasks = async (
     updatedAt: string;
   }>
 ) => {
-  inMemoryProjectManagementTasks = cloneJson(rows);
+  inMemoryProjectManagementTasks = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
   await safePersistJson(projectManagementTaskFile, rows);
 };
 

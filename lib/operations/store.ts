@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 
 import { addNotification } from "@/lib/notifications/store";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { listSubmissions, reconcileSubmissionWorkflow } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
@@ -70,23 +70,23 @@ const normalizeDueDate = (
 };
 
 const readStore = async (): Promise<WorkCard[]> => {
-  if (inMemoryBoardCards) {
+  if (shouldUseMemoryStoreCache() && inMemoryBoardCards) {
     return cloneJson(inMemoryBoardCards);
   }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as WorkCard[];
     const rows = Array.isArray(parsed) ? parsed : [];
-    inMemoryBoardCards = cloneJson(rows);
+    inMemoryBoardCards = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
   } catch {
-    inMemoryBoardCards = [];
+    inMemoryBoardCards = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
 };
 
 const writeStore = async (rows: WorkCard[]) => {
-  inMemoryBoardCards = cloneJson(rows);
+  inMemoryBoardCards = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
   await safePersistJson(storeFile, rows);
 };
 

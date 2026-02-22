@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 
 import { findUserByEmail } from "@/lib/auth/users";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 import { resolveCanonicalWorkflowState } from "@/lib/submissions/workflow";
 import type {
@@ -22,23 +22,23 @@ const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCa
 const normalizeId = (value?: string | null) => (value ?? "").trim();
 
 const readStore = async (): Promise<ApprovalRequestRecord[]> => {
-  if (inMemoryApprovalRequests) {
+  if (shouldUseMemoryStoreCache() && inMemoryApprovalRequests) {
     return cloneJson(inMemoryApprovalRequests);
   }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as ApprovalRequestRecord[];
     const rows = Array.isArray(parsed) ? parsed : [];
-    inMemoryApprovalRequests = cloneJson(rows);
+    inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
   } catch {
-    inMemoryApprovalRequests = [];
+    inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
 };
 
 const writeStore = async (rows: ApprovalRequestRecord[]) => {
-  inMemoryApprovalRequests = cloneJson(rows);
+  inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
   await safePersistJson(storeFile, rows);
 };
 

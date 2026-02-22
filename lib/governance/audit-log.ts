@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
 
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 import { cloneJson, safePersistJson } from "@/lib/storage/json-file";
 
 export type GovernanceAuditOutcome = "SUCCESS" | "FAILED" | "DENIED";
@@ -50,23 +50,23 @@ const normalizeMetadata = (
 };
 
 const readStore = async (): Promise<GovernanceAuditEntry[]> => {
-  if (inMemoryGovernanceAudit) {
+  if (shouldUseMemoryStoreCache() && inMemoryGovernanceAudit) {
     return cloneJson(inMemoryGovernanceAudit);
   }
   try {
     const raw = await fs.readFile(storeFile, "utf8");
     const parsed = JSON.parse(raw) as GovernanceAuditEntry[];
     const rows = Array.isArray(parsed) ? parsed : [];
-    inMemoryGovernanceAudit = cloneJson(rows);
+    inMemoryGovernanceAudit = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
   } catch {
-    inMemoryGovernanceAudit = [];
+    inMemoryGovernanceAudit = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
 };
 
 const writeStore = async (rows: GovernanceAuditEntry[]) => {
-  inMemoryGovernanceAudit = cloneJson(rows);
+  inMemoryGovernanceAudit = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
   await safePersistJson(storeFile, rows);
 };
 

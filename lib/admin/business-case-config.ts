@@ -8,7 +8,7 @@ import {
   type KpiMetricMap,
   type PayGradeMonthlySalaryMap
 } from "@/lib/admin/business-case-config-defs";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 
 const storeFile = getDataStorePath("business-case-config.json");
 let inMemoryBusinessCaseConfig: BusinessCaseConfig | null = null;
@@ -107,7 +107,7 @@ const normalizeBusinessCaseConfig = (input?: Partial<BusinessCaseConfig>): Busin
 };
 
 const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
-  if (inMemoryBusinessCaseConfig) {
+  if (shouldUseMemoryStoreCache() && inMemoryBusinessCaseConfig) {
     return inMemoryBusinessCaseConfig;
   }
   try {
@@ -119,7 +119,7 @@ const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
 };
 
 const writeStore = async (data: BusinessCaseConfig) => {
-  inMemoryBusinessCaseConfig = data;
+  inMemoryBusinessCaseConfig = shouldUseMemoryStoreCache() ? data : null;
   try {
     await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
   } catch (error) {
@@ -132,7 +132,7 @@ const writeStore = async (data: BusinessCaseConfig) => {
 export const getBusinessCaseConfig = async (): Promise<BusinessCaseConfig> => {
   const current = await readRawStore();
   const normalized = normalizeBusinessCaseConfig(current ?? undefined);
-  inMemoryBusinessCaseConfig = normalized;
+  inMemoryBusinessCaseConfig = shouldUseMemoryStoreCache() ? normalized : null;
   return normalized;
 };
 

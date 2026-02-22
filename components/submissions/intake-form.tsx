@@ -3448,12 +3448,12 @@ export default function IntakeForm({ initialData, forceReadOnly = false }: Props
       setShowUnsavedWarning(true);
       return;
     }
-    router.push("/submissions");
+    router.push(`/submissions?ts=${Date.now()}`);
   }, [dirty, router, submissionId]);
 
   const confirmLeaveWithoutSaving = useCallback(() => {
     setShowUnsavedWarning(false);
-    router.push("/submissions");
+    router.push(`/submissions?ts=${Date.now()}`);
   }, [router]);
 
   const cancelLeaveWithoutSaving = useCallback(() => {

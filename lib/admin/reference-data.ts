@@ -5,7 +5,7 @@ import {
   type ReferenceData,
   type ReferenceDataKey
 } from "@/lib/admin/reference-data-config";
-import { getDataStorePath } from "@/lib/storage/data-store-path";
+import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
 
 export {
   defaultReferenceData,
@@ -69,7 +69,7 @@ const normalizeReferenceData = (input?: Partial<ReferenceData>): ReferenceData =
 };
 
 const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
-  if (inMemoryReferenceData) {
+  if (shouldUseMemoryStoreCache() && inMemoryReferenceData) {
     return inMemoryReferenceData;
   }
   try {
@@ -81,7 +81,7 @@ const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
 };
 
 const writeStore = async (data: ReferenceData) => {
-  inMemoryReferenceData = data;
+  inMemoryReferenceData = shouldUseMemoryStoreCache() ? data : null;
   try {
     await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
   } catch (error) {
@@ -94,7 +94,7 @@ const writeStore = async (data: ReferenceData) => {
 export const getReferenceData = async (): Promise<ReferenceData> => {
   const current = await readRawStore();
   const normalized = normalizeReferenceData(current ?? undefined);
-  inMemoryReferenceData = normalized;
+  inMemoryReferenceData = shouldUseMemoryStoreCache() ? normalized : null;
   return normalized;
 };
 
