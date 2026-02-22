@@ -11,7 +11,13 @@ const signInSchema = z.object({
   password: z.string().min(8)
 });
 
+const runtimeAuthSecret =
+  process.env.NEXTAUTH_SECRET?.trim() ||
+  process.env.AUTH_SECRET?.trim() ||
+  process.env.STAGING_NEXTAUTH_SECRET?.trim();
+
 export const authOptions: NextAuthOptions = {
+  secret: runtimeAuthSecret,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [
