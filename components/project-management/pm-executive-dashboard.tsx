@@ -177,11 +177,25 @@ const buildQueryString = (filters: PmDashboardFilters, page?: number, pageSize?:
 
 const fetchJson = async <T,>(url: string): Promise<T> => {
   const response = await fetch(url);
-  const payload = (await response.json()) as { data?: T; message?: string };
-  if (!response.ok) {
-    throw new Error(payload.message ?? "Unable to load dashboard data.");
+  const raw = await response.text();
+  let payload: { data?: T; message?: string } | null = null;
+
+  if (raw.trim().length > 0) {
+    try {
+      payload = JSON.parse(raw) as { data?: T; message?: string };
+    } catch {
+      payload = null;
+    }
   }
-  if (!payload.data) {
+
+  if (!response.ok) {
+    const fallbackMessage =
+      payload?.message ??
+      `${response.status} ${response.statusText || "Failed to load dashboard data."}`;
+    throw new Error(fallbackMessage);
+  }
+
+  if (!payload?.data) {
     throw new Error("Dashboard response was empty.");
   }
   return payload.data;
