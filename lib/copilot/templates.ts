@@ -4,49 +4,50 @@ export const copilotTemplates: CopilotTemplate[] = [
   {
     id: "improve-task",
     label: "Improve my task",
-    mode: "TASK_BUILDER",
+    mode: "TASK_REWRITE",
     prompt:
-      "Rewrite this into SMART format with clear owner, effort, dependencies, risks, and KPIs:\n<Task draft here>",
-    description: "Converts rough work statements into SMART execution tasks."
+      "Rewrite the provided task into a SMART, governance-ready task with measurable outcome, scope boundaries, acceptance criteria, and timeline.",
+    description: "Converts a rough task into a SMART governance-ready task artifact."
   },
   {
     id: "break-subtasks",
     label: "Break into subtasks",
-    mode: "TASK_BUILDER",
+    mode: "SUBTASKS",
     prompt:
-      "Break this initiative into sequenced subtasks, call out dependencies, and suggest milestone checks:\n<Initiative summary here>",
-    description: "Creates dependency-aware subtask decomposition."
+      "Decompose the provided task into sequenced subtasks with dependencies, effort estimates, and acceptance criteria.",
+    description: "Creates structured subtask sequencing for execution planning."
   },
   {
     id: "generate-risks",
     label: "Generate risks",
-    mode: "RISKS",
+    mode: "RISK_REGISTER",
     prompt:
-      "Generate a practical risk register for this project with mitigation owners and measurable controls:",
-    description: "Builds a risk register with likelihood, impact, and mitigation actions."
+      "Generate a project-specific risk register with causes, impacts, mitigation, contingency, owners, and early warning indicators.",
+    description: "Builds a governance-ready risk register."
   },
   {
     id: "generate-kpis",
     label: "Generate KPIs",
-    mode: "KPIS",
+    mode: "KPI_SET",
     prompt:
-      "Propose KPI set for this project, including formulas, frequency, targets, and owners:",
-    description: "Suggests delivery and benefits KPIs suitable for governance reviews."
+      "Generate leading and lagging KPIs with formulas, targets, frequency, data sources, and owners.",
+    description: "Builds KPI definitions aligned to objectives and benefits."
   },
   {
     id: "draft-exec-summary",
     label: "Draft exec summary",
     mode: "EXEC_SUMMARY",
     prompt:
-      "Draft a steering-committee executive summary with objective, current status, key wins, issues, next steps, and asks.",
-    description: "Creates board-ready summary language."
+      "Draft a concise committee-ready executive summary with purpose, status, value, milestones, key risks/issues, decisions needed, and next steps.",
+    description: "Creates an executive summary suitable for governance committees."
   },
   {
     id: "insights-project",
     label: "Insights from this project",
-    mode: "INSIGHTS",
+    mode: "PROJECT_INSIGHTS",
     prompt:
-      "Using this project context, provide drivers of delay, gaps, risks, KPIs, next best actions, and steering-committee questions.",
-    description: "Data-aware analysis from portal project metadata and governance signals."
+      "Generate strategic and delivery insights, blind spots, likely blockers, quick wins, and recommended next artifacts to update.",
+    description: "Produces insight-focused decision support from project context."
   }
 ];
+

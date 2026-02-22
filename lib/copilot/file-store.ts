@@ -4,10 +4,10 @@ import { randomUUID } from "node:crypto";
 
 import type {
   CopilotArtifactResponse,
-  CopilotArtifactType,
   CopilotChatMessageResponse,
   CopilotConversationSummary,
-  CopilotJsonEnvelope
+  CopilotJsonEnvelope,
+  CopilotStorageArtifactType
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
 import { cloneJson, isReadonlyFsError, safePersistJson } from "@/lib/storage/json-file";
@@ -77,7 +77,7 @@ type FileArtifact = {
   id: string;
   conversationId: string;
   projectId: string | null;
-  type: CopilotArtifactType;
+  type: CopilotStorageArtifactType;
   payload: unknown;
   createdAt: string;
 };
@@ -413,7 +413,7 @@ export const createMessageFile = async (input: {
 export const createArtifactsFile = async (input: {
   conversationId: string;
   projectId?: string | null;
-  artifacts: Array<{ type: CopilotArtifactType; payload: unknown }>;
+  artifacts: Array<{ type: CopilotStorageArtifactType; payload: unknown }>;
 }): Promise<CopilotArtifactResponse[]> =>
   mutateStore(async (store) => {
     if (input.artifacts.length === 0) {

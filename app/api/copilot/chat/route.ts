@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { authOptions } from "@/lib/auth/options";
-import { getAuthorizedSubmission } from "@/lib/copilot/access";
+import { buildCopilotPrincipal, getAuthorizedSubmission } from "@/lib/copilot/access";
 import { buildProjectContextPack, buildConversationTitle } from "@/lib/copilot/context";
 import {
   generateCompletion,
@@ -11,7 +11,7 @@ import {
   streamCompletion,
   type LlmChatMessage
 } from "@/lib/copilot/provider";
-import { buildContextMessage, buildSystemPrompt } from "@/lib/copilot/prompts";
+import { buildContextMessage, buildModePrompt, buildSystemPrompt } from "@/lib/copilot/prompts";
 import { sanitizeContext, sanitizePlainText, hasPromptInjectionSignal } from "@/lib/copilot/security";
 import {
   createArtifacts,
@@ -24,7 +24,12 @@ import {
   updateConversation
 } from "@/lib/copilot/store";
 import { parseStructuredOutput } from "@/lib/copilot/structured";
-import { COPILOT_MODES, type CopilotChatRequest, type CopilotJsonEnvelope } from "@/lib/copilot/types";
+import {
+  COPILOT_MODES,
+  type CopilotChatRequest,
+  type CopilotJsonEnvelope,
+  type CopilotStorageArtifactType
+} from "@/lib/copilot/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,6 +58,10 @@ const buildMessagesForModel = async (input: {
     {
       role: "system",
       content: buildSystemPrompt(input.mode)
+    },
+    {
+      role: "system",
+      content: buildModePrompt(input.mode)
     }
   ];
 
@@ -75,7 +84,7 @@ const buildMessagesForModel = async (input: {
 };
 
 const attachSourceMessageToArtifacts = (
-  artifacts: Array<{ type: "TASKS" | "RISKS" | "KPIS" | "EXEC_SUMMARY"; payload: unknown }>,
+  artifacts: Array<{ type: CopilotStorageArtifactType; payload: unknown }>,
   sourceMessageId: string,
   citations: CopilotJsonEnvelope["citations"]
 ) =>
@@ -102,8 +111,8 @@ export async function POST(request: Request) {
   }
 
   const body = parsed.data;
-  const userId = session.user.id;
-
+  const principalFromSession = await buildCopilotPrincipal(session);
+  let userId = principalFromSession.id;
   let conversation = null;
 
   if (body.conversationId) {
@@ -118,9 +127,18 @@ export async function POST(request: Request) {
   if (!projectAccess.ok) {
     return NextResponse.json({ message: projectAccess.message }, { status: projectAccess.status });
   }
+  const { principal, permissions } = projectAccess;
+  userId = principal.id;
 
   if (projectAccess.submission) {
     await ensureProjectRecord(projectAccess.submission);
+  }
+
+  if (body.mode !== "GENERAL" && !permissions.canGenerateArtifacts) {
+    const message = permissions.canGenerateApprovalCommentary
+      ? "You are currently in approver-only mode for this project."
+      : "Your role can view this project but cannot generate editable artifacts for it.";
+    return NextResponse.json({ message }, { status: 403 });
   }
 
   if (!conversation) {

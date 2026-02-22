@@ -1,5 +1,10 @@
 # Architecture Decisions
 
+## 2026-02-22: STRATOS Copilot moved to schema-first artifact generation with strict context injection
+- Decision: Add a dedicated `/api/copilot` endpoint that enforces project-scoped context grounding, role-aware artifact generation permissions, and schema validation/retry for canonical STRATOS artifacts.
+- Rationale: Governance workflows require deterministic, auditable artifacts and prevention of hallucinated project facts; the old prompt style was too permissive for enterprise control needs.
+- Tradeoffs: Existing artifact storage enum (`TASKS/RISKS/KPIS/EXEC_SUMMARY`) is retained for compatibility, so semantic artifact types are mapped into payload metadata (`artifactType`) instead of changing DB enums immediately.
+
 ## 2026-02-22: Staging isolation profile with notification safety guardrails
 - Decision: Add a dedicated staging deployment profile (`APP_ENV=staging`) with explicit public test guide, staging seed accounts, and outbound notification safe mode (email redirect sink + Teams disabled/redirect-only).
 - Rationale: Stakeholders need full workflow testing on a public URL without sending live notifications or touching production data/users.

@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   COPILOT_MODES,
+  COPILOT_ARTIFACT_TYPES,
+  mapStorageTypeToDefaultArtifactType,
   type CopilotArtifactResponse,
   type CopilotArtifactType,
   type CopilotChatMessageResponse,
@@ -11,7 +13,7 @@ import {
   type CopilotConversationSummary,
   type CopilotJsonEnvelope,
   type CopilotMode,
-  type CopilotSseEvent,
+  type CopilotStorageArtifactType,
   type CopilotTemplate
 } from "@/lib/copilot/types";
 
@@ -34,50 +36,55 @@ type CopilotPanelProps = {
 };
 
 const modeLabels: Record<CopilotMode, string> = {
-  TASK_BUILDER: "Task Builder",
-  RISKS: "Risks",
-  KPIS: "KPIs",
+  TASK_REWRITE: "Improve Task",
+  SUBTASKS: "Subtasks",
+  RISK_REGISTER: "Risks",
+  KPI_SET: "KPIs",
   EXEC_SUMMARY: "Exec Summary",
-  INSIGHTS: "Insights",
+  PROJECT_INSIGHTS: "Insights",
   GENERAL: "General"
 };
 
 const artifactTypeByMode: Partial<Record<CopilotMode, CopilotArtifactType>> = {
-  TASK_BUILDER: "TASKS",
-  RISKS: "RISKS",
-  KPIS: "KPIS",
-  EXEC_SUMMARY: "EXEC_SUMMARY"
+  TASK_REWRITE: "TASK_REWRITE",
+  SUBTASKS: "SUBTASKS",
+  RISK_REGISTER: "RISK_REGISTER",
+  KPI_SET: "KPI_SET",
+  EXEC_SUMMARY: "EXEC_SUMMARY",
+  PROJECT_INSIGHTS: "PROJECT_INSIGHTS"
 };
 
 const defaultQuickActions: CopilotTemplate[] = [
   {
     id: "improve-task",
     label: "Improve my task",
-    mode: "TASK_BUILDER",
+    mode: "TASK_REWRITE",
     prompt:
-      "Rewrite this into SMART format with clear owner, effort, dependencies, risks, and KPIs:\n<Task draft here>",
-    description: "Converts rough work statements into SMART execution tasks."
+      "Rewrite the provided task into a SMART, governance-ready task with measurable outcome, scope boundaries, acceptance criteria, and timeline.",
+    description: "Converts rough work statements into SMART governance-ready tasks."
   },
   {
     id: "break-subtasks",
     label: "Break into subtasks",
-    mode: "TASK_BUILDER",
+    mode: "SUBTASKS",
     prompt:
-      "Break this initiative into sequenced subtasks, call out dependencies, and suggest milestone checks:\n<Initiative summary here>",
+      "Decompose this task into sequenced subtasks with dependencies, owners (if known), and effort estimates.",
     description: "Creates dependency-aware subtask decomposition."
   },
   {
     id: "generate-risks",
     label: "Generate risks",
-    mode: "RISKS",
-    prompt: "Generate a practical risk register for this project with mitigation owners and measurable controls.",
+    mode: "RISK_REGISTER",
+    prompt:
+      "Generate a project-specific risk register with mitigation, contingency, owner, and early warning indicators.",
     description: "Builds a risk register with likelihood, impact, and mitigation actions."
   },
   {
     id: "generate-kpis",
     label: "Generate KPIs",
-    mode: "KPIS",
-    prompt: "Propose KPI set for this project, including formulas, frequency, targets, and owners.",
+    mode: "KPI_SET",
+    prompt:
+      "Generate leading and lagging KPIs with formulas, baseline, target, frequency, and data source.",
     description: "Suggests delivery and benefits KPIs suitable for governance reviews."
   },
   {
@@ -91,9 +98,9 @@ const defaultQuickActions: CopilotTemplate[] = [
   {
     id: "insights-project",
     label: "Insights from this project",
-    mode: "INSIGHTS",
+    mode: "PROJECT_INSIGHTS",
     prompt:
-      "Using this project context, provide drivers of delay, gaps, risks, KPIs, next best actions, and steering-committee questions.",
+      "Generate strategic and delivery insights, blind spots, likely blockers, quick wins, and recommended next actions.",
     description: "Data-aware analysis from project metadata and governance signals."
   }
 ];
@@ -155,10 +162,25 @@ const normalizeArtifactData = (payload: unknown) => {
   if (!isObject(payload)) {
     return payload;
   }
-  if ("data" in payload) {
+  if ("data" in payload && (payload as { data?: unknown }).data !== undefined) {
     return (payload as { data?: unknown }).data;
   }
   return payload;
+};
+
+const semanticTypeSet = new Set<string>(COPILOT_ARTIFACT_TYPES);
+
+const resolveArtifactType = (artifact: CopilotArtifactResponse): CopilotArtifactType => {
+  const payload = artifact.payload;
+  if (isObject(payload) && typeof payload.artifactType === "string" && semanticTypeSet.has(payload.artifactType)) {
+    return payload.artifactType as CopilotArtifactType;
+  }
+
+  if (typeof artifact.type === "string" && semanticTypeSet.has(artifact.type)) {
+    return artifact.type as CopilotArtifactType;
+  }
+
+  return mapStorageTypeToDefaultArtifactType(artifact.type as CopilotStorageArtifactType);
 };
 
 const getArtifactCitations = (payload: unknown): CopilotCitation[] => {
@@ -169,42 +191,13 @@ const getArtifactCitations = (payload: unknown): CopilotCitation[] => {
   return payload.citations.filter((item): item is CopilotCitation => isObject(item) && typeof item.source === "string");
 };
 
-const splitSseBuffer = (buffer: string) => {
-  const normalized = buffer.replace(/\r\n/g, "\n");
-  const parts = normalized.split("\n\n");
-  const remainder = parts.pop() ?? "";
-  const events = parts.map((line) => line.trim()).filter(Boolean);
-  return { events, remainder };
-};
-
-const parseSseEvent = (raw: string): CopilotSseEvent | null => {
-  const payloadLines = raw
-    .split(/\r?\n/)
-    .map((item) => item.trim())
-    .filter((item) => item.startsWith("data:"))
-    .map((line) => line.replace(/^data:\s*/, ""));
-
-  if (payloadLines.length === 0) {
-    return null;
-  }
-
-  const jsonText = payloadLines.join("\n").trim();
-  if (!jsonText || jsonText === "[DONE]") {
-    return null;
-  }
-
-  try {
-    return JSON.parse(jsonText) as CopilotSseEvent;
-  } catch {
-    return null;
-  }
-};
-
 const artifactTypeLabel: Record<CopilotArtifactType, string> = {
-  TASKS: "Tasks",
-  RISKS: "Risks",
-  KPIS: "KPIs",
-  EXEC_SUMMARY: "Executive Summary"
+  TASK_REWRITE: "Task Rewrite",
+  SUBTASKS: "Subtasks",
+  RISK_REGISTER: "Risk Register",
+  KPI_SET: "KPI Set",
+  EXEC_SUMMARY: "Executive Summary",
+  PROJECT_INSIGHTS: "Project Insights"
 };
 
 const downloadJson = (fileName: string, data: unknown) => {
@@ -229,16 +222,17 @@ function ArtifactPreview({
   selected: boolean;
   onSelect: (artifactId: string) => void;
 }) {
+  const artifactType = resolveArtifactType(artifact);
   const data = normalizeArtifactData(artifact.payload);
 
-  const renderTasks = () => {
+  const renderSubtasks = () => {
     const items =
-      isObject(data) && Array.isArray(data.tasks)
-        ? data.tasks.filter((row): row is Record<string, unknown> => isObject(row))
+      isObject(data) && Array.isArray(data.subtasks)
+        ? data.subtasks.filter((row): row is Record<string, unknown> => isObject(row))
         : [];
 
     if (items.length === 0) {
-      return <p className="text-xs text-slate-500">No task rows in artifact payload.</p>;
+      return <p className="text-xs text-slate-500">No subtask rows in artifact payload.</p>;
     }
 
     return (
@@ -246,21 +240,19 @@ function ArtifactPreview({
         <table className="min-w-full text-xs">
           <thead className="bg-slate-50 text-slate-600">
             <tr>
-              <th className="px-2 py-1 text-left">Task</th>
+              <th className="px-2 py-1 text-left">Order</th>
+              <th className="px-2 py-1 text-left">Subtask</th>
               <th className="px-2 py-1 text-left">Owner</th>
-              <th className="px-2 py-1 text-left">Priority</th>
               <th className="px-2 py-1 text-left">Effort</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item, index) => (
-              <tr key={`${artifact.id}-task-${index}`} className="border-t border-slate-200">
-                <td className="px-2 py-1 text-slate-700">{String(item.taskName ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">{String(item.owner ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">{String(item.priority ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">
-                  {item.effortHours === undefined ? "-" : String(item.effortHours)}
-                </td>
+              <tr key={`${artifact.id}-subtask-${index}`} className="border-t border-slate-200">
+                <td className="px-2 py-1 text-slate-700">{String(item.order ?? index + 1)}</td>
+                <td className="px-2 py-1 text-slate-700">{String(item.title ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.owner ?? "Unknown")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.effort_estimate ?? "Unknown")}</td>
               </tr>
             ))}
           </tbody>
@@ -285,18 +277,18 @@ function ArtifactPreview({
           <thead className="bg-slate-50 text-slate-600">
             <tr>
               <th className="px-2 py-1 text-left">Risk</th>
-              <th className="px-2 py-1 text-left">Category</th>
-              <th className="px-2 py-1 text-left">Likelihood</th>
-              <th className="px-2 py-1 text-left">Impact</th>
+              <th className="px-2 py-1 text-left">Probability</th>
+              <th className="px-2 py-1 text-left">Severity</th>
+              <th className="px-2 py-1 text-left">Owner</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item, index) => (
               <tr key={`${artifact.id}-risk-${index}`} className="border-t border-slate-200">
-                <td className="px-2 py-1 text-slate-700">{String(item.risk ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">{String(item.category ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">{String(item.likelihood ?? "-")}</td>
-                <td className="px-2 py-1 text-slate-600">{String(item.impact ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-700">{String(item.title ?? item.risk_statement ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.probability ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.severity ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.owner ?? "Unknown")}</td>
               </tr>
             ))}
           </tbody>
@@ -321,6 +313,7 @@ function ArtifactPreview({
           <thead className="bg-slate-50 text-slate-600">
             <tr>
               <th className="px-2 py-1 text-left">KPI</th>
+              <th className="px-2 py-1 text-left">Type</th>
               <th className="px-2 py-1 text-left">Frequency</th>
               <th className="px-2 py-1 text-left">Target</th>
               <th className="px-2 py-1 text-left">Owner</th>
@@ -329,7 +322,8 @@ function ArtifactPreview({
           <tbody>
             {items.map((item, index) => (
               <tr key={`${artifact.id}-kpi-${index}`} className="border-t border-slate-200">
-                <td className="px-2 py-1 text-slate-700">{String(item.kpi ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-700">{String(item.name ?? item.kpi ?? "-")}</td>
+                <td className="px-2 py-1 text-slate-600">{String(item.type ?? "-")}</td>
                 <td className="px-2 py-1 text-slate-600">{String(item.frequency ?? "-")}</td>
                 <td className="px-2 py-1 text-slate-600">{String(item.target ?? "-")}</td>
                 <td className="px-2 py-1 text-slate-600">{String(item.owner ?? "-")}</td>
@@ -342,25 +336,84 @@ function ArtifactPreview({
   };
 
   const renderSummary = () => {
-    if (!isObject(data) || !isObject(data.executiveSummary)) {
+    if (!isObject(data) || !isObject(data.summary)) {
       return <p className="text-xs text-slate-500">No executive summary payload.</p>;
     }
 
-    const summary = data.executiveSummary;
+    const summary = data.summary;
     return (
       <div className="space-y-2 text-xs text-slate-700">
         <p>
-          <span className="font-semibold">Objective:</span> {String(summary.objective ?? "-")}
+          <span className="font-semibold">Purpose:</span> {String(summary.purpose ?? "-")}
         </p>
         <p>
-          <span className="font-semibold">Current Status:</span> {String(summary.currentStatus ?? "-")}
+          <span className="font-semibold">Current Status:</span> {String(summary.current_status ?? "-")}
         </p>
-        {Array.isArray(summary.nextSteps) ? (
+        {Array.isArray(summary.next_steps) ? (
           <div>
             <p className="font-semibold">Next Steps</p>
             <ul className="list-disc pl-4">
-              {summary.nextSteps.map((step, index) => (
+              {summary.next_steps.map((step, index) => (
                 <li key={`${artifact.id}-next-${index}`}>{String(step)}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+
+  const renderTaskRewrite = () => {
+    if (!isObject(data) || !isObject(data.task)) {
+      return <p className="text-xs text-slate-500">No task rewrite payload.</p>;
+    }
+
+    const task = data.task;
+    return (
+      <div className="space-y-2 text-xs text-slate-700">
+        <p>
+          <span className="font-semibold">Title:</span> {String(task.title ?? "-")}
+        </p>
+        <p>
+          <span className="font-semibold">SMART Statement:</span> {String(task.smart_statement ?? "-")}
+        </p>
+        {Array.isArray(task.acceptance_criteria) && task.acceptance_criteria.length > 0 ? (
+          <div>
+            <p className="font-semibold">Acceptance Criteria</p>
+            <ul className="list-disc pl-4">
+              {task.acceptance_criteria.map((criteria, index) => (
+                <li key={`${artifact.id}-criteria-${index}`}>{String(criteria)}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+
+  const renderInsights = () => {
+    if (!isObject(data) || !isObject(data.insights)) {
+      return <p className="text-xs text-slate-500">No project insights payload.</p>;
+    }
+    const insights = data.insights;
+    return (
+      <div className="space-y-2 text-xs text-slate-700">
+        {Array.isArray(insights.quick_wins) && insights.quick_wins.length > 0 ? (
+          <div>
+            <p className="font-semibold">Quick Wins</p>
+            <ul className="list-disc pl-4">
+              {insights.quick_wins.map((item, index) => (
+                <li key={`${artifact.id}-quick-win-${index}`}>{String(item)}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {Array.isArray(insights.likely_blockers) && insights.likely_blockers.length > 0 ? (
+          <div>
+            <p className="font-semibold">Likely Blockers</p>
+            <ul className="list-disc pl-4">
+              {insights.likely_blockers.map((item, index) => (
+                <li key={`${artifact.id}-blocker-${index}`}>{String(item)}</li>
               ))}
             </ul>
           </div>
@@ -375,19 +428,21 @@ function ArtifactPreview({
     >
       <button
         type="button"
-        onClick={() => onSelect(artifact.id)}
+      onClick={() => onSelect(artifact.id)}
         className="w-full text-left"
       >
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-          {artifactTypeLabel[artifact.type]}
+          {artifactTypeLabel[artifactType]}
         </p>
         <p className="mt-0.5 text-xs text-slate-500">{formatDateTime(artifact.createdAt)}</p>
       </button>
       <div className="mt-3">
-        {artifact.type === "TASKS" ? renderTasks() : null}
-        {artifact.type === "RISKS" ? renderRisks() : null}
-        {artifact.type === "KPIS" ? renderKpis() : null}
-        {artifact.type === "EXEC_SUMMARY" ? renderSummary() : null}
+        {artifactType === "TASK_REWRITE" ? renderTaskRewrite() : null}
+        {artifactType === "SUBTASKS" ? renderSubtasks() : null}
+        {artifactType === "RISK_REGISTER" ? renderRisks() : null}
+        {artifactType === "KPI_SET" ? renderKpis() : null}
+        {artifactType === "EXEC_SUMMARY" ? renderSummary() : null}
+        {artifactType === "PROJECT_INSIGHTS" ? renderInsights() : null}
       </div>
     </article>
   );
@@ -419,8 +474,6 @@ export default function CopilotPanel({
   const transcriptRef = useRef<HTMLDivElement | null>(null);
   const projectSwitchRef = useRef<string>(projectId ?? "");
   const projectLocked = Boolean(projectId);
-  const STREAM_TOTAL_TIMEOUT_MS = 65000;
-  const STREAM_IDLE_TIMEOUT_MS = 18000;
 
   const selectedArtifact = useMemo(
     () => artifacts.find((artifact) => artifact.id === selectedArtifactId) ?? null,
@@ -669,194 +722,60 @@ export default function CopilotPanel({
     setMessages((prev) => [...prev, optimisticMessage]);
     setInput("");
 
-    const streamAbortController = new AbortController();
-    let totalTimeoutRef: ReturnType<typeof setTimeout> | null = null;
-    let idleTimeoutRef: ReturnType<typeof setTimeout> | null = null;
-    const clearStreamTimers = () => {
-      if (totalTimeoutRef) {
-        clearTimeout(totalTimeoutRef);
-        totalTimeoutRef = null;
-      }
-      if (idleTimeoutRef) {
-        clearTimeout(idleTimeoutRef);
-        idleTimeoutRef = null;
-      }
-    };
-    const resetIdleTimeout = () => {
-      if (idleTimeoutRef) {
-        clearTimeout(idleTimeoutRef);
-      }
-      idleTimeoutRef = setTimeout(() => {
-        streamAbortController.abort("STREAM_IDLE_TIMEOUT");
-      }, STREAM_IDLE_TIMEOUT_MS);
-    };
-
     try {
-      totalTimeoutRef = setTimeout(() => {
-        streamAbortController.abort("STREAM_TOTAL_TIMEOUT");
-      }, STREAM_TOTAL_TIMEOUT_MS);
+      const requestController = new AbortController();
+      const timeoutRef = setTimeout(() => requestController.abort(), 65000);
 
-      const response = await fetch("/api/copilot/chat", {
+      const response = await fetch("/api/copilot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           conversationId,
-          projectId: selectedProjectId || undefined,
+          projectId: selectedProjectId || projectId,
           mode,
-          message: text,
-          stream: true
+          message: text
         }),
-        signal: streamAbortController.signal
+        signal: requestController.signal
       });
+      clearTimeout(timeoutRef);
 
       if (!response.ok) {
         throw new Error(await parseApiError(response));
       }
 
-      const contentType = response.headers.get("content-type") ?? "";
-      if (!contentType.includes("text/event-stream")) {
-        const payload = (await response.json()) as {
-          data?: {
-            conversationId: string;
-            assistantMessage: CopilotChatMessageResponse;
-            artifacts: CopilotArtifactResponse[];
-          };
+      const payload = (await response.json()) as {
+        message?: string;
+        warnings?: string[];
+        data?: {
+          conversationId: string;
+          assistantMessage: CopilotChatMessageResponse;
+          artifacts: CopilotArtifactResponse[];
         };
+      };
 
-        const data = payload.data;
-        if (!data) {
-          throw new Error("Invalid Copilot response.");
-        }
-
-        setConversationId(data.conversationId);
-        setMessages((prev) => [
-          ...prev.filter((item) => item.id !== optimisticUserId),
-          {
-            ...optimisticMessage,
-            conversationId: data.conversationId
-          },
-          data.assistantMessage
-        ]);
-        setArtifacts((prev) => mergeArtifacts(prev, data.artifacts ?? []));
-        setSelectedMessageId(data.assistantMessage.id);
-        try {
-          await loadConversations(selectedProjectId);
-        } catch (loadError) {
-          setError(loadError instanceof Error ? loadError.message : "Could not refresh conversation list.");
-        }
-        return;
+      const data = payload.data;
+      if (!data?.assistantMessage) {
+        throw new Error("Invalid Copilot response.");
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error("Streaming reader unavailable.");
+      setConversationId(data.conversationId);
+      setMessages((prev) => [
+        ...prev.filter((item) => item.id !== optimisticUserId),
+        {
+          ...optimisticMessage,
+          conversationId: data.conversationId
+        },
+        data.assistantMessage
+      ]);
+      setArtifacts((prev) => mergeArtifacts(prev, data.artifacts ?? []));
+      setSelectedMessageId(data.assistantMessage.id);
+      if (data.artifacts?.[0]?.id) {
+        setSelectedArtifactId(data.artifacts[0].id);
       }
-
-      const decoder = new TextDecoder();
-      const assistantDraftId = `tmp-assistant-${Date.now()}`;
-      let streamBuffer = "";
-      let activeConversationId = conversationId;
-      let hasAssistantDraft = false;
-      let doneReceived = false;
-      resetIdleTimeout();
-
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
-        }
-
-        resetIdleTimeout();
-        streamBuffer += decoder.decode(value, { stream: true });
-
-        const { events, remainder } = splitSseBuffer(streamBuffer);
-        streamBuffer = remainder;
-
-        for (const segment of events) {
-          const event = parseSseEvent(segment);
-          if (!event) {
-            continue;
-          }
-
-          if (event.type === "conversation") {
-            activeConversationId = event.conversationId;
-            setConversationId(event.conversationId);
-            setMessages((prev) =>
-              prev.map((message) =>
-                message.conversationId === "pending"
-                  ? {
-                      ...message,
-                      conversationId: event.conversationId
-                    }
-                  : message
-              )
-            );
-          } else if (event.type === "token") {
-            if (!hasAssistantDraft) {
-              hasAssistantDraft = true;
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: assistantDraftId,
-                  conversationId: activeConversationId ?? "pending",
-                  role: "assistant",
-                  content: event.token,
-                  json: null,
-                  createdAt: new Date().toISOString()
-                }
-              ]);
-            } else {
-              setMessages((prev) =>
-                prev.map((message) =>
-                  message.id === assistantDraftId
-                    ? {
-                        ...message,
-                        content: `${message.content}${event.token}`
-                      }
-                    : message
-                )
-              );
-            }
-          } else if (event.type === "done") {
-            doneReceived = true;
-            setConversationId(event.conversationId);
-            setMessages((prev) => {
-              const withoutDraft = prev.filter((message) => message.id !== assistantDraftId);
-              return [...withoutDraft, event.assistantMessage];
-            });
-            setArtifacts((prev) => mergeArtifacts(prev, event.artifacts));
-            setSelectedMessageId(event.assistantMessage.id);
-            if (event.artifacts.length > 0) {
-              setSelectedArtifactId(event.artifacts[0].id);
-            }
-          } else if (event.type === "error") {
-            throw new Error(event.message);
-          }
-        }
-      }
-
-      const trailingEvent = parseSseEvent(streamBuffer.trim());
-      if (trailingEvent?.type === "done") {
-        doneReceived = true;
-        setConversationId(trailingEvent.conversationId);
-        setMessages((prev) => {
-          const withoutDraft = prev.filter((message) => message.id !== assistantDraftId);
-          return [...withoutDraft, trailingEvent.assistantMessage];
-        });
-        setArtifacts((prev) => mergeArtifacts(prev, trailingEvent.artifacts));
-        setSelectedMessageId(trailingEvent.assistantMessage.id);
-        if (trailingEvent.artifacts.length > 0) {
-          setSelectedArtifactId(trailingEvent.artifacts[0].id);
-        }
-      } else if (trailingEvent?.type === "error") {
-        throw new Error(trailingEvent.message);
-      }
-
-      if (!doneReceived) {
-        setMessages((prev) => prev.filter((message) => message.id !== assistantDraftId));
-        throw new Error("STRATOS stream closed before completion. Please retry.");
+      if (Array.isArray(payload.warnings) && payload.warnings.length > 0) {
+        setStatusMessage(payload.warnings.join(" | "));
       }
 
       try {
@@ -865,27 +784,20 @@ export default function CopilotPanel({
         setError(loadError instanceof Error ? loadError.message : "Could not refresh conversation list.");
       }
     } catch (sendError) {
-      const isAbort = sendError instanceof Error && sendError.name === "AbortError";
       setError(
-        isAbort
-          ? "STRATOS response timed out. Please retry."
-          : sendError instanceof Error
-            ? sendError.message
-            : "Copilot request failed."
+        sendError instanceof Error ? sendError.message : "Copilot request failed."
       );
       setMessages((prev) => prev.filter((message) => message.id !== optimisticUserId));
     } finally {
-      clearStreamTimers();
       setLoading(false);
     }
   }, [
-    STREAM_IDLE_TIMEOUT_MS,
-    STREAM_TOTAL_TIMEOUT_MS,
     conversationId,
     input,
     loadConversations,
     loading,
     mode,
+    projectId,
     selectedProjectId
   ]);
 
@@ -955,7 +867,7 @@ export default function CopilotPanel({
     }
 
     const match = projects.find((item) => item.id === selectedProjectId);
-    return match ? `${match.id} - ${match.title}` : selectedProjectId || "Cross-project";
+    return match ? `${match.id} - ${match.title}` : selectedProjectId || "Select project";
   }, [projectId, projectTitle, projects, selectedProjectId]);
 
   return (
@@ -986,7 +898,6 @@ export default function CopilotPanel({
               disabled={projectLocked}
               className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm disabled:bg-slate-100"
             >
-              <option value="">Cross-project context</option>
               {projectLocked && projectId ? (
                 <option value={projectId}>{projectLabel}</option>
               ) : null}
@@ -1185,16 +1096,20 @@ export default function CopilotPanel({
             <div className="mt-2 flex items-center gap-2">
               <button
                 type="button"
-                disabled={loading || !input.trim()}
+                disabled={loading || !input.trim() || !selectedProjectId}
                 onClick={() => {
                   void sendMessage();
                 }}
                 className="rounded-md accent-bg px-3 py-2 text-xs font-semibold disabled:opacity-60"
               >
-                {loading ? "Streaming..." : "Send"}
+                {loading ? "Generating..." : "Send"}
               </button>
               <p className="text-xs text-slate-500">
-                {loading ? "Generating response with live streaming..." : "Responses persist to conversation history."}
+                {!selectedProjectId
+                  ? "Select a project context to run STRATOS."
+                  : loading
+                    ? "Generating structured response..."
+                    : "Responses persist to conversation history."}
               </p>
             </div>
           </div>
@@ -1259,7 +1174,7 @@ export default function CopilotPanel({
           <div className="min-h-0 flex-1 space-y-2 overflow-y-auto p-3">
             {artifacts.length === 0 ? (
               <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-4 text-xs text-slate-500">
-                Structured artifacts appear here (tasks, risks, KPIs, executive summaries).
+                Structured artifacts appear here (task rewrite, subtasks, risk register, KPI set, executive summary, insights).
               </p>
             ) : null}
 

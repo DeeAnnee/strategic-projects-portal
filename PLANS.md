@@ -110,6 +110,7 @@ flowchart LR
   - Implement provider routing with Azure OpenAI preference and OpenAI fallback (`Completed`)
   - Build streaming Copilot UI panel with quick actions, history, artifact cards, export, and insert hooks (`Completed`)
   - Embed Copilot in STRATOS floating launcher and dedicated page (`Completed`)
+  - Upgrade Copilot to schema-first STRATOS workflow with canonical artifact modes (`TASK_REWRITE`, `SUBTASKS`, `RISK_REGISTER`, `KPI_SET`, `EXEC_SUMMARY`, `PROJECT_INSIGHTS`), strict project-context injection, role-aware generation guardrails, and `/api/copilot` structured response contract (`In Progress`)
 - Acceptance criteria:
   - Streaming replies render in UI and persist to conversation history
   - Structured artifacts are stored and retrievable by conversation/project

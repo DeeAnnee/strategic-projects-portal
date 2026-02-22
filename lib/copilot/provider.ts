@@ -192,7 +192,7 @@ const fallbackText = (messages: LlmChatMessage[]) => {
     "",
     "Suggestion:",
     "- Provide explicit project context (objective, constraints, timeline, owners).",
-    "- Request a specific mode (TASK_BUILDER, RISKS, KPIS, EXEC_SUMMARY, or INSIGHTS).",
+    "- Request a specific mode (TASK_REWRITE, SUBTASKS, RISK_REGISTER, KPI_SET, EXEC_SUMMARY, or PROJECT_INSIGHTS).",
     "- Ask for JSON output to persist artifacts."
   ].join("\n");
 };

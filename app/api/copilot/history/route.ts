@@ -39,12 +39,13 @@ export async function GET(request: Request) {
     if (!projectAccess.ok) {
       return NextResponse.json({ message: projectAccess.message }, { status: projectAccess.status });
     }
+    const principal = projectAccess.principal;
 
     if (!conversationId) {
-      const conversations = await listConversationsForUser(session.user.id, projectAccess.submission?.id);
+      const conversations = await listConversationsForUser(principal.id, projectAccess.submission?.id);
 
       await createAuditLog({
-        userId: session.user.id,
+        userId: principal.id,
         projectId: projectAccess.submission?.id,
         action: "COPILOT_HISTORY_LISTED",
         metadata: {
@@ -56,7 +57,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ data: { conversations } });
     }
 
-    const conversation = await getConversationForUser(conversationId, session.user.id);
+    const conversation = await getConversationForUser(conversationId, principal.id);
     if (!conversation) {
       return NextResponse.json({ message: "Conversation not found" }, { status: 404 });
     }
@@ -69,12 +70,12 @@ export async function GET(request: Request) {
     }
 
     const [messages, artifacts] = await Promise.all([
-      listConversationMessagesForUser(conversation.id, session.user.id),
-      listArtifactsForConversation(conversation.id, session.user.id)
+      listConversationMessagesForUser(conversation.id, principal.id),
+      listArtifactsForConversation(conversation.id, principal.id)
     ]);
 
     await createAuditLog({
-      userId: session.user.id,
+      userId: principal.id,
       projectId: conversation.projectId,
       conversationId: conversation.id,
       action: "COPILOT_HISTORY_OPENED",

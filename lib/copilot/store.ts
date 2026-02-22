@@ -3,10 +3,10 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import type {
   CopilotArtifactResponse,
-  CopilotArtifactType,
   CopilotChatMessageResponse,
   CopilotConversationSummary,
-  CopilotJsonEnvelope
+  CopilotJsonEnvelope,
+  CopilotStorageArtifactType
 } from "@/lib/copilot/types";
 import type {
   CopilotConversationRecord,
@@ -123,7 +123,7 @@ const toArtifact = (row: {
   id: string;
   conversationId: string;
   projectId: string | null;
-  type: CopilotArtifactType;
+  type: CopilotStorageArtifactType;
   payload: unknown;
   createdAt: Date;
 }): CopilotArtifactResponse => ({
@@ -359,7 +359,7 @@ export const createMessage = async (input: {
 export const createArtifacts = async (input: {
   conversationId: string;
   projectId?: string | null;
-  artifacts: Array<{ type: CopilotArtifactType; payload: unknown }>;
+  artifacts: Array<{ type: CopilotStorageArtifactType; payload: unknown }>;
 }): Promise<CopilotArtifactResponse[]> =>
   withFallback(
     async () => {
@@ -388,7 +388,7 @@ export const createArtifacts = async (input: {
       return created.map((row) =>
         toArtifact({
           ...row,
-          type: row.type as CopilotArtifactType
+          type: row.type as CopilotStorageArtifactType
         })
       );
     },
@@ -417,7 +417,7 @@ export const listArtifactsForConversation = async (
       return rows.map((row) =>
         toArtifact({
           ...row,
-          type: row.type as CopilotArtifactType
+          type: row.type as CopilotStorageArtifactType
         })
       );
     },
