@@ -1,5 +1,12 @@
+import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 export type NotificationItem = {
   id: string;
@@ -24,7 +31,13 @@ const readStore = async (): Promise<NotificationItem[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryNotifications = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryNotifications = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
@@ -61,6 +74,25 @@ export const addNotification = async (
   };
   rows.push(item);
   await writeStore(rows);
+  try {
+    await appendGovernanceAuditLog({
+      area: "WORKFLOW",
+      action: "NOTIFICATION_QUEUED",
+      entityType: "notification",
+      entityId: item.id,
+      outcome: "SUCCESS",
+      actorName: "Notification Service",
+      actorEmail: "system@portal.local",
+      details: "Queued in-app notification.",
+      metadata: {
+        channel: "in_app",
+        recipient: item.recipientEmail ?? "all",
+        title: item.title
+      }
+    });
+  } catch {
+    // Non-blocking audit write.
+  }
   return item;
 };
 

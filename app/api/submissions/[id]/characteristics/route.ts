@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import { canUserViewSubmission } from "@/lib/auth/project-access";
 import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
@@ -52,7 +53,12 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   }
 
   const { id } = await context.params;
-  const existing = await getSubmissionById(id);
+  let existing: Awaited<ReturnType<typeof getSubmissionById>> = null;
+  try {
+    existing = await getSubmissionById(id);
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load submission characteristics.");
+  }
   if (!existing) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -97,8 +103,10 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     (existing.businessCase?.introduction.fundingType ?? "") !== nextFundingType ||
     (existing.businessCase?.introduction.fundingSource ?? "") !== nextFundingSource;
 
-  const updated = hasCharacteristicsUpdate
-    ? await updateSubmission(
+  let updated: Awaited<ReturnType<typeof updateSubmission>> | null = existing;
+  if (hasCharacteristicsUpdate) {
+    try {
+      const saved = await updateSubmission(
         id,
         {
           ...nextState,
@@ -110,22 +118,30 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
           }
         },
         {
-        audit: {
-          action: "UPDATED",
-          note: "Governance characteristics updated.",
-          actorName: principal.name ?? "Governance Reviewer",
-          actorEmail: principal.email ?? undefined
+          audit: {
+            action: "UPDATED",
+            note: "Governance characteristics updated.",
+            actorName: principal.name ?? "Governance Reviewer",
+            actorEmail: principal.email ?? undefined
+          }
         }
-      }
-      )
-    : existing;
+      );
+      updated = saved;
+    } catch (error) {
+      return persistenceErrorResponse(error, "Failed to save governance characteristics.");
+    }
+  }
 
   if (!updated) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
 
   if (hasCharacteristicsUpdate) {
-    await markGovernanceCharacteristicsUpdated(id);
+    try {
+      await markGovernanceCharacteristicsUpdated(id);
+    } catch (error) {
+      return persistenceErrorResponse(error, "Failed to mark governance task update.");
+    }
     try {
       await appendGovernanceAuditLog({
         area: "WORKFLOW",

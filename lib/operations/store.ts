@@ -1,6 +1,12 @@
 import { addNotification } from "@/lib/notifications/store";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 import { listSubmissions, reconcileSubmissionWorkflow } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkComment, WorkTask } from "@/lib/operations/types";
@@ -77,7 +83,13 @@ const readStore = async (): Promise<WorkCard[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryBoardCards = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryBoardCards = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }

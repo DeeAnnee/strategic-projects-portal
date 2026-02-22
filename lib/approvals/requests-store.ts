@@ -1,6 +1,12 @@
 import { findUserByEmail } from "@/lib/auth/users";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 import { resolveCanonicalWorkflowState } from "@/lib/submissions/workflow";
 import type {
   ApprovalRequestStageContext,
@@ -29,7 +35,13 @@ const readStore = async (): Promise<ApprovalRequestRecord[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryApprovalRequests = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }

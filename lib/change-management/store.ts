@@ -10,7 +10,13 @@ import type {
   ChangeThresholds
 } from "@/lib/change-management/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("change-requests.json");
 let inMemoryChangeManagementStore: ChangeManagementStore | null = null;
@@ -89,7 +95,13 @@ export const readChangeManagementStore = async (): Promise<ChangeManagementStore
     const normalized = normalizeStore(parsed);
     inMemoryChangeManagementStore = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     // In hosted/serverless environments (e.g., Vercel), the deployed filesystem
     // is read-only. Reads must never attempt to seed/write local JSON files.
     const seeded = defaultStore();

@@ -1,5 +1,11 @@
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 export type GovernanceAuditOutcome = "SUCCESS" | "FAILED" | "DENIED";
 export type GovernanceAuditArea =
@@ -57,7 +63,13 @@ const readStore = async (): Promise<GovernanceAuditEntry[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryGovernanceAudit = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryGovernanceAudit = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }

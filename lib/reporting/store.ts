@@ -17,7 +17,13 @@ import type {
   TemplatesStore
 } from "@/lib/reporting/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 const reportingDatasetsFile = getDataStorePath("reporting-datasets.json");
 const reportingReportsFile = getDataStorePath("reporting-reports.json");
@@ -40,7 +46,13 @@ const readJson = async <T,>(filePath: string, fallback: T): Promise<T> => {
       inMemoryReportingStore.delete(filePath);
     }
     return parsed;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     const seeded = cloneJson(fallback);
     if (shouldUseMemoryStoreCache()) {
       inMemoryReportingStore.set(filePath, cloneJson(seeded));

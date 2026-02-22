@@ -1,5 +1,12 @@
+import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 export type OutboundChannel = "email" | "teams";
 
@@ -27,7 +34,13 @@ const readStore = async (): Promise<OutboundMessage[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryOutbox = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryOutbox = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
@@ -55,5 +68,24 @@ export const queueOutboundMessage = async (
 
   rows.push(item);
   await writeStore(rows);
+  try {
+    await appendGovernanceAuditLog({
+      area: "WORKFLOW",
+      action: "NOTIFICATION_QUEUED",
+      entityType: "notification",
+      entityId: item.id,
+      outcome: "SUCCESS",
+      actorName: "Notification Service",
+      actorEmail: "system@portal.local",
+      details: `Queued ${item.channel.toUpperCase()} notification.`,
+      metadata: {
+        channel: item.channel,
+        recipient: item.to,
+        subject: item.subject
+      }
+    });
+  } catch {
+    // Non-blocking audit write.
+  }
   return item;
 };

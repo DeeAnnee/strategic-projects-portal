@@ -28,7 +28,7 @@ import type {
   PmTask
 } from "@/lib/pm-dashboard/types";
 import { getDataStorePath } from "@/lib/storage/data-store-path";
-import { safeReadJsonText } from "@/lib/storage/json-file";
+import { isDataStorePersistenceError, isStoreMissingError, safeReadJsonText } from "@/lib/storage/json-file";
 
 const pmDashboardStoreFile = getDataStorePath("pm-dashboard.json");
 const CACHE_TTL_MS = 20_000;
@@ -270,7 +270,13 @@ const readPmDashboardSeed = async (): Promise<PmDashboardSeedData> => {
     const raw = await safeReadJsonText(pmDashboardStoreFile);
     const parsed = JSON.parse(raw) as PmDashboardSeedData;
     return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     return {};
   }
 };

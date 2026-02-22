@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import { canUserEditSubmission, canUserViewSubmission } from "@/lib/auth/project-access";
 import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
 import { workflowActionSchema } from "@/lib/submissions/schema";
 import { getSubmissionById, runWorkflowAction } from "@/lib/submissions/store";
+import { isDataStorePersistenceError } from "@/lib/storage/json-file";
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const access = await requireApiPrincipal("projects");
@@ -21,7 +23,12 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   }
 
   const { id } = await context.params;
-  const current = await getSubmissionById(id);
+  let current: Awaited<ReturnType<typeof getSubmissionById>> = null;
+  try {
+    current = await getSubmissionById(id);
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load workflow submission.");
+  }
   if (!current) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -63,7 +70,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   }
 
-  let updated = null;
+  let updated: Awaited<ReturnType<typeof runWorkflowAction>> = null;
   try {
     updated = await runWorkflowAction(id, action, {
       actorName: principal.name ?? "Workflow User",
@@ -71,6 +78,10 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       actorUserId: principal.id
     });
   } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      await writeAudit("FAILED", `${error.code}: ${error.message}`);
+      return persistenceErrorResponse(error, "Failed to persist workflow action.");
+    }
     const message = error instanceof Error ? error.message : "Workflow action failed";
     await writeAudit("FAILED", message);
     return NextResponse.json({ message }, { status: 400 });

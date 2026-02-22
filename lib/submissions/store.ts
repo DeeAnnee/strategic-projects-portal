@@ -35,7 +35,13 @@ import {
 } from "@/lib/submissions/workflow";
 import type { WorkCard, WorkTask } from "@/lib/operations/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("submissions.json");
 const operationsBoardFile = getDataStorePath("operations-board.json");
@@ -1605,7 +1611,13 @@ const readStore = async (): Promise<ProjectSubmission[]> => {
     const normalized = Array.isArray(parsed) ? parsed.map(normalizeSubmission) : [];
     inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     const seeded = demoData();
     inMemorySubmissions = shouldUseMemoryStoreCache() ? cloneJson(seeded) : null;
     await writeStore(seeded);
@@ -2013,7 +2025,13 @@ const readOperationsBoard = async (): Promise<WorkCard[]> => {
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryOperationsBoard = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryOperationsBoard = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }
@@ -2079,7 +2097,13 @@ const readProjectManagementTasks = async (): Promise<
     const rows = Array.isArray(parsed) ? parsed : [];
     inMemoryProjectManagementTasks = shouldUseMemoryStoreCache() ? cloneJson(rows) : null;
     return rows;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     inMemoryProjectManagementTasks = shouldUseMemoryStoreCache() ? [] : null;
     return [];
   }

@@ -1,6 +1,12 @@
 import { addNotification } from "@/lib/notifications/store";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 import { calculateFinancialMetrics, calculateNetBenefitsByYear } from "@/lib/submissions/financial-metrics";
 import { getSubmissionById, listSubmissions, runWorkflowAction } from "@/lib/submissions/store";
 import { resolveWorkflowLifecycleStatus } from "@/lib/submissions/workflow";
@@ -29,7 +35,13 @@ const readStore = async (): Promise<SpoCommitteeState> => {
     };
     inMemorySpoCommitteeState = shouldUseMemoryStoreCache() ? cloneJson(state) : null;
     return state;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     const state = emptyState();
     inMemorySpoCommitteeState = shouldUseMemoryStoreCache() ? cloneJson(state) : null;
     return state;

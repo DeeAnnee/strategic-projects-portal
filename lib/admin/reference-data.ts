@@ -4,7 +4,12 @@ import {
   type ReferenceDataKey
 } from "@/lib/admin/reference-data-config";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 export {
   defaultReferenceData,
@@ -66,7 +71,13 @@ const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
   try {
     const raw = await safeReadJsonText(storeFile);
     return JSON.parse(raw) as Partial<ReferenceData>;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     return null;
   }
 };

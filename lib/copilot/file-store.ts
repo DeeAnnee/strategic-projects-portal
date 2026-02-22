@@ -11,7 +11,14 @@ import type {
 } from "@/lib/copilot/types";
 import type { ProjectSubmission } from "@/lib/submissions/types";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { cloneJson, isReadonlyFsError, safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  cloneJson,
+  isDataStorePersistenceError,
+  isReadonlyFsError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 
 export type CopilotConversationRecord = {
   id: string;
@@ -200,7 +207,13 @@ const readStore = async (): Promise<CopilotFileStore> => {
     };
     inMemoryCopilotStore = shouldUseMemoryStoreCache() ? cloneJson(normalized) : null;
     return normalized;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     const initial = emptyStore();
     inMemoryCopilotStore = shouldUseMemoryStoreCache() ? cloneJson(initial) : null;
     return initial;

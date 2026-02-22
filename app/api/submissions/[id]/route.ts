@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { canUserEditSubmission, canUserViewSubmission } from "@/lib/auth/project-access";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
@@ -16,7 +17,12 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
   }
 
   const { id } = await context.params;
-  const item = await getSubmissionById(id);
+  let item: Awaited<ReturnType<typeof getSubmissionById>> = null;
+  try {
+    item = await getSubmissionById(id);
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load submission.");
+  }
   if (!item) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -49,7 +55,12 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   }
 
   const { id } = await context.params;
-  const existing = await getSubmissionById(id);
+  let existing: Awaited<ReturnType<typeof getSubmissionById>> = null;
+  try {
+    existing = await getSubmissionById(id);
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load submission.");
+  }
   if (!existing) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -143,7 +154,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     delete patchData.workflow;
   }
 
-  const updated = await updateSubmission(id, patchData, {
+  let updated: Awaited<ReturnType<typeof updateSubmission>> = null;
+  try {
+    updated = await updateSubmission(id, patchData, {
       audit: {
         action: "UPDATED",
         note: "Submission details updated via edit form.",
@@ -151,6 +164,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
         actorEmail: access.principal.email ?? undefined
       }
     });
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to save submission changes.");
+  }
 
   if (!updated) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });

@@ -1,5 +1,10 @@
 # Architecture Decisions
 
+## 2026-02-22: Staging/production persistence is database-only with hard-fail on DB errors
+- Decision: For `APP_ENV=staging|production` and `VERCEL_ENV=preview|production`, application data stores now require database persistence and do not fall back to filesystem (`data/`, `/tmp`) for reads or writes.
+- Rationale: Vercel serverless filesystems are ephemeral and instance-local; fallback writes created false-success saves that disappeared on subsequent requests.
+- Tradeoffs: Misconfigured or unavailable database now causes explicit non-200 API failures (`PERSISTENCE_DB_*`) instead of silent fallback behavior, which is stricter but correct for durable workflow data.
+
 ## 2026-02-22: Serverless JSON persistence promoted to Postgres-backed shared store
 - Decision: Route JSON-backed module persistence through a shared `JsonStore` Postgres table (keyed by store filename) via `safePersistJson` + `safeReadJsonText`, with filesystem fallback preserved for local development.
 - Rationale: Vercel/serverless functions do not share local filesystem state across routes, which caused writes to appear successful but disappear on subsequent reads in other functions.

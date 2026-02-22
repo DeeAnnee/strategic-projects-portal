@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import { filterSubmissionsByAccess } from "@/lib/auth/project-access";
 import { projectVisibilityScope } from "@/lib/auth/rbac";
@@ -13,9 +14,13 @@ export async function GET() {
     return access.error;
   }
 
-  const rows = await listSubmissions();
-  const visibleRows = filterSubmissionsByAccess(toRbacPrincipal(access.principal), rows, "projects");
-  return NextResponse.json({ data: visibleRows });
+  try {
+    const rows = await listSubmissions();
+    const visibleRows = filterSubmissionsByAccess(toRbacPrincipal(access.principal), rows, "projects");
+    return NextResponse.json({ data: visibleRows });
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load submissions.");
+  }
 }
 
 export async function POST(request: Request) {
@@ -45,28 +50,32 @@ export async function POST(request: Request) {
     );
   }
 
-  const created = await createSubmission({
-    ...parsed.data,
-    createdByUserId: access.principal.id,
-    ownerName: access.principal.name ?? parsed.data.ownerName,
-    ownerEmail: access.principal.email ?? parsed.data.ownerEmail
-  });
-
   try {
-    await appendGovernanceAuditLog({
-      area: "SUBMISSIONS",
-      action: "CREATE_SUBMISSION",
-      entityType: "submission",
-      entityId: created.id,
-      outcome: "SUCCESS",
-      actorName: access.principal.name ?? "Portal User",
-      actorEmail: access.principal.email ?? undefined,
-      actorRole: access.principal.roleType,
-      details: "Submission created through /api/submissions."
+    const created = await createSubmission({
+      ...parsed.data,
+      createdByUserId: access.principal.id,
+      ownerName: access.principal.name ?? parsed.data.ownerName,
+      ownerEmail: access.principal.email ?? parsed.data.ownerEmail
     });
-  } catch {
-    // Non-blocking audit write.
-  }
 
-  return NextResponse.json({ data: created }, { status: 201 });
+    try {
+      await appendGovernanceAuditLog({
+        area: "SUBMISSIONS",
+        action: "CREATE_SUBMISSION",
+        entityType: "submission",
+        entityId: created.id,
+        outcome: "SUCCESS",
+        actorName: access.principal.name ?? "Portal User",
+        actorEmail: access.principal.email ?? undefined,
+        actorRole: access.principal.roleType,
+        details: "Submission created through /api/submissions."
+      });
+    } catch {
+      // Non-blocking audit write.
+    }
+
+    return NextResponse.json({ data: created }, { status: 201 });
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to persist submission.");
+  }
 }

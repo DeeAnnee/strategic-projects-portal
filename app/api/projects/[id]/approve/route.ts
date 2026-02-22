@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import {
   canUserApproveSubmissionStage,
   canUserViewSubmission,
@@ -19,6 +20,7 @@ import {
   reconcileSubmissionWorkflow,
   updateSubmission
 } from "@/lib/submissions/store";
+import { isDataStorePersistenceError } from "@/lib/storage/json-file";
 import type { ApprovalRequestRecord, ApprovalStageCode, ProjectSubmission } from "@/lib/submissions/types";
 
 const approveSchema = z.object({
@@ -60,7 +62,12 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   const rbacUser = toRbacPrincipal(principal);
 
   const { id } = await context.params;
-  const submission = await getSubmissionById(id);
+  let submission: Awaited<ReturnType<typeof getSubmissionById>> = null;
+  try {
+    submission = await getSubmissionById(id);
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load project for approval.");
+  }
   if (!submission) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
@@ -77,7 +84,11 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   let requestRecord: ApprovalRequestRecord | null = null;
   let stage = parsed.data.stage as ApprovalStageCode | undefined;
   if (parsed.data.requestId) {
-    requestRecord = await getApprovalRequestById(parsed.data.requestId);
+    try {
+      requestRecord = await getApprovalRequestById(parsed.data.requestId);
+    } catch (error) {
+      return persistenceErrorResponse(error, "Failed to load approval request.");
+    }
     if (
       requestRecord &&
       requestRecord.entityId === submission.id &&
@@ -132,6 +143,9 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
       });
     }
   } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      return persistenceErrorResponse(error, "Failed to persist approval decision.");
+    }
     return NextResponse.json(
       { message: error instanceof Error ? error.message : "Unable to record approval." },
       { status: 400 }
@@ -143,36 +157,46 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
   let responseSubmission: ProjectSubmission = approved;
   if (resolvedStage === "PROJECT_MANAGER") {
-    const movedLive = await updateSubmission(
-      id,
-      {
-        stage: "LIVE",
-        status: "ACTIVE",
-        workflow: {
-          entityType: "FUNDING_REQUEST",
-          lifecycleStatus: "CLOSED",
-          fundingStatus: "Live",
-          lockReason: "Project is active in live stage."
+    let movedLive: ProjectSubmission | null = null;
+    try {
+      movedLive = await updateSubmission(
+        id,
+        {
+          stage: "LIVE",
+          status: "ACTIVE",
+          workflow: {
+            entityType: "FUNDING_REQUEST",
+            lifecycleStatus: "CLOSED",
+            fundingStatus: "Live",
+            lockReason: "Project is active in live stage."
+          }
+        },
+        {
+          audit: {
+            action: "STATE_CHANGE",
+            note: "Project Manager accepted assignment. Transitioned to LIVE/ACTIVE.",
+            actorName: principal.name ?? "Approver",
+            actorEmail: principal.email ?? undefined
+          }
         }
-      },
-      {
-        audit: {
-          action: "STATE_CHANGE",
-          note: "Project Manager accepted assignment. Transitioned to LIVE/ACTIVE.",
-          actorName: principal.name ?? "Approver",
-          actorEmail: principal.email ?? undefined
-        }
-      }
-    );
+      );
+    } catch (error) {
+      return persistenceErrorResponse(error, "Failed to transition project to Live after PM approval.");
+    }
     if (movedLive) {
       responseSubmission = movedLive;
     }
   } else {
-    const reconciled = await reconcileSubmissionWorkflow(id, {
-      actorName: principal.name ?? "Approver",
-      actorEmail: principal.email ?? undefined,
-      reason: `Approval recorded for stage ${resolvedStage}.`
-    });
+    let reconciled: ProjectSubmission | null = null;
+    try {
+      reconciled = await reconcileSubmissionWorkflow(id, {
+        actorName: principal.name ?? "Approver",
+        actorEmail: principal.email ?? undefined,
+        reason: `Approval recorded for stage ${resolvedStage}.`
+      });
+    } catch (error) {
+      return persistenceErrorResponse(error, "Failed to reconcile workflow after approval.");
+    }
     if (reconciled) {
       responseSubmission = reconciled;
     }

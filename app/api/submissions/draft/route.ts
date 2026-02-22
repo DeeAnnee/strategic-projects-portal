@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { projectVisibilityScope } from "@/lib/auth/rbac";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import { appendGovernanceAuditLog } from "@/lib/governance/audit-log";
@@ -33,28 +34,32 @@ export async function POST(request: Request) {
     );
   }
 
-  const created = await createDraftSubmission({
-    ...parsed.data,
-    createdByUserId: access.principal.id,
-    ownerName: access.principal.name ?? parsed.data.ownerName,
-    ownerEmail: access.principal.email ?? parsed.data.ownerEmail
-  });
-
   try {
-    await appendGovernanceAuditLog({
-      area: "SUBMISSIONS",
-      action: "CREATE_DRAFT_SUBMISSION",
-      entityType: "submission",
-      entityId: created.id,
-      outcome: "SUCCESS",
-      actorName: access.principal.name ?? "Portal User",
-      actorEmail: access.principal.email ?? undefined,
-      actorRole: access.principal.roleType,
-      details: "Draft submission created through /api/submissions/draft."
+    const created = await createDraftSubmission({
+      ...parsed.data,
+      createdByUserId: access.principal.id,
+      ownerName: access.principal.name ?? parsed.data.ownerName,
+      ownerEmail: access.principal.email ?? parsed.data.ownerEmail
     });
-  } catch {
-    // Non-blocking audit write.
-  }
 
-  return NextResponse.json({ data: created }, { status: 201 });
+    try {
+      await appendGovernanceAuditLog({
+        area: "SUBMISSIONS",
+        action: "CREATE_DRAFT_SUBMISSION",
+        entityType: "submission",
+        entityId: created.id,
+        outcome: "SUCCESS",
+        actorName: access.principal.name ?? "Portal User",
+        actorEmail: access.principal.email ?? undefined,
+        actorRole: access.principal.roleType,
+        details: "Draft submission created through /api/submissions/draft."
+      });
+    } catch {
+      // Non-blocking audit write.
+    }
+
+    return NextResponse.json({ data: created }, { status: 201 });
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to persist draft submission.");
+  }
 }

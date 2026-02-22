@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { persistenceErrorResponse } from "@/lib/api/error-response";
 import { canUserViewSubmission } from "@/lib/auth/project-access";
 import { requireApiPrincipal, toRbacPrincipal } from "@/lib/auth/api";
 import {
@@ -18,12 +19,20 @@ export async function GET() {
   const principal = access.principal;
   const rbacUser = toRbacPrincipal(principal);
 
-  const [requests, initiatedRequests, changeApprovals] = await Promise.all([
-    listPendingApprovalRequestsForPrincipal(principal),
-    listApprovalRequestsInitiatedByPrincipal(principal),
-    listPendingChangeApprovalsForPrincipal(principal)
-  ]);
-  const submissions = await listSubmissions();
+  let requests: Awaited<ReturnType<typeof listPendingApprovalRequestsForPrincipal>> = [];
+  let initiatedRequests: Awaited<ReturnType<typeof listApprovalRequestsInitiatedByPrincipal>> = [];
+  let changeApprovals: Awaited<ReturnType<typeof listPendingChangeApprovalsForPrincipal>> = [];
+  let submissions: Awaited<ReturnType<typeof listSubmissions>> = [];
+  try {
+    [requests, initiatedRequests, changeApprovals] = await Promise.all([
+      listPendingApprovalRequestsForPrincipal(principal),
+      listApprovalRequestsInitiatedByPrincipal(principal),
+      listPendingChangeApprovalsForPrincipal(principal)
+    ]);
+    submissions = await listSubmissions();
+  } catch (error) {
+    return persistenceErrorResponse(error, "Failed to load approvals queue.");
+  }
   const byId = new Map(submissions.map((submission) => [submission.id, submission]));
 
   const sentToMe = requests

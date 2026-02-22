@@ -35,6 +35,7 @@ flowchart LR
 - Tasks:
   - Define Prisma schema for all required entities (`In Progress`: RBAC-centric schema added for `User`, `Project`, `ProjectAssignment`, `Approval`, `AuditLog` with role/stage enums and sponsor object-id fields)
   - Add migration and seed data scripts (`In Progress`: migration `20260221_rbac_access_control` and Prisma seed script with 7 role-based users + 10 sample projects + assignments + approvals + audit entries delivered; `npm run db:seed` wired. `Update`: added staging-focused Prisma seed script `/prisma/seed.ts` with all required test personas and `npm run db:seed:staging` command.)
+  - Enforce DB-only persistence in staging/production (`Completed`: file/JSON fallback persistence is disabled for `APP_ENV=staging|production` and `VERCEL_ENV=preview|production`; failed DB reads/writes now return explicit non-200 persistence error codes, and write routes no longer report false success.)
   - Add reference data tables for configurable workflow metadata
 - Acceptance criteria:
   - PostgreSQL schema includes all core entities and relationships

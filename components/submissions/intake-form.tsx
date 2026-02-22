@@ -3508,7 +3508,9 @@ export default function IntakeForm({ initialData, forceReadOnly = false }: Props
         setDirty(false);
 
         if (redirectOnSuccess) {
-          router.push(`/submissions?draftSaved=1&caseId=${encodeURIComponent(createdId)}`);
+          router.push(
+            `/submissions?draftSaved=1&caseId=${encodeURIComponent(createdId)}&ts=${Date.now()}`
+          );
           router.refresh();
           return createdId;
         }
@@ -3537,7 +3539,9 @@ export default function IntakeForm({ initialData, forceReadOnly = false }: Props
       setDirty(false);
 
       if (redirectOnSuccess) {
-        router.push(`/submissions?draftSaved=1&caseId=${encodeURIComponent(patchPayload.data.id as string)}`);
+        router.push(
+          `/submissions?draftSaved=1&caseId=${encodeURIComponent(patchPayload.data.id as string)}&ts=${Date.now()}`
+        );
         router.refresh();
         return submissionId;
       }

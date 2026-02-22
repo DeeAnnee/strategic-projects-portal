@@ -6,7 +6,12 @@ import { normalizeRoleType } from "@/lib/auth/roles";
 import { canAccessModule, projectVisibilityScope } from "@/lib/auth/rbac";
 import { isStagingAppEnv } from "@/lib/runtime/app-env";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
-import { safePersistJson, safeReadJsonText } from "@/lib/storage/json-file";
+import {
+  isDataStorePersistenceError,
+  isStoreMissingError,
+  safePersistJson,
+  safeReadJsonText
+} from "@/lib/storage/json-file";
 import { STAGING_TEST_ACCOUNTS, type TestAccount } from "@/lib/staging/test-accounts";
 
 export type PortalUser = {
@@ -253,7 +258,13 @@ const readStore = async (): Promise<PortalUser[]> => {
     const seeded = isStagingAppEnv() ? seedStagingUsers() : seedUsers();
     await writeStore(seeded);
     return seeded;
-  } catch {
+  } catch (error) {
+    if (isDataStorePersistenceError(error)) {
+      throw error;
+    }
+    if (!isStoreMissingError(error)) {
+      throw error;
+    }
     const seeded = isStagingAppEnv() ? seedStagingUsers() : seedUsers();
     await writeStore(seeded);
     return seeded;
