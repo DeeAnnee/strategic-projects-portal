@@ -1,0 +1,455 @@
+[
+  {
+    "id": "n-1771361402327-2245",
+    "title": "SP-2026-001 sent for sponsor approval",
+    "body": "Approval request sent to Jordan Sponsor (approver@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-001/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-17T20:50:02.327Z"
+  },
+  {
+    "id": "n-1771361402328-9054",
+    "title": "SP-2026-001 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-001/edit?focus=sponsor-approval",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-17T20:50:02.328Z"
+  },
+  {
+    "id": "n-1771361402350-7979",
+    "title": "SP-2026-001 submitted",
+    "body": "Your request was sent to sponsor Jordan Sponsor for approval.",
+    "href": "/submissions/SP-2026-001/edit?focus=sponsor-approval",
+    "recipientEmail": "submitter@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-17T20:50:02.350Z"
+  },
+  {
+    "id": "n-1771362048008-6245",
+    "title": "SP-2026-001 sponsor approved",
+    "body": "Project moved to parallel PGO and Finance review.",
+    "href": "/submissions/SP-2026-001/edit",
+    "isRead": true,
+    "createdAt": "2026-02-17T21:00:48.008Z"
+  },
+  {
+    "id": "n-1771436497613-6085",
+    "title": "SP-2026-001 moved to Funding Requests",
+    "body": "PGO and Finance gating reviews are complete. Item moved to Funding Requests and queued for SPO Committee review.",
+    "href": "/submissions/SP-2026-001/edit",
+    "recipientEmail": "submitter@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-18T17:41:37.613Z"
+  },
+  {
+    "id": "n-1771439063100-4424",
+    "title": "SP-2026-001 SPO approved",
+    "body": "SPO Committee approved this item. Status is now SPO Approved.",
+    "href": "/submissions/SP-2026-001/edit",
+    "recipientEmail": "submitter@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-18T18:24:23.100Z"
+  },
+  {
+    "id": "n-1771462314778-8118",
+    "title": "SP-2026-002 sent for sponsor approval",
+    "body": "Approval request sent to Drew Sponsor (admin@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-002/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-19T00:51:54.778Z"
+  },
+  {
+    "id": "n-1771462314778-7371",
+    "title": "SP-2026-002 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-002/edit?focus=sponsor-approval",
+    "recipientEmail": "admin@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-19T00:51:54.778Z"
+  },
+  {
+    "id": "n-1771462314778-8376",
+    "title": "SP-2026-002 submitted",
+    "body": "Your request was sent to sponsor Drew Sponsor for approval.",
+    "href": "/submissions/SP-2026-002/edit?focus=sponsor-approval",
+    "recipientEmail": "admin@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-19T00:51:54.778Z"
+  },
+  {
+    "id": "n-1771462349782-3099",
+    "title": "SP-2026-002 sponsor approved",
+    "body": "Project moved to parallel PGO and Finance review.",
+    "href": "/submissions/SP-2026-002/edit",
+    "isRead": true,
+    "createdAt": "2026-02-19T00:52:29.782Z"
+  },
+  {
+    "id": "n-1771462437524-2892",
+    "title": "SP-2026-002 moved to Funding Requests",
+    "body": "PGO and Finance gating reviews are complete. Item moved to Funding Requests and queued for SPO Committee review.",
+    "href": "/submissions/SP-2026-002/edit",
+    "recipientEmail": "admin@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-19T00:53:57.524Z"
+  },
+  {
+    "id": "n-1771620900388-5148",
+    "title": "SP-2026-105 sent for sponsor approval",
+    "body": "Approval request sent to Jordan Sponsor (approver@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-105/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-20T20:55:00.388Z"
+  },
+  {
+    "id": "n-1771620900389-1327",
+    "title": "SP-2026-105 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-105/edit?focus=sponsor-approval",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T20:55:00.389Z"
+  },
+  {
+    "id": "n-1771620900389-7621",
+    "title": "SP-2026-105 submitted",
+    "body": "Your request was sent to sponsor Jordan Sponsor for approval.",
+    "href": "/submissions/SP-2026-105/edit?focus=sponsor-approval",
+    "recipientEmail": "dummy-owner-5@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T20:55:00.389Z"
+  },
+  {
+    "id": "n-1771620905483-1267",
+    "title": "SP-2026-105 sponsor approved",
+    "body": "Project moved to parallel PGO and Finance review.",
+    "href": "/submissions/SP-2026-105/edit",
+    "isRead": true,
+    "createdAt": "2026-02-20T20:55:05.483Z"
+  },
+  {
+    "id": "n-1771626591770-1929",
+    "title": "SP-2026-105 moved to Funding Requests",
+    "body": "PGO and Finance gating reviews are complete. Item moved to Funding Requests and queued for SPO Committee review.",
+    "href": "/submissions/SP-2026-105/edit",
+    "recipientEmail": "dummy-owner-5@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:29:51.770Z"
+  },
+  {
+    "id": "n-1771626729936-726",
+    "title": "SP-2026-101 sent for sponsor approval",
+    "body": "Approval request sent to Jordan Sponsor (approver@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-101/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:32:09.936Z"
+  },
+  {
+    "id": "n-1771626729937-6278",
+    "title": "SP-2026-101 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-101/edit?focus=sponsor-approval",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:32:09.937Z"
+  },
+  {
+    "id": "n-1771626729937-6118",
+    "title": "SP-2026-101 submitted",
+    "body": "Your request was sent to sponsor Jordan Sponsor for approval.",
+    "href": "/submissions/SP-2026-101/edit?focus=sponsor-approval",
+    "recipientEmail": "dummy-owner-1@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:32:09.937Z"
+  },
+  {
+    "id": "n-1771626769412-5203",
+    "title": "SP-2026-101 sponsor approved",
+    "body": "Project moved to parallel PGO and Finance review.",
+    "href": "/submissions/SP-2026-101/edit",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:32:49.412Z"
+  },
+  {
+    "id": "n-1771626818605-7614",
+    "title": "SP-2026-101 moved to Funding Requests",
+    "body": "PGO and Finance gating reviews are complete. Item moved to Funding Requests and queued for SPO Committee review.",
+    "href": "/submissions/SP-2026-101/edit",
+    "recipientEmail": "dummy-owner-1@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-20T22:33:38.605Z"
+  },
+  {
+    "id": "n-1771689318822-1564",
+    "title": "SP-2026-104 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Draft Proposal 4.",
+    "href": "/submissions/SP-2026-104/edit?focus=approval",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T15:55:18.822Z"
+  },
+  {
+    "id": "n-1771689318825-3204",
+    "title": "SP-2026-104 sent for sponsor approval",
+    "body": "Approval request sent to Avery Sponsor (reviewer@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-104/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-21T15:55:18.825Z"
+  },
+  {
+    "id": "n-1771689318825-335",
+    "title": "SP-2026-104 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-104/edit?focus=sponsor-approval",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T15:55:18.825Z"
+  },
+  {
+    "id": "n-1771689318826-4042",
+    "title": "SP-2026-104 submitted",
+    "body": "Your request was sent to sponsor Avery Sponsor for approval.",
+    "href": "/submissions/SP-2026-104/edit?focus=sponsor-approval",
+    "recipientEmail": "dummy-owner-4@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T15:55:18.826Z"
+  },
+  {
+    "id": "n-1771689318826-5452",
+    "title": "SP-2026-104 sent to sponsor",
+    "body": "Proposal submitted and routed to sponsor review.",
+    "href": "/submissions/SP-2026-104/edit",
+    "isRead": true,
+    "createdAt": "2026-02-21T15:55:18.826Z"
+  },
+  {
+    "id": "n-1771689784148-7786",
+    "title": "SP-2026-201 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.148Z"
+  },
+  {
+    "id": "n-1771689784150-2838",
+    "title": "SP-2026-201 approval request",
+    "body": "Approval required as Business Delegate for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "recipientEmail": "dummy.owner.6@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.150Z"
+  },
+  {
+    "id": "n-1771689784151-1266",
+    "title": "SP-2026-201 approval request",
+    "body": "Approval required as Finance Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "recipientEmail": "finance.pmo@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.151Z"
+  },
+  {
+    "id": "n-1771689784153-934",
+    "title": "SP-2026-201 approval request",
+    "body": "Approval required as Technology Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "recipientEmail": "taylor.executive@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.153Z"
+  },
+  {
+    "id": "n-1771689784155-4539",
+    "title": "SP-2026-201 approval request",
+    "body": "Approval required as Benefits Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.155Z"
+  },
+  {
+    "id": "n-1771689784165-9860",
+    "title": "SP-2026-201 funding request submitted",
+    "body": "Funding request sent for sponsor approvals and governance review.",
+    "href": "/submissions/SP-2026-201/edit",
+    "isRead": true,
+    "createdAt": "2026-02-21T16:03:04.165Z"
+  },
+  {
+    "id": "n-1771711315160-3540",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:01:55.160Z"
+  },
+  {
+    "id": "n-1771711315161-744",
+    "title": "SP-2026-207 sent for sponsor approval",
+    "body": "Approval request sent to Avery Approver (approver@portal.local) via Teams and email.",
+    "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:01:55.161Z"
+  },
+  {
+    "id": "n-1771711315163-4544",
+    "title": "SP-2026-207 awaiting your approval",
+    "body": "Please review and decide. Intake summary PDF is attached in workflow message.",
+    "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:01:55.163Z"
+  },
+  {
+    "id": "n-1771711315164-1634",
+    "title": "SP-2026-207 submitted",
+    "body": "Your request was sent to sponsor Avery Approver for approval.",
+    "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:01:55.164Z"
+  },
+  {
+    "id": "n-1771711315165-2327",
+    "title": "SP-2026-207 sent to sponsor",
+    "body": "Proposal submitted and routed to sponsor review.",
+    "href": "/submissions/SP-2026-207/edit",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:01:55.165Z"
+  },
+  {
+    "id": "n-1771711536642-3367",
+    "title": "SP-2026-207 workflow updated",
+    "body": "Workflow moved to AT_PGO_FGO_REVIEW.",
+    "href": "/submissions/SP-2026-207/edit",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:05:36.642Z"
+  },
+  {
+    "id": "n-1771711560594-3645",
+    "title": "SP-2026-201 workflow updated",
+    "body": "Workflow moved to FR_DRAFT.",
+    "href": "/submissions/SP-2026-201/edit",
+    "recipientEmail": "dummy-owner-6@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:06:00.594Z"
+  },
+  {
+    "id": "n-1771711758238-8283",
+    "title": "SP-2026-207 workflow updated",
+    "body": "Workflow moved to AT_SPO_REVIEW.",
+    "href": "/submissions/SP-2026-207/edit",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:09:18.238Z"
+  },
+  {
+    "id": "n-1771712314469-8811",
+    "title": "SP-2026-207 SPO approved",
+    "body": "Funding draft is now available for completion.",
+    "href": "/submissions/SP-2026-207/edit",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:18:34.469Z"
+  },
+  {
+    "id": "n-1771712314524-3266",
+    "title": "SP-2026-207 SPO approved",
+    "body": "SPO Committee approved this item. Funding Request draft was created from the proposal.",
+    "href": "/submissions/SP-2026-207/edit",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:18:34.524Z"
+  },
+  {
+    "id": "n-1771713457283-7558",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:37:37.283Z"
+  },
+  {
+    "id": "n-1771713457300-6693",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Business Delegate for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "admin@portal.local",
+    "isRead": false,
+    "createdAt": "2026-02-21T22:37:37.300Z"
+  },
+  {
+    "id": "n-1771713457307-4597",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Finance Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "admin@portal.local",
+    "isRead": false,
+    "createdAt": "2026-02-21T22:37:37.307Z"
+  },
+  {
+    "id": "n-1771713457320-2574",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Technology Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "admin@portal.local",
+    "isRead": false,
+    "createdAt": "2026-02-21T22:37:37.320Z"
+  },
+  {
+    "id": "n-1771713457336-4205",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Benefits Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "admin@portal.local",
+    "isRead": false,
+    "createdAt": "2026-02-21T22:37:37.336Z"
+  },
+  {
+    "id": "n-1771713457350-2569",
+    "title": "SP-2026-207 funding request submitted",
+    "body": "Funding request sent to required sponsors for approval.",
+    "href": "/submissions/SP-2026-207/edit",
+    "isRead": true,
+    "createdAt": "2026-02-21T22:37:37.350Z"
+  },
+  {
+    "id": "n-1771715960517-9167",
+    "title": "SP-2026-207 funding request approved",
+    "body": "Funding Request is approved and locked. Project Management task created for PM assignment.",
+    "href": "/submissions/SP-2026-207/edit",
+    "recipientEmail": "reviewer@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T23:19:20.517Z"
+  },
+  {
+    "id": "n-1771716059638-5712",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "pmadmin@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T23:20:59.638Z"
+  },
+  {
+    "id": "n-1771716944172-2063",
+    "title": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "recipientEmail": "pmadmin@portal.local",
+    "isRead": false,
+    "createdAt": "2026-02-21T23:35:44.172Z"
+  },
+  {
+    "id": "n-1771717228178-6551",
+    "title": "CR-2026-9666 requires change approval",
+    "body": "SP-2026-207 (Project Workflow Test 1) has a pending change requiring your review as GOVERNANCE_REVIEW.",
+    "href": "/project-management-hub?changeRequest=CR-2026-9666",
+    "recipientEmail": "approver@portal.local",
+    "isRead": true,
+    "createdAt": "2026-02-21T23:40:28.178Z"
+  }
+]

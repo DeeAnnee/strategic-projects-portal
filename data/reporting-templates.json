@@ -1,0 +1,493 @@
+{
+  "templates": [
+    {
+      "id": "template-portfolio",
+      "type": "TEMPLATE",
+      "title": "Executive Portfolio Template",
+      "description": "Executive template for portfolio rollups and board packs.",
+      "tags": [
+        "executive",
+        "featured"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T15:12:08Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Portfolio Summary (Stage/Status/Health)",
+        "description": "Portfolio counts and financial posture grouped by stage and status.",
+        "datasetIds": [
+          "projects"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "overview",
+            "name": "Portfolio Overview",
+            "rows": [
+              "stage",
+              "status"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "project_count",
+                "label": "Projects",
+                "aggregation": "sum"
+              },
+              {
+                "field": "total_cost",
+                "label": "Total Cost",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "npv",
+                "label": "NPV",
+                "aggregation": "sum",
+                "format": "currency"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-stage",
+                "title": "Projects by Stage",
+                "type": "bar",
+                "xField": "stage",
+                "yField": "Projects"
+              },
+              {
+                "id": "chart-status",
+                "title": "Projects by Status",
+                "type": "donut",
+                "xField": "status",
+                "yField": "Projects"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [
+          {
+            "id": "fiscal_year",
+            "label": "Fiscal Year",
+            "type": "fiscal_year",
+            "required": false
+          },
+          {
+            "id": "segment_unit",
+            "label": "Segment - Unit",
+            "type": "string",
+            "required": false
+          },
+          {
+            "id": "status",
+            "label": "Status",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": [
+        {
+          "version": 1,
+          "savedAt": "2026-02-21T15:12:08Z",
+          "savedByUserId": "u-admin-001",
+          "savedByEmail": "admin@portal.local",
+          "definition": {
+            "name": "Portfolio Summary (Stage/Status/Health)",
+            "description": "Portfolio counts and financial posture grouped by stage and status.",
+            "datasetIds": [
+              "projects"
+            ],
+            "fiscalCalendarId": "org_default",
+            "views": [
+              {
+                "id": "overview",
+                "name": "Portfolio Overview",
+                "rows": [
+                  "stage",
+                  "status"
+                ],
+                "columns": [],
+                "values": [
+                  {
+                    "field": "project_count",
+                    "label": "Projects",
+                    "aggregation": "sum"
+                  },
+                  {
+                    "field": "total_cost",
+                    "label": "Total Cost",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  },
+                  {
+                    "field": "npv",
+                    "label": "NPV",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  }
+                ],
+                "filters": [],
+                "sort": [],
+                "pageSize": 25,
+                "showTotals": true,
+                "pivotMode": true,
+                "visuals": [
+                  {
+                    "id": "chart-stage",
+                    "title": "Projects by Stage",
+                    "type": "bar",
+                    "xField": "stage",
+                    "yField": "Projects"
+                  },
+                  {
+                    "id": "chart-status",
+                    "title": "Projects by Status",
+                    "type": "donut",
+                    "xField": "status",
+                    "yField": "Projects"
+                  }
+                ]
+              }
+            ],
+            "calculations": [],
+            "parameters": [
+              {
+                "id": "fiscal_year",
+                "label": "Fiscal Year",
+                "type": "fiscal_year",
+                "required": false
+              },
+              {
+                "id": "segment_unit",
+                "label": "Segment - Unit",
+                "type": "string",
+                "required": false
+              },
+              {
+                "id": "status",
+                "label": "Status",
+                "type": "string",
+                "required": false
+              }
+            ],
+            "formatting": {
+              "currency": "USD",
+              "decimals": 2
+            }
+          }
+        }
+      ],
+      "isFeatured": true
+    },
+    {
+      "id": "template-sla",
+      "type": "TEMPLATE",
+      "title": "Governance SLA Template",
+      "description": "Template for SLA aging, throughput, and bottlenecks.",
+      "tags": [
+        "sla",
+        "governance"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T15:12:08Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Approval SLA Breaches",
+        "description": "Approval aging by stage.",
+        "datasetIds": [
+          "approvals"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "sla",
+            "name": "SLA",
+            "rows": [
+              "approval_stage",
+              "approval_status"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "approval_count",
+                "label": "Approvals",
+                "aggregation": "sum"
+              },
+              {
+                "field": "approval_age_days",
+                "label": "Avg Age Days",
+                "aggregation": "avg"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-aging",
+                "title": "Approval Aging",
+                "type": "stacked_bar",
+                "xField": "approval_stage",
+                "yField": "Avg Age Days"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": [
+        {
+          "version": 1,
+          "savedAt": "2026-02-21T15:12:08Z",
+          "savedByUserId": "u-admin-001",
+          "savedByEmail": "admin@portal.local",
+          "definition": {
+            "name": "Approval SLA Breaches",
+            "description": "Approval aging by stage.",
+            "datasetIds": [
+              "approvals"
+            ],
+            "fiscalCalendarId": "org_default",
+            "views": [
+              {
+                "id": "sla",
+                "name": "SLA",
+                "rows": [
+                  "approval_stage",
+                  "approval_status"
+                ],
+                "columns": [],
+                "values": [
+                  {
+                    "field": "approval_count",
+                    "label": "Approvals",
+                    "aggregation": "sum"
+                  },
+                  {
+                    "field": "approval_age_days",
+                    "label": "Avg Age Days",
+                    "aggregation": "avg"
+                  }
+                ],
+                "filters": [],
+                "sort": [],
+                "pageSize": 25,
+                "showTotals": true,
+                "pivotMode": true,
+                "visuals": [
+                  {
+                    "id": "chart-aging",
+                    "title": "Approval Aging",
+                    "type": "stacked_bar",
+                    "xField": "approval_stage",
+                    "yField": "Avg Age Days"
+                  }
+                ]
+              }
+            ],
+            "calculations": [],
+            "parameters": [],
+            "formatting": {
+              "currency": "USD",
+              "decimals": 2
+            }
+          }
+        }
+      ],
+      "isFeatured": true
+    },
+    {
+      "id": "template-finance",
+      "type": "TEMPLATE",
+      "title": "Finance Variance Template",
+      "description": "Template for FoF spend and benefits variance tracking.",
+      "tags": [
+        "finance",
+        "featured"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T15:12:08Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "FoF Spend",
+        "description": "FoF financial comparison",
+        "datasetIds": [
+          "finance"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "fof",
+            "name": "FoF",
+            "rows": [
+              "fiscal_year",
+              "segment_unit"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "total",
+                "label": "Total Spend",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "capex",
+                "label": "Capex",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "expense",
+                "label": "Expense",
+                "aggregation": "sum",
+                "format": "currency"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-fof",
+                "title": "Spend Trend",
+                "type": "line",
+                "xField": "fiscal_year",
+                "yField": "Total Spend"
+              }
+            ]
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc-fof-variance",
+            "name": "FoF Variance",
+            "type": "FOF",
+            "outputField": "fof_variance",
+            "config": {
+              "baseField": "Total Spend"
+            }
+          }
+        ],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": [
+        {
+          "version": 1,
+          "savedAt": "2026-02-21T15:12:08Z",
+          "savedByUserId": "u-admin-001",
+          "savedByEmail": "admin@portal.local",
+          "definition": {
+            "name": "FoF Spend",
+            "description": "FoF financial comparison",
+            "datasetIds": [
+              "finance"
+            ],
+            "fiscalCalendarId": "org_default",
+            "views": [
+              {
+                "id": "fof",
+                "name": "FoF",
+                "rows": [
+                  "fiscal_year",
+                  "segment_unit"
+                ],
+                "columns": [],
+                "values": [
+                  {
+                    "field": "total",
+                    "label": "Total Spend",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  },
+                  {
+                    "field": "capex",
+                    "label": "Capex",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  },
+                  {
+                    "field": "expense",
+                    "label": "Expense",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  }
+                ],
+                "filters": [],
+                "sort": [],
+                "pageSize": 25,
+                "showTotals": true,
+                "pivotMode": true,
+                "visuals": [
+                  {
+                    "id": "chart-fof",
+                    "title": "Spend Trend",
+                    "type": "line",
+                    "xField": "fiscal_year",
+                    "yField": "Total Spend"
+                  }
+                ]
+              }
+            ],
+            "calculations": [
+              {
+                "id": "calc-fof-variance",
+                "name": "FoF Variance",
+                "type": "FOF",
+                "outputField": "fof_variance",
+                "config": {
+                  "baseField": "Total Spend"
+                }
+              }
+            ],
+            "parameters": [],
+            "formatting": {
+              "currency": "USD",
+              "decimals": 2
+            }
+          }
+        }
+      ],
+      "isFeatured": true
+    }
+  ]
+}

@@ -1,0 +1,856 @@
+{
+  "datasets": [
+    {
+      "datasetId": "projects",
+      "datasetName": "Projects Dataset",
+      "description": "Core project intake and lifecycle metadata.",
+      "primaryKeys": [
+        "project_id"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "stage",
+          "label": "Stage",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_theme",
+          "label": "Project Theme",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "segment_unit",
+          "label": "Segment - Unit",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "business_unit",
+          "label": "Business Unit",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "owner_email",
+          "label": "Owner Email",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "business_sponsor",
+          "label": "Business Sponsor",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "start_date",
+          "label": "Start Date",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "end_date",
+          "label": "End Date",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "project_count",
+          "label": "Project Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        },
+        {
+          "key": "capex",
+          "label": "Capex",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "opex",
+          "label": "Expense",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "one_time_costs",
+          "label": "One-Time Costs",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "total_cost",
+          "label": "Total Cost",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "npv",
+          "label": "NPV",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "payback_years",
+          "label": "Payback (Years)",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "BASIC_USER",
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "funding_requests",
+      "datasetName": "Funding Requests Dataset",
+      "description": "Funding request stage records and economics.",
+      "primaryKeys": [
+        "project_id"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "funding_status",
+          "label": "Funding Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "segment_unit",
+          "label": "Segment - Unit",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "owner_email",
+          "label": "Owner Email",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "submitted_at",
+          "label": "Submitted At",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "request_count",
+          "label": "Request Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        },
+        {
+          "key": "budget_requested",
+          "label": "Budget Requested",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "budget_approved",
+          "label": "Budget Approved",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "benefits_target",
+          "label": "Benefits Target",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "BASIC_USER",
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "approvals",
+      "datasetName": "Approvals Dataset",
+      "description": "Project approval stages, decisions, and aging.",
+      "primaryKeys": [
+        "project_id",
+        "approval_stage"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "approval_stage",
+          "label": "Approval Stage",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "approval_status",
+          "label": "Approval Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "decided_at",
+          "label": "Decided At",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "approval_count",
+          "label": "Approval Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        },
+        {
+          "key": "approval_age_days",
+          "label": "Approval Age Days",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "BASIC_USER",
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "governance_tasks",
+      "datasetName": "Governance Tasks Dataset",
+      "description": "Finance and Project Governance task board activities.",
+      "primaryKeys": [
+        "task_id"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "lane",
+          "label": "Hub Lane",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "task_id",
+          "label": "Task ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "task_title",
+          "label": "Task Title",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "task_status",
+          "label": "Task Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "assignee_name",
+          "label": "Assignee",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "due_date",
+          "label": "Due Date",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "task_count",
+          "label": "Task Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        },
+        {
+          "key": "days_to_due",
+          "label": "Days to Due",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "BASIC_USER",
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "finance",
+      "datasetName": "Finance Dataset",
+      "description": "Financial outcomes by fiscal year and project.",
+      "primaryKeys": [
+        "project_id",
+        "fiscal_year"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "segment_unit",
+          "label": "Segment - Unit",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "capex",
+          "label": "Capex",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "expense",
+          "label": "Expense",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "total",
+          "label": "Total",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "revenue",
+          "label": "Revenue",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "saved_costs",
+          "label": "Saved Costs",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "additional_operating_costs",
+          "label": "Additional Operating Costs",
+          "role": "MEASURE",
+          "type": "number"
+        },
+        {
+          "key": "net_benefits",
+          "label": "Net Benefits",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "BASIC_USER",
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "hr_resources",
+      "datasetName": "HR / Resources Dataset",
+      "description": "Resource requirement details from business cases.",
+      "primaryKeys": [
+        "project_id",
+        "resource_row_id"
+      ],
+      "dimensions": [
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "resource_row_id",
+          "label": "Resource Row",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "role_description",
+          "label": "Role Description",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "resource_type",
+          "label": "Resource Type",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "pay_grade",
+          "label": "Pay Grade",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "hiring_required",
+          "label": "Hiring Required",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "resource_start_date",
+          "label": "Resource Start Date",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "resource_end_date",
+          "label": "Resource End Date",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "resource_count",
+          "label": "Resource Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        },
+        {
+          "key": "allocation_pct",
+          "label": "Allocation %",
+          "role": "MEASURE",
+          "type": "number"
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    },
+    {
+      "datasetId": "audit_status_events",
+      "datasetName": "Audit / Status Events Dataset",
+      "description": "Submission audit timeline and workflow events.",
+      "primaryKeys": [
+        "event_id"
+      ],
+      "dimensions": [
+        {
+          "key": "event_id",
+          "label": "Event ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_id",
+          "label": "Project ID",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "project_name",
+          "label": "Project Name",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "event_action",
+          "label": "Action",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "event_stage",
+          "label": "Stage",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "event_status",
+          "label": "Status",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "actor_email",
+          "label": "Actor Email",
+          "role": "DIMENSION",
+          "type": "string"
+        },
+        {
+          "key": "event_timestamp",
+          "label": "Event Timestamp",
+          "role": "DIMENSION",
+          "type": "date"
+        },
+        {
+          "key": "fiscal_year",
+          "label": "Fiscal Year",
+          "role": "DIMENSION",
+          "type": "number"
+        }
+      ],
+      "measures": [
+        {
+          "key": "event_count",
+          "label": "Event Count",
+          "role": "MEASURE",
+          "type": "number",
+          "allowedAggregations": [
+            "count",
+            "sum"
+          ]
+        }
+      ],
+      "owner": "Enterprise Data Office",
+      "refreshSchedule": "Hourly",
+      "allowedAggregations": [
+        "sum",
+        "avg",
+        "min",
+        "max",
+        "count",
+        "distinct_count"
+      ],
+      "dataClassification": "INTERNAL",
+      "permissions": [
+        {
+          "roleTypes": [
+            "FINANCE_GOVERNANCE_USER",
+            "PROJECT_GOVERNANCE_USER",
+            "SPO_COMMITTEE_HUB_USER",
+            "PROJECT_MANAGEMENT_HUB_ADMIN",
+            "PROJECT_MANAGEMENT_HUB_BASIC_USER",
+            "ADMIN"
+          ],
+          "level": "BUILD"
+        }
+      ],
+      "sampleQueries": [
+        "Compare current fiscal spend to previous fiscal by segment",
+        "Show approval aging by stage",
+        "List projects at risk with top budget variance"
+      ],
+      "updatedAt": "2026-02-21T15:02:51.816Z"
+    }
+  ],
+  "fiscalCalendars": [
+    {
+      "id": "global_jan",
+      "name": "Global Fiscal Calendar (Jan-Dec)",
+      "fiscalYearStartMonth": 1,
+      "description": "Fiscal year starts January 1."
+    },
+    {
+      "id": "org_default",
+      "name": "Organization Fiscal Calendar (Nov-Oct)",
+      "fiscalYearStartMonth": 11,
+      "description": "Fiscal year starts November 1 and ends October 31."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "FoF",
+      "definition": "Fiscal-over-fiscal comparison of a metric against prior fiscal year."
+    },
+    {
+      "term": "SLA breach",
+      "definition": "A workflow duration that exceeds the configured governance target threshold."
+    },
+    {
+      "term": "Net Benefits",
+      "definition": "Revenue + Saved Costs - Additional Operating Costs - Depreciation where applicable."
+    }
+  ]
+}

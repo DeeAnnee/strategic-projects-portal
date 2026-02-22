@@ -1,0 +1,98 @@
+{
+  "milestones": [
+    {
+      "id": "SP-2026-101-ms-seed-1",
+      "projectId": "SP-2026-101",
+      "name": "Steering Committee Sign-off",
+      "plannedDate": "2026-03-15",
+      "forecastDate": "2026-03-22",
+      "status": "IN_PROGRESS",
+      "ownerUserId": "pmadmin@portal.local"
+    },
+    {
+      "id": "SP-2026-106-ms-seed-1",
+      "projectId": "SP-2026-106",
+      "name": "Benefits Baseline Established",
+      "plannedDate": "2026-04-10",
+      "forecastDate": "2026-04-12",
+      "status": "NOT_STARTED",
+      "ownerUserId": "pmbasic@portal.local"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "SP-2026-101-task-seed-1",
+      "projectId": "SP-2026-101",
+      "name": "Finalize portfolio-level release readiness checklist",
+      "status": "IN_PROGRESS",
+      "ownerUserId": "pmadmin@portal.local",
+      "ownerName": "Morgan PM Admin",
+      "dueDate": "2026-03-12",
+      "createdAt": "2026-02-20T12:00:00.000Z"
+    },
+    {
+      "id": "SP-2026-106-task-seed-1",
+      "projectId": "SP-2026-106",
+      "name": "Confirm PM assignment and escalation matrix",
+      "status": "NOT_STARTED",
+      "ownerUserId": "pmbasic@portal.local",
+      "ownerName": "Jordan PM User",
+      "dueDate": "2026-03-05",
+      "createdAt": "2026-02-18T15:00:00.000Z"
+    }
+  ],
+  "risks": [
+    {
+      "id": "SP-2026-101-risk-seed-1",
+      "projectId": "SP-2026-101",
+      "title": "Third-party deployment window uncertainty",
+      "severity": "High",
+      "probability": "Medium",
+      "impactArea": "Schedule",
+      "mitigation": "Weekly vendor checkpoints and controlled rollback planning.",
+      "ownerUserId": "pmadmin@portal.local",
+      "ownerName": "Morgan PM Admin",
+      "status": "OPEN",
+      "createdAt": "2026-02-19T09:30:00.000Z"
+    },
+    {
+      "id": "SP-2026-106-risk-seed-1",
+      "projectId": "SP-2026-106",
+      "title": "Benefits tracking data quality gaps",
+      "severity": "Medium",
+      "probability": "High",
+      "impactArea": "Scope",
+      "mitigation": "Introduce weekly KPI reconciliation controls.",
+      "ownerUserId": "pmbasic@portal.local",
+      "ownerName": "Jordan PM User",
+      "status": "OPEN",
+      "createdAt": "2026-02-16T11:10:00.000Z"
+    }
+  ],
+  "issues": [
+    {
+      "id": "SP-2026-101-issue-seed-1",
+      "projectId": "SP-2026-101",
+      "title": "Integration environment defects backlog",
+      "severity": "High",
+      "ownerUserId": "pmadmin@portal.local",
+      "ownerName": "Morgan PM Admin",
+      "status": "OPEN",
+      "openedAt": "2026-02-17T10:00:00.000Z"
+    }
+  ],
+  "slaEvents": [
+    {
+      "id": "SP-2026-101-sla-seed-1",
+      "projectId": "SP-2026-101",
+      "eventType": "PM_ASSIGNED",
+      "timestamp": "2026-02-21T13:00:00.000Z"
+    },
+    {
+      "id": "SP-2026-106-sla-seed-1",
+      "projectId": "SP-2026-106",
+      "eventType": "SPONSOR_REVIEW_START",
+      "timestamp": "2026-02-20T14:00:00.000Z"
+    }
+  ]
+}

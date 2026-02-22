@@ -1,0 +1,32 @@
+{
+  "rows": [],
+  "versions": [
+    {
+      "id": "SPO-V002",
+      "savedAt": "2026-02-21T22:18:34.424Z",
+      "savedByName": "Selene SPO",
+      "savedByEmail": "spo@portal.local",
+      "rows": []
+    },
+    {
+      "id": "SPO-V001",
+      "savedAt": "2026-02-18T18:24:23.099Z",
+      "savedByName": "Ada Admin",
+      "savedByEmail": "admin@portal.local",
+      "rows": [
+        {
+          "projectId": "SP-2026-001",
+          "projectName": "Dream Work ",
+          "businessUnit": "Corporate",
+          "stage": "Funding Request",
+          "status": "SPO Approved",
+          "sponsorName": "Jordan Sponsor",
+          "submitterName": "Sofia Submitter",
+          "decision": "Approved",
+          "comment": "No concern",
+          "updatedAt": "2026-02-18T18:24:23.099Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+[
+  {
+    "id": "msg-1771361402361-3479",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-001 Dream Work ",
+    "body": "You have a sponsor approval request for SP-2026-001. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-001&mode=intake-summary",
+    "href": "/submissions/SP-2026-001/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-001&mode=intake-summary",
+    "createdAt": "2026-02-17T20:50:02.361Z"
+  },
+  {
+    "id": "msg-1771361402368-2345",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-001 Dream Work ",
+    "body": "You have a sponsor approval request for SP-2026-001. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-001&mode=intake-summary",
+    "href": "/submissions/SP-2026-001/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-001&mode=intake-summary",
+    "createdAt": "2026-02-17T20:50:02.368Z"
+  },
+  {
+    "id": "msg-1771462314779-7795",
+    "channel": "email",
+    "to": "admin@portal.local",
+    "subject": "Approval requested: SP-2026-002 Operation Eagle",
+    "body": "You have a sponsor approval request for SP-2026-002. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-002&mode=intake-summary",
+    "href": "/submissions/SP-2026-002/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-002&mode=intake-summary",
+    "createdAt": "2026-02-19T00:51:54.779Z"
+  },
+  {
+    "id": "msg-1771462314779-6209",
+    "channel": "teams",
+    "to": "admin@portal.local",
+    "subject": "Approval requested: SP-2026-002 Operation Eagle",
+    "body": "You have a sponsor approval request for SP-2026-002. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-002&mode=intake-summary",
+    "href": "/submissions/SP-2026-002/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-002&mode=intake-summary",
+    "createdAt": "2026-02-19T00:51:54.779Z"
+  },
+  {
+    "id": "msg-1771620900389-2846",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-105 Dummy Draft Proposal 5",
+    "body": "You have a sponsor approval request for SP-2026-105. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-105&mode=intake-summary",
+    "href": "/submissions/SP-2026-105/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-105&mode=intake-summary",
+    "createdAt": "2026-02-20T20:55:00.389Z"
+  },
+  {
+    "id": "msg-1771620900390-7038",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-105 Dummy Draft Proposal 5",
+    "body": "You have a sponsor approval request for SP-2026-105. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-105&mode=intake-summary",
+    "href": "/submissions/SP-2026-105/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-105&mode=intake-summary",
+    "createdAt": "2026-02-20T20:55:00.390Z"
+  },
+  {
+    "id": "msg-1771626729938-8551",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-101 Dummy Draft Proposal 1",
+    "body": "You have a sponsor approval request for SP-2026-101. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-101&mode=intake-summary",
+    "href": "/submissions/SP-2026-101/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-101&mode=intake-summary",
+    "createdAt": "2026-02-20T22:32:09.938Z"
+  },
+  {
+    "id": "msg-1771626729938-4378",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "Approval requested: SP-2026-101 Dummy Draft Proposal 1",
+    "body": "You have a sponsor approval request for SP-2026-101. Open the request to Approve, Reject, Return, or Reassign. Intake PDF: /api/reports/pdf?id=SP-2026-101&mode=intake-summary",
+    "href": "/submissions/SP-2026-101/edit?focus=sponsor-approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-101&mode=intake-summary",
+    "createdAt": "2026-02-20T22:32:09.938Z"
+  },
+  {
+    "id": "msg-1771689318825-148",
+    "channel": "email",
+    "to": "reviewer@portal.local",
+    "subject": "SP-2026-104 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Draft Proposal 4.",
+    "href": "/submissions/SP-2026-104/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-104&mode=intake-summary",
+    "createdAt": "2026-02-21T15:55:18.825Z"
+  },
+  {
+    "id": "msg-1771689318825-9899",
+    "channel": "teams",
+    "to": "reviewer@portal.local",
+    "subject": "SP-2026-104 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Draft Proposal 4.",
+    "href": "/submissions/SP-2026-104/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-104&mode=intake-summary",
+    "createdAt": "2026-02-21T15:55:18.825Z"
+  },
+  {
+    "id": "msg-1771689784149-8702",
+    "channel": "email",
+    "to": "reviewer@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.149Z"
+  },
+  {
+    "id": "msg-1771689784150-5470",
+    "channel": "teams",
+    "to": "reviewer@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Business Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.150Z"
+  },
+  {
+    "id": "msg-1771689784150-4441",
+    "channel": "email",
+    "to": "dummy.owner.6@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Business Delegate for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.150Z"
+  },
+  {
+    "id": "msg-1771689784151-9513",
+    "channel": "teams",
+    "to": "dummy.owner.6@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Business Delegate for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.151Z"
+  },
+  {
+    "id": "msg-1771689784152-6959",
+    "channel": "email",
+    "to": "finance.pmo@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Finance Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.152Z"
+  },
+  {
+    "id": "msg-1771689784152-9516",
+    "channel": "teams",
+    "to": "finance.pmo@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Finance Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.152Z"
+  },
+  {
+    "id": "msg-1771689784153-397",
+    "channel": "email",
+    "to": "taylor.executive@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Technology Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.153Z"
+  },
+  {
+    "id": "msg-1771689784154-8326",
+    "channel": "teams",
+    "to": "taylor.executive@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Technology Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.154Z"
+  },
+  {
+    "id": "msg-1771689784155-1563",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Benefits Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.155Z"
+  },
+  {
+    "id": "msg-1771689784157-6074",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-201 approval request",
+    "body": "Approval required as Benefits Sponsor for Dummy Funding Request 1.",
+    "href": "/submissions/SP-2026-201/edit?focus=approval",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-201&mode=intake-summary",
+    "createdAt": "2026-02-21T16:03:04.157Z"
+  },
+  {
+    "id": "msg-1771711315160-3235",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:01:55.160Z"
+  },
+  {
+    "id": "msg-1771711315161-1134",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:01:55.161Z"
+  },
+  {
+    "id": "msg-1771713457285-419",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.285Z"
+  },
+  {
+    "id": "msg-1771713457287-4558",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.287Z"
+  },
+  {
+    "id": "msg-1771713457304-8336",
+    "channel": "email",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Delegate for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.304Z"
+  },
+  {
+    "id": "msg-1771713457305-1810",
+    "channel": "teams",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Business Delegate for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.305Z"
+  },
+  {
+    "id": "msg-1771713457311-7505",
+    "channel": "email",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Finance Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.311Z"
+  },
+  {
+    "id": "msg-1771713457314-6662",
+    "channel": "teams",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Finance Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.314Z"
+  },
+  {
+    "id": "msg-1771713457325-2629",
+    "channel": "email",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Technology Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.325Z"
+  },
+  {
+    "id": "msg-1771713457334-123",
+    "channel": "teams",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Technology Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.334Z"
+  },
+  {
+    "id": "msg-1771713457339-1679",
+    "channel": "email",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Benefits Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.339Z"
+  },
+  {
+    "id": "msg-1771713457348-9026",
+    "channel": "teams",
+    "to": "admin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Benefits Sponsor for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T22:37:37.348Z"
+  },
+  {
+    "id": "msg-1771716059642-8426",
+    "channel": "email",
+    "to": "pmadmin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T23:20:59.642Z"
+  },
+  {
+    "id": "msg-1771716059643-5849",
+    "channel": "teams",
+    "to": "pmadmin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T23:20:59.643Z"
+  },
+  {
+    "id": "msg-1771716944173-268",
+    "channel": "email",
+    "to": "pmadmin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T23:35:44.173Z"
+  },
+  {
+    "id": "msg-1771716944173-3975",
+    "channel": "teams",
+    "to": "pmadmin@portal.local",
+    "subject": "SP-2026-207 approval request",
+    "body": "Approval required as Project Manager for Project Workflow Test 1.",
+    "href": "/approvals",
+    "attachmentHref": "/api/reports/pdf?id=SP-2026-207&mode=intake-summary",
+    "createdAt": "2026-02-21T23:35:44.173Z"
+  },
+  {
+    "id": "msg-1771717228181-8536",
+    "channel": "email",
+    "to": "approver@portal.local",
+    "subject": "CR-2026-9666 requires change approval",
+    "body": "SP-2026-207 (Project Workflow Test 1) has a pending change requiring your review as GOVERNANCE_REVIEW.",
+    "href": "/project-management-hub?changeRequest=CR-2026-9666",
+    "createdAt": "2026-02-21T23:40:28.181Z"
+  },
+  {
+    "id": "msg-1771717228182-5209",
+    "channel": "teams",
+    "to": "approver@portal.local",
+    "subject": "CR-2026-9666 requires change approval",
+    "body": "SP-2026-207 (Project Workflow Test 1) has a pending change requiring your review as GOVERNANCE_REVIEW.",
+    "href": "/project-management-hub?changeRequest=CR-2026-9666",
+    "createdAt": "2026-02-21T23:40:28.182Z"
+  }
+]

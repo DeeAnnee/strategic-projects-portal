@@ -1,0 +1,90 @@
+[
+  {
+    "id": "SP-2026-101-Finance",
+    "projectId": "SP-2026-101",
+    "projectTitle": "Dummy Draft Proposal 1",
+    "stage": "FUNDING",
+    "status": "PGO_FGO_REVIEW",
+    "lane": "Finance",
+    "workflowStage": "FUNDING_REQUEST",
+    "characteristicsUpdated": true,
+    "tasks": [
+      {
+        "id": "SP-2026-101-task-1",
+        "title": "Conduct project funding gating review",
+        "taskType": "GOVERNANCE_REVIEW",
+        "status": "Done",
+        "dueDate": "2026-03-03",
+        "assigneeName": "Unassigned",
+        "subtasks": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "id": "SP-2026-101-Project-Governance",
+    "projectId": "SP-2026-101",
+    "projectTitle": "Dummy Draft Proposal 1",
+    "stage": "FUNDING",
+    "status": "PGO_FGO_REVIEW",
+    "lane": "Project Governance",
+    "workflowStage": "FUNDING_REQUEST",
+    "characteristicsUpdated": false,
+    "tasks": [
+      {
+        "id": "SP-2026-101-task-1",
+        "title": "Conduct project funding gating review",
+        "taskType": "GOVERNANCE_REVIEW",
+        "status": "To Do",
+        "dueDate": "2026-03-03",
+        "assigneeName": "Unassigned",
+        "subtasks": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "id": "SP-2026-105-Finance",
+    "projectId": "SP-2026-105",
+    "projectTitle": "Dummy Draft Proposal 5",
+    "stage": "FUNDING",
+    "status": "PGO_FGO_REVIEW",
+    "lane": "Finance",
+    "workflowStage": "FUNDING_REQUEST",
+    "characteristicsUpdated": true,
+    "tasks": [
+      {
+        "id": "SP-2026-105-task-1",
+        "title": "Conduct project funding gating review",
+        "taskType": "GOVERNANCE_REVIEW",
+        "status": "To Do",
+        "dueDate": "2026-03-03",
+        "assigneeName": "Unassigned",
+        "subtasks": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "id": "SP-2026-105-Project-Governance",
+    "projectId": "SP-2026-105",
+    "projectTitle": "Dummy Draft Proposal 5",
+    "stage": "FUNDING",
+    "status": "PGO_FGO_REVIEW",
+    "lane": "Project Governance",
+    "workflowStage": "FUNDING_REQUEST",
+    "characteristicsUpdated": true,
+    "tasks": [
+      {
+        "id": "SP-2026-105-task-1",
+        "title": "Conduct project funding gating review",
+        "taskType": "GOVERNANCE_REVIEW",
+        "status": "In Progress",
+        "dueDate": "2026-03-03",
+        "assigneeName": "Unassigned",
+        "subtasks": []
+      }
+    ],
+    "comments": []
+  }
+]

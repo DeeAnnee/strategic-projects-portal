@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  <Worksheet ss:Name="Report">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">stage</Data></Cell>
+        <Cell><Data ss:Type="String">status</Data></Cell>
+        <Cell><Data ss:Type="String">Projects</Data></Cell>
+        <Cell><Data ss:Type="String">Total Cost</Data></Cell>
+        <Cell><Data ss:Type="String">NPV</Data></Cell>
+      </Row>
+      <Row><Cell><Data ss:Type="String">Proposal</Data></Cell><Cell><Data ss:Type="String">Draft</Data></Cell><Cell><Data ss:Type="Number">5</Data></Cell><Cell><Data ss:Type="Number">891002</Data></Cell><Cell><Data ss:Type="Number">124403</Data></Cell></Row>
+      <Row><Cell><Data ss:Type="String">Funding Request</Data></Cell><Cell><Data ss:Type="String">Submitted</Data></Cell><Cell><Data ss:Type="Number">5</Data></Cell><Cell><Data ss:Type="Number">2516005</Data></Cell><Cell><Data ss:Type="Number">402890</Data></Cell></Row>
+      <Row><Cell><Data ss:Type="String">Funding Request</Data></Cell><Cell><Data ss:Type="String">Approved</Data></Cell><Cell><Data ss:Type="Number">2</Data></Cell><Cell><Data ss:Type="Number">334002</Data></Cell><Cell><Data ss:Type="Number">50211</Data></Cell></Row>
+    </Table>
+  </Worksheet>
+  <Worksheet ss:Name="Definitions">
+    <Table>
+      <Row><Cell><Data ss:Type="String">Report</Data></Cell><Cell><Data ss:Type="String">Portfolio Summary (Stage/Status/Health)</Data></Cell></Row>
+      <Row><Cell><Data ss:Type="String">Generated At</Data></Cell><Cell><Data ss:Type="String">2026-02-21T12:00:00.000Z</Data></Cell></Row>
+      <Row><Cell><Data ss:Type="String">Filters</Data></Cell><Cell><Data ss:Type="String">{}</Data></Cell></Row>
+    </Table>
+  </Worksheet>
+</Workbook>

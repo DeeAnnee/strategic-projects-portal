@@ -1,0 +1,40 @@
+{
+  "changeRequests": [],
+  "fieldDeltas": [],
+  "approvals": [],
+  "comments": [],
+  "attachments": [],
+  "snapshots": [],
+  "templates": [
+    {
+      "id": "template-budget-revision",
+      "name": "Budget Revision",
+      "description": "Use when approved project costs require financial revision.",
+      "changeType": "BUDGET_CHANGE",
+      "defaultImpactScope": "Financial baseline updates.",
+      "defaultPriority": "High"
+    },
+    {
+      "id": "template-timeline-extension",
+      "name": "Timeline Extension",
+      "description": "Use when delivery dates shift due to dependency or execution constraints.",
+      "changeType": "SCHEDULE_CHANGE",
+      "defaultImpactScope": "Delivery schedule adjustment.",
+      "defaultPriority": "Medium"
+    },
+    {
+      "id": "template-scope-addition",
+      "name": "Scope Addition",
+      "description": "Use when approved scope is expanded with additional deliverables.",
+      "changeType": "SCOPE_CHANGE",
+      "defaultImpactScope": "Scope and implementation plan adjustment.",
+      "defaultPriority": "High"
+    }
+  ],
+  "thresholds": {
+    "budgetImpactThresholdAbs": 50000,
+    "budgetImpactThresholdPct": 5,
+    "scheduleImpactThresholdDays": 14,
+    "cumulativeBudgetEscalationPct": 10
+  }
+}

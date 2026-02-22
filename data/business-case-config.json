@@ -1,0 +1,261 @@
+{
+  "depreciationRules": [
+    {
+      "label": "Consulting / Contractors",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Vendor",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Operating Systems Software",
+      "usefulLifeYears": 4
+    },
+    {
+      "label": "Application Systems Software",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Consultancy",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Desktop/Workstation Computers",
+      "usefulLifeYears": 4
+    },
+    {
+      "label": "Laptop Computers",
+      "usefulLifeYears": 3
+    },
+    {
+      "label": "Monitors & Printers",
+      "usefulLifeYears": 6
+    },
+    {
+      "label": "Servers",
+      "usefulLifeYears": 4
+    },
+    {
+      "label": "Host/Mainframe",
+      "usefulLifeYears": 4
+    },
+    {
+      "label": "Data Communication Equipment",
+      "usefulLifeYears": 4
+    },
+    {
+      "label": "Voice Communication Equipment",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Automated Banking Machines",
+      "usefulLifeYears": 7
+    },
+    {
+      "label": "Cellular Phones",
+      "usefulLifeYears": 2
+    },
+    {
+      "label": "POS Terminals",
+      "usefulLifeYears": 3
+    },
+    {
+      "label": "Furniture (desks, chairs, workstations, tables)",
+      "usefulLifeYears": 15
+    },
+    {
+      "label": "Air Conditioners",
+      "usefulLifeYears": 15
+    },
+    {
+      "label": "Signs: External",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Signs: Internal",
+      "usefulLifeYears": 15
+    },
+    {
+      "label": "Alarms",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Carpets",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Drapes/Blinds",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Card Access Control",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Vault Doors",
+      "usefulLifeYears": 40
+    },
+    {
+      "label": "Safes",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Safety & Time Locks",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "Built in Safety Deposit Boxes",
+      "usefulLifeYears": 40
+    },
+    {
+      "label": "Portable insta-vaults, Anti-Holdup Units, Banker's Safe",
+      "usefulLifeYears": 40
+    },
+    {
+      "label": "Bullet Resistive Wickets",
+      "usefulLifeYears": 15
+    },
+    {
+      "label": "Security Cameras",
+      "usefulLifeYears": 5
+    },
+    {
+      "label": "Audio Visual",
+      "usefulLifeYears": 7
+    },
+    {
+      "label": "Portable Digital Cameras",
+      "usefulLifeYears": 3
+    },
+    {
+      "label": "Photocopiers & Proof Encoders",
+      "usefulLifeYears": 7
+    },
+    {
+      "label": "Other Office & Mechanical Equipment",
+      "usefulLifeYears": 7
+    },
+    {
+      "label": "Banking Pavilion",
+      "usefulLifeYears": 15
+    },
+    {
+      "label": "Auxiliary Power Equipment",
+      "usefulLifeYears": 40
+    },
+    {
+      "label": "Leasehold Premises",
+      "usefulLifeYears": 10
+    },
+    {
+      "label": "New Building",
+      "usefulLifeYears": 40
+    }
+  ],
+  "depreciationCategoryMap": {
+    "External Resources": [
+      "Consulting / Contractors",
+      "Vendor"
+    ],
+    "Software": [
+      "Operating Systems Software",
+      "Application Systems Software",
+      "Consultancy"
+    ],
+    "Hardware": [
+      "Desktop/Workstation Computers",
+      "Laptop Computers",
+      "Monitors & Printers",
+      "Servers",
+      "Host/Mainframe",
+      "Data Communication Equipment",
+      "Voice Communication Equipment",
+      "Automated Banking Machines",
+      "Cellular Phones",
+      "POS Terminals"
+    ],
+    "Furniture and Fixtures": [
+      "Furniture (desks, chairs, workstations, tables)",
+      "Air Conditioners",
+      "Signs",
+      "Signs: External",
+      "Signs: Internal",
+      "Alarms",
+      "Carpets",
+      "Drapes/Blinds",
+      "Card Access Control"
+    ],
+    "Safekeeping": [
+      "Vault Doors",
+      "Safes",
+      "Safety & Time Locks",
+      "Built in Safety Deposit Boxes",
+      "Portable insta-vaults, Anti-Holdup Units, Banker's Safe",
+      "Bullet Resistive Wickets"
+    ],
+    "Office Equipment": [
+      "Security Cameras",
+      "Audio Visual",
+      "Portable Digital Cameras",
+      "Photocopiers & Proof Encoders",
+      "Other Office & Mechanical Equipment"
+    ],
+    "Other": [
+      "Banking Pavilion",
+      "Auxiliary Power Equipment"
+    ],
+    "Premises": [
+      "Leasehold Premises",
+      "New Building"
+    ]
+  },
+  "kpiMetricMap": {
+    "Customer Experience and Satisfaction": [
+      "Customer Satisfaction Score",
+      "Net Promoter Score",
+      "Customer Retention Rate",
+      "First Contact Resolution Time",
+      "Queue Time in Branches",
+      "Call Center Average Response Time",
+      "ATM and Branch Availability Uptime",
+      "Social Media Engagement Rate",
+      "Digital Banking Adoption Rate"
+    ],
+    "Operational Efficiency": [
+      "Loan Processing Turnaround Time",
+      "Account Opening Time",
+      "Transaction Processing Speed",
+      "Branch Footfall",
+      "Employee Productivity Rate",
+      "Self-Service Transaction Rate",
+      "Cost per Transaction"
+    ],
+    "Risk Management and Compliance": [
+      "Regulatory Compliance Score",
+      "Fraud Detection Rate",
+      "Cybersecurity Incident Response Time",
+      "Credit Default Rate",
+      "Know Your Customer Compliance Rate",
+      "Anti-Money Laundering Compliance Rate"
+    ],
+    "Innovation and Technology": [
+      "IT System Downtime",
+      "New Product Adoption Rate"
+    ],
+    "Other": []
+  },
+  "payGradeMonthlySalaryUsd": {
+    "FC 1": 1800,
+    "FC 2": 2200,
+    "FC 3": 2600,
+    "FC 4": 3200,
+    "FC 5": 3900,
+    "FC 6": 4700,
+    "FC 7": 5600,
+    "FC 8": 6800,
+    "FC 9": 8200,
+    "FC 10": 9800,
+    "FC 11+": 12000
+  }
+}

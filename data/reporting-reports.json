@@ -1,0 +1,679 @@
+{
+  "reports": [
+    {
+      "id": "report-1771717679332-1493",
+      "type": "REPORT",
+      "title": "New Self-Service Report",
+      "description": "",
+      "tags": [],
+      "createdAt": "2026-02-21T23:47:59.332Z",
+      "updatedAt": "2026-02-21T23:47:59.332Z",
+      "access": {
+        "ownerUserId": "u-gov-001",
+        "ownerEmail": "reviewer@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "New Self-Service Report",
+        "description": "",
+        "datasetIds": [
+          "hr_resources"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "view-main",
+            "name": "Main View",
+            "rows": [
+              "project_id"
+            ],
+            "columns": [
+              "project_name",
+              "role_description"
+            ],
+            "values": [],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "visual-table",
+                "title": "Table View",
+                "type": "table"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": [
+        {
+          "version": 1,
+          "savedAt": "2026-02-21T23:47:59.332Z",
+          "savedByUserId": "u-gov-001",
+          "savedByEmail": "reviewer@portal.local",
+          "definition": {
+            "name": "New Self-Service Report",
+            "description": "",
+            "datasetIds": [
+              "hr_resources"
+            ],
+            "fiscalCalendarId": "org_default",
+            "views": [
+              {
+                "id": "view-main",
+                "name": "Main View",
+                "rows": [
+                  "project_id"
+                ],
+                "columns": [
+                  "project_name",
+                  "role_description"
+                ],
+                "values": [],
+                "filters": [],
+                "sort": [],
+                "pageSize": 25,
+                "showTotals": true,
+                "pivotMode": true,
+                "visuals": [
+                  {
+                    "id": "visual-table",
+                    "title": "Table View",
+                    "type": "table"
+                  }
+                ]
+              }
+            ],
+            "calculations": [],
+            "parameters": [],
+            "formatting": {
+              "currency": "USD",
+              "decimals": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "report-portfolio-summary",
+      "type": "REPORT",
+      "title": "Portfolio Summary (Stage/Status/Health)",
+      "description": "Enterprise portfolio summary with stage and status rollups.",
+      "tags": [
+        "portfolio",
+        "executive"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Portfolio Summary (Stage/Status/Health)",
+        "description": "Portfolio counts and financial posture grouped by stage and status.",
+        "datasetIds": [
+          "projects"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "overview",
+            "name": "Portfolio Overview",
+            "rows": [
+              "stage",
+              "status"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "project_count",
+                "label": "Projects",
+                "aggregation": "sum"
+              },
+              {
+                "field": "total_cost",
+                "label": "Total Cost",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "npv",
+                "label": "NPV",
+                "aggregation": "sum",
+                "format": "currency"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-stage",
+                "title": "Projects by Stage",
+                "type": "bar",
+                "xField": "stage",
+                "yField": "Projects"
+              },
+              {
+                "id": "chart-status",
+                "title": "Projects by Status",
+                "type": "donut",
+                "xField": "status",
+                "yField": "Projects"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [
+          {
+            "id": "fiscal_year",
+            "label": "Fiscal Year",
+            "type": "fiscal_year",
+            "required": false
+          },
+          {
+            "id": "segment_unit",
+            "label": "Segment - Unit",
+            "type": "string",
+            "required": false
+          },
+          {
+            "id": "status",
+            "label": "Status",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": [
+        {
+          "version": 1,
+          "savedAt": "2026-02-21T11:10:00.000Z",
+          "savedByUserId": "u-admin-001",
+          "savedByEmail": "admin@portal.local",
+          "definition": {
+            "name": "Portfolio Summary (Stage/Status/Health)",
+            "description": "Portfolio counts and financial posture grouped by stage and status.",
+            "datasetIds": [
+              "projects"
+            ],
+            "fiscalCalendarId": "org_default",
+            "views": [
+              {
+                "id": "overview",
+                "name": "Portfolio Overview",
+                "rows": [
+                  "stage",
+                  "status"
+                ],
+                "columns": [],
+                "values": [
+                  {
+                    "field": "project_count",
+                    "label": "Projects",
+                    "aggregation": "sum"
+                  },
+                  {
+                    "field": "total_cost",
+                    "label": "Total Cost",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  },
+                  {
+                    "field": "npv",
+                    "label": "NPV",
+                    "aggregation": "sum",
+                    "format": "currency"
+                  }
+                ],
+                "filters": [],
+                "sort": [],
+                "pageSize": 25,
+                "showTotals": true,
+                "pivotMode": true,
+                "visuals": [
+                  {
+                    "id": "chart-stage",
+                    "title": "Projects by Stage",
+                    "type": "bar",
+                    "xField": "stage",
+                    "yField": "Projects"
+                  },
+                  {
+                    "id": "chart-status",
+                    "title": "Projects by Status",
+                    "type": "donut",
+                    "xField": "status",
+                    "yField": "Projects"
+                  }
+                ]
+              }
+            ],
+            "calculations": [],
+            "parameters": [
+              {
+                "id": "fiscal_year",
+                "label": "Fiscal Year",
+                "type": "fiscal_year",
+                "required": false
+              },
+              {
+                "id": "segment_unit",
+                "label": "Segment - Unit",
+                "type": "string",
+                "required": false
+              },
+              {
+                "id": "status",
+                "label": "Status",
+                "type": "string",
+                "required": false
+              }
+            ],
+            "formatting": {
+              "currency": "USD",
+              "decimals": 2
+            }
+          }
+        }
+      ],
+      "isFeatured": true
+    },
+    {
+      "id": "report-approval-sla",
+      "type": "REPORT",
+      "title": "Approval SLA Breaches",
+      "description": "Approval aging and throughput trends.",
+      "tags": [
+        "governance",
+        "sla"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Approval SLA Breaches",
+        "description": "Approval aging by stage.",
+        "datasetIds": [
+          "approvals"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "sla",
+            "name": "SLA",
+            "rows": [
+              "approval_stage",
+              "approval_status"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "approval_count",
+                "label": "Approvals",
+                "aggregation": "sum"
+              },
+              {
+                "field": "approval_age_days",
+                "label": "Avg Age Days",
+                "aggregation": "avg"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-aging",
+                "title": "Approval Aging",
+                "type": "stacked_bar",
+                "xField": "approval_stage",
+                "yField": "Avg Age Days"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": []
+    },
+    {
+      "id": "report-fof-spend",
+      "type": "REPORT",
+      "title": "Fiscal-over-Fiscal Spend vs Budget",
+      "description": "FoF spend and budget variance analysis.",
+      "tags": [
+        "finance",
+        "fiscal"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "FoF Spend",
+        "description": "FoF financial comparison",
+        "datasetIds": [
+          "finance"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "fof",
+            "name": "FoF",
+            "rows": [
+              "fiscal_year",
+              "segment_unit"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "total",
+                "label": "Total Spend",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "capex",
+                "label": "Capex",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "expense",
+                "label": "Expense",
+                "aggregation": "sum",
+                "format": "currency"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-fof",
+                "title": "Spend Trend",
+                "type": "line",
+                "xField": "fiscal_year",
+                "yField": "Total Spend"
+              }
+            ]
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc-fof-variance",
+            "name": "FoF Variance",
+            "type": "FOF",
+            "outputField": "fof_variance",
+            "config": {
+              "baseField": "Total Spend"
+            }
+          }
+        ],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": []
+    },
+    {
+      "id": "report-benefits",
+      "type": "REPORT",
+      "title": "Benefits Realization vs Target",
+      "description": "Benefits trend against targets.",
+      "tags": [
+        "benefits",
+        "value"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Benefits Realization",
+        "description": "Benefits and target variance",
+        "datasetIds": [
+          "finance",
+          "funding_requests"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "benefits",
+            "name": "Benefits",
+            "rows": [
+              "project_id",
+              "fiscal_year"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "net_benefits",
+                "label": "Net Benefits",
+                "aggregation": "sum",
+                "format": "currency"
+              },
+              {
+                "field": "benefits_target",
+                "label": "Benefits Target",
+                "aggregation": "sum",
+                "format": "currency"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-benefits",
+                "title": "Benefits Trend",
+                "type": "line",
+                "xField": "fiscal_year",
+                "yField": "Net Benefits"
+              }
+            ]
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc-benefit-variance",
+            "name": "Benefit Variance",
+            "type": "VARIANCE",
+            "outputField": "benefit_variance",
+            "config": {
+              "minuendField": "Net Benefits",
+              "subtrahendField": "Benefits Target"
+            }
+          }
+        ],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": []
+    },
+    {
+      "id": "report-pm-workload",
+      "type": "REPORT",
+      "title": "PM Workload & Overdue Tasks",
+      "description": "Task load by owner and due-date health.",
+      "tags": [
+        "resources",
+        "workload"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "PM Workload",
+        "description": "Task and workload insights",
+        "datasetIds": [
+          "governance_tasks"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "workload",
+            "name": "Workload",
+            "rows": [
+              "assignee_name",
+              "task_status"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "task_count",
+                "label": "Tasks",
+                "aggregation": "sum"
+              },
+              {
+                "field": "days_to_due",
+                "label": "Avg Days to Due",
+                "aggregation": "avg"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-workload",
+                "title": "Task Load",
+                "type": "bar",
+                "xField": "assignee_name",
+                "yField": "Tasks"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": []
+    },
+    {
+      "id": "report-governance-bottlenecks",
+      "type": "REPORT",
+      "title": "Governance Bottlenecks",
+      "description": "Workflow bottleneck and contribution view.",
+      "tags": [
+        "governance",
+        "throughput"
+      ],
+      "createdAt": "2026-02-21T11:10:00.000Z",
+      "updatedAt": "2026-02-21T11:10:00.000Z",
+      "access": {
+        "ownerUserId": "u-admin-001",
+        "ownerEmail": "admin@portal.local",
+        "viewers": [],
+        "editors": []
+      },
+      "definition": {
+        "name": "Governance Bottlenecks",
+        "description": "Event stage contribution analysis",
+        "datasetIds": [
+          "audit_status_events"
+        ],
+        "fiscalCalendarId": "org_default",
+        "views": [
+          {
+            "id": "bottlenecks",
+            "name": "Bottlenecks",
+            "rows": [
+              "event_stage",
+              "event_action"
+            ],
+            "columns": [],
+            "values": [
+              {
+                "field": "event_count",
+                "label": "Events",
+                "aggregation": "sum"
+              }
+            ],
+            "filters": [],
+            "sort": [],
+            "pageSize": 25,
+            "showTotals": true,
+            "pivotMode": true,
+            "visuals": [
+              {
+                "id": "chart-stage-delay",
+                "title": "Stage Throughput",
+                "type": "stacked_bar",
+                "xField": "event_stage",
+                "yField": "Events"
+              }
+            ]
+          }
+        ],
+        "calculations": [],
+        "parameters": [],
+        "formatting": {
+          "currency": "USD",
+          "decimals": 2
+        }
+      },
+      "versions": []
+    }
+  ]
+}

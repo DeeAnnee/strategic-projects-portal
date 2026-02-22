@@ -1,0 +1,2177 @@
+[
+  {
+    "id": "gov-audit-1771620900021-1116",
+    "createdAt": "2026-02-20T20:55:00.021Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-105",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Placemat Proposal",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771620900390-3210",
+    "createdAt": "2026-02-20T20:55:00.390Z",
+    "area": "WORKFLOW",
+    "action": "SEND_TO_SPONSOR",
+    "entityType": "submission",
+    "entityId": "SP-2026-105",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Workflow action completed. Stage=Sponsor Approval, Status=Sent for Approval."
+  },
+  {
+    "id": "gov-audit-1771620905484-1480",
+    "createdAt": "2026-02-20T20:55:05.484Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_APPROVE",
+    "entityType": "submission",
+    "entityId": "SP-2026-105",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision Approved recorded."
+  },
+  {
+    "id": "gov-audit-1771626548176-5694",
+    "createdAt": "2026-02-20T22:29:08.176Z",
+    "area": "WORKFLOW",
+    "action": "UPDATE_CHARACTERISTICS",
+    "entityType": "submission",
+    "entityId": "SP-2026-105",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Characteristics updated during governance review.",
+    "metadata": {
+      "stage": "PGO & Finance Review",
+      "status": "Submitted"
+    }
+  },
+  {
+    "id": "gov-audit-1771626682721-7348",
+    "createdAt": "2026-02-20T22:31:22.721Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Placemat Proposal",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626699684-5388",
+    "createdAt": "2026-02-20T22:31:39.684Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Placemat Proposal",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626729374-9185",
+    "createdAt": "2026-02-20T22:32:09.374Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-101",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Placemat Proposal",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626729938-9731",
+    "createdAt": "2026-02-20T22:32:09.938Z",
+    "area": "WORKFLOW",
+    "action": "SEND_TO_SPONSOR",
+    "entityType": "submission",
+    "entityId": "SP-2026-101",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Workflow action completed. Stage=Sponsor Approval, Status=Sent for Approval."
+  },
+  {
+    "id": "gov-audit-1771626769412-6510",
+    "createdAt": "2026-02-20T22:32:49.412Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_APPROVE",
+    "entityType": "submission",
+    "entityId": "SP-2026-101",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision Approved recorded."
+  },
+  {
+    "id": "gov-audit-1771626937353-776",
+    "createdAt": "2026-02-20T22:35:37.353Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626940965-4489",
+    "createdAt": "2026-02-20T22:35:40.965Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626944797-1131",
+    "createdAt": "2026-02-20T22:35:44.797Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771626986471-8362",
+    "createdAt": "2026-02-20T22:36:26.471Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771627254268-6653",
+    "createdAt": "2026-02-20T22:40:54.268Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-203",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Approved"
+    }
+  },
+  {
+    "id": "gov-audit-1771627254636-8736",
+    "createdAt": "2026-02-20T22:40:54.636Z",
+    "area": "WORKFLOW",
+    "action": "SEND_TO_SPONSOR",
+    "entityType": "submission",
+    "entityId": "SP-2026-203",
+    "outcome": "FAILED",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Action SEND_TO_SPONSOR is not allowed for Funding Request (Approved). Allowed: SUBMIT_FUNDING_REQUEST, DEFER, CANCEL"
+  },
+  {
+    "id": "gov-audit-1771675001074-7204",
+    "createdAt": "2026-02-21T11:56:41.074Z",
+    "area": "ADMIN",
+    "action": "CREATE_USER",
+    "entityType": "user",
+    "entityId": "admin1@portal.local",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Created new user admin1@portal.local.",
+    "metadata": {
+      "roleType": "ADMIN"
+    }
+  },
+  {
+    "id": "gov-audit-1771676525080-749",
+    "createdAt": "2026-02-21T12:22:05.080Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-101",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Submitted"
+    }
+  },
+  {
+    "id": "gov-audit-1771680078629-6679",
+    "createdAt": "2026-02-21T13:21:18.629Z",
+    "area": "ADMIN",
+    "action": "CREATE_USER",
+    "entityType": "user",
+    "entityId": "admin1@portal.local",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Created new user admin1@portal.local.",
+    "metadata": {
+      "roleType": "ADMIN"
+    }
+  },
+  {
+    "id": "gov-audit-1771680901415-8668",
+    "createdAt": "2026-02-21T13:35:01.415Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-001",
+    "outcome": "SUCCESS",
+    "actorName": "Sofia Submitter",
+    "actorEmail": "submitter@portal.local",
+    "actorRole": "BASIC_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689015681-9412",
+    "createdAt": "2026-02-21T15:50:15.681Z",
+    "area": "ADMIN",
+    "action": "CREATE_USER",
+    "entityType": "user",
+    "entityId": "admin1@portal.local",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Created new user admin1@portal.local.",
+    "metadata": {
+      "roleType": "ADMIN"
+    }
+  },
+  {
+    "id": "gov-audit-1771689318227-2393",
+    "createdAt": "2026-02-21T15:55:18.227Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Placemat Proposal",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689318829-949",
+    "createdAt": "2026-02-21T15:55:18.829Z",
+    "area": "WORKFLOW",
+    "action": "SEND_TO_SPONSOR",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Workflow action completed. Stage=Sponsor Approval, Status=Sent for Approval."
+  },
+  {
+    "id": "gov-audit-1771689403422-2437",
+    "createdAt": "2026-02-21T15:56:43.422Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689408111-6098",
+    "createdAt": "2026-02-21T15:56:48.111Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689411424-932",
+    "createdAt": "2026-02-21T15:56:51.424Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689412135-5351",
+    "createdAt": "2026-02-21T15:56:52.135Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689434588-7727",
+    "createdAt": "2026-02-21T15:57:14.588Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689435385-6494",
+    "createdAt": "2026-02-21T15:57:15.386Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689435914-9696",
+    "createdAt": "2026-02-21T15:57:15.914Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689604828-5435",
+    "createdAt": "2026-02-21T16:00:04.828Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689608383-8839",
+    "createdAt": "2026-02-21T16:00:08.383Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689618071-9026",
+    "createdAt": "2026-02-21T16:00:18.071Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689622008-7868",
+    "createdAt": "2026-02-21T16:00:22.008Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689624973-4609",
+    "createdAt": "2026-02-21T16:00:24.973Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689640415-1764",
+    "createdAt": "2026-02-21T16:00:40.415Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689645007-5847",
+    "createdAt": "2026-02-21T16:00:45.007Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689647502-412",
+    "createdAt": "2026-02-21T16:00:47.502Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689650822-1377",
+    "createdAt": "2026-02-21T16:00:50.822Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689660138-5020",
+    "createdAt": "2026-02-21T16:01:00.138Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689662262-1925",
+    "createdAt": "2026-02-21T16:01:02.262Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689667298-9567",
+    "createdAt": "2026-02-21T16:01:07.298Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689671174-9101",
+    "createdAt": "2026-02-21T16:01:11.174Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689783706-4458",
+    "createdAt": "2026-02-21T16:03:03.706Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Draft"
+    }
+  },
+  {
+    "id": "gov-audit-1771689784169-8661",
+    "createdAt": "2026-02-21T16:03:04.169Z",
+    "area": "WORKFLOW",
+    "action": "SUBMIT_FUNDING_REQUEST",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Workflow action completed. Stage=Funding Request, Status=Sent for Approval."
+  },
+  {
+    "id": "gov-audit-1771689828777-4994",
+    "createdAt": "2026-02-21T16:03:48.777Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771689836082-2554",
+    "createdAt": "2026-02-21T16:03:56.083Z",
+    "area": "WORKFLOW",
+    "action": "SPONSOR_DECISION",
+    "entityType": "submission",
+    "entityId": "SP-2026-104",
+    "outcome": "DENIED",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "admin1@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Sponsor decision denied: actor is not assigned sponsor."
+  },
+  {
+    "id": "gov-audit-1771697250671-9566",
+    "createdAt": "2026-02-21T18:07:30.671Z",
+    "area": "ADMIN",
+    "action": "CREATE_USER",
+    "entityType": "user",
+    "entityId": "deeanne.dottin@gmail.com",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Created new user deeanne.dottin@gmail.com.",
+    "metadata": {
+      "roleType": "ADMIN"
+    }
+  },
+  {
+    "id": "gov-audit-1771697935513-6226",
+    "createdAt": "2026-02-21T18:18:55.513Z",
+    "area": "ADMIN",
+    "action": "UPDATE_USER_ROLE",
+    "entityType": "user",
+    "entityId": "deeanne.dottin@gmail.com",
+    "outcome": "SUCCESS",
+    "actorName": "Dee-Anne Dottin",
+    "actorEmail": "deeanne.dottin@gmail.com",
+    "actorRole": "ADMIN",
+    "details": "Updated user settings for deeanne.dottin@gmail.com.",
+    "metadata": {
+      "name": "Dee-Anne Approver",
+      "roleType": "BASIC_USER",
+      "isActive": true,
+      "jobTitle": "Tester",
+      "department": "Transformation & Project Governance"
+    }
+  },
+  {
+    "id": "gov-audit-1771704551594-3650",
+    "createdAt": "2026-02-21T20:09:11.595Z",
+    "area": "WORKFLOW",
+    "action": "UPDATE_CHARACTERISTICS",
+    "entityType": "submission",
+    "entityId": "SP-2026-105",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Characteristics updated during governance review.",
+    "metadata": {
+      "stage": "Funding Request",
+      "status": "Submitted"
+    }
+  },
+  {
+    "id": "gov-audit-1771710729538-9660",
+    "createdAt": "2026-02-21T21:52:09.538Z",
+    "area": "SUBMISSIONS",
+    "action": "CREATE_DRAFT_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Draft submission created through /api/submissions/draft."
+  },
+  {
+    "id": "gov-audit-1771710938579-2854",
+    "createdAt": "2026-02-21T21:55:38.579Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "PROPOSAL",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771710947617-4125",
+    "createdAt": "2026-02-21T21:55:47.617Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "PROPOSAL",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771711314241-64",
+    "createdAt": "2026-02-21T22:01:54.241Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "PROPOSAL",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771711315162-8488",
+    "createdAt": "2026-02-21T22:01:55.162Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 sent for sponsor approval",
+    "metadata": {
+      "recipientEmail": "",
+      "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval"
+    }
+  },
+  {
+    "id": "gov-audit-1771711315164-1874",
+    "createdAt": "2026-02-21T22:01:55.164Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 awaiting your approval",
+    "metadata": {
+      "recipientEmail": "approver@portal.local",
+      "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval"
+    }
+  },
+  {
+    "id": "gov-audit-1771711315165-2327",
+    "createdAt": "2026-02-21T22:01:55.165Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 submitted",
+    "metadata": {
+      "recipientEmail": "reviewer@portal.local",
+      "href": "/submissions/SP-2026-207/edit?focus=sponsor-approval"
+    }
+  },
+  {
+    "id": "gov-audit-1771711315166-2112",
+    "createdAt": "2026-02-21T22:01:55.166Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 sent to sponsor",
+    "metadata": {
+      "recipientEmail": "",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771711315169-9323",
+    "createdAt": "2026-02-21T22:01:55.169Z",
+    "area": "WORKFLOW",
+    "action": "SEND_TO_SPONSOR",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Workflow action completed. Stage=PROPOSAL, Status=SPONSOR_REVIEW."
+  },
+  {
+    "id": "gov-audit-1771711536643-4109",
+    "createdAt": "2026-02-21T22:05:36.643Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 workflow updated",
+    "metadata": {
+      "recipientEmail": "reviewer@portal.local",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771711536643-7088",
+    "createdAt": "2026-02-21T22:05:36.643Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Approval recorded for stage BUSINESS.",
+    "metadata": {
+      "stage": "BUSINESS",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771711560595-4047",
+    "createdAt": "2026-02-21T22:06:00.595Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-201 workflow updated",
+    "metadata": {
+      "recipientEmail": "dummy-owner-6@portal.local",
+      "href": "/submissions/SP-2026-201/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771711560595-2945",
+    "createdAt": "2026-02-21T22:06:00.595Z",
+    "area": "WORKFLOW",
+    "action": "NEED_MORE_INFO_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-201",
+    "outcome": "SUCCESS",
+    "actorName": "Avery Approver",
+    "actorEmail": "approver@portal.local",
+    "actorRole": "FINANCE_GOVERNANCE_USER",
+    "details": "Need-more-info recorded for stage BENEFITS.",
+    "metadata": {
+      "stage": "BENEFITS",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771711758239-3191",
+    "createdAt": "2026-02-21T22:09:18.239Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 workflow updated",
+    "metadata": {
+      "recipientEmail": "reviewer@portal.local",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771712314471-1298",
+    "createdAt": "2026-02-21T22:18:34.471Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 SPO approved",
+    "metadata": {
+      "recipientEmail": "",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771712314547-9396",
+    "createdAt": "2026-02-21T22:18:34.547Z",
+    "area": "SPO_COMMITTEE",
+    "action": "SAVE_SPO_COMMITTEE_ROWS",
+    "entityType": "spo-committee",
+    "outcome": "SUCCESS",
+    "actorName": "Selene SPO",
+    "actorEmail": "spo@portal.local",
+    "actorRole": "SPO_COMMITTEE_HUB_USER",
+    "details": "SPO Committee decisions/comments saved.",
+    "metadata": {
+      "rowCount": 1
+    }
+  },
+  {
+    "id": "gov-audit-1771712895416-7355",
+    "createdAt": "2026-02-21T22:28:15.416Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712904743-4509",
+    "createdAt": "2026-02-21T22:28:24.743Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712906996-9314",
+    "createdAt": "2026-02-21T22:28:26.996Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712916011-8620",
+    "createdAt": "2026-02-21T22:28:36.011Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712919219-6681",
+    "createdAt": "2026-02-21T22:28:39.219Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712924333-1015",
+    "createdAt": "2026-02-21T22:28:44.333Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712927267-5363",
+    "createdAt": "2026-02-21T22:28:47.267Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712935601-7010",
+    "createdAt": "2026-02-21T22:28:55.601Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712940594-1416",
+    "createdAt": "2026-02-21T22:29:00.594Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771712942461-8697",
+    "createdAt": "2026-02-21T22:29:02.461Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713167125-3060",
+    "createdAt": "2026-02-21T22:32:47.125Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713176551-5768",
+    "createdAt": "2026-02-21T22:32:56.551Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713179676-5",
+    "createdAt": "2026-02-21T22:32:59.676Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713181747-7004",
+    "createdAt": "2026-02-21T22:33:01.747Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713186709-9014",
+    "createdAt": "2026-02-21T22:33:06.709Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713199361-1450",
+    "createdAt": "2026-02-21T22:33:19.361Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713203228-8256",
+    "createdAt": "2026-02-21T22:33:23.228Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713216313-8718",
+    "createdAt": "2026-02-21T22:33:36.313Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713222347-8470",
+    "createdAt": "2026-02-21T22:33:42.347Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713227584-994",
+    "createdAt": "2026-02-21T22:33:47.584Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713231554-2167",
+    "createdAt": "2026-02-21T22:33:51.554Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713238630-47",
+    "createdAt": "2026-02-21T22:33:58.630Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713242724-6097",
+    "createdAt": "2026-02-21T22:34:02.724Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713249188-2595",
+    "createdAt": "2026-02-21T22:34:09.188Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713253779-3262",
+    "createdAt": "2026-02-21T22:34:13.779Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713258890-8178",
+    "createdAt": "2026-02-21T22:34:18.890Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713276722-8969",
+    "createdAt": "2026-02-21T22:34:36.722Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713300248-5063",
+    "createdAt": "2026-02-21T22:35:00.248Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713307645-4996",
+    "createdAt": "2026-02-21T22:35:07.646Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713313197-4389",
+    "createdAt": "2026-02-21T22:35:13.197Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713368533-9641",
+    "createdAt": "2026-02-21T22:36:08.533Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713370595-4016",
+    "createdAt": "2026-02-21T22:36:10.595Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713372793-9009",
+    "createdAt": "2026-02-21T22:36:12.793Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713377599-1197",
+    "createdAt": "2026-02-21T22:36:17.599Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713379264-5445",
+    "createdAt": "2026-02-21T22:36:19.264Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713387275-7335",
+    "createdAt": "2026-02-21T22:36:27.275Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713389053-2729",
+    "createdAt": "2026-02-21T22:36:29.053Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713391117-1616",
+    "createdAt": "2026-02-21T22:36:31.117Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713396270-5693",
+    "createdAt": "2026-02-21T22:36:36.270Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713398796-4360",
+    "createdAt": "2026-02-21T22:36:38.796Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713400683-1931",
+    "createdAt": "2026-02-21T22:36:40.683Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713406592-4065",
+    "createdAt": "2026-02-21T22:36:46.593Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713410568-7163",
+    "createdAt": "2026-02-21T22:36:50.568Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713412178-1948",
+    "createdAt": "2026-02-21T22:36:52.178Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713413869-8757",
+    "createdAt": "2026-02-21T22:36:53.869Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713416827-3237",
+    "createdAt": "2026-02-21T22:36:56.827Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713419924-6753",
+    "createdAt": "2026-02-21T22:36:59.924Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713421800-378",
+    "createdAt": "2026-02-21T22:37:01.800Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713433227-6609",
+    "createdAt": "2026-02-21T22:37:13.227Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713436233-3202",
+    "createdAt": "2026-02-21T22:37:16.233Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713438553-2471",
+    "createdAt": "2026-02-21T22:37:18.553Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713441645-2781",
+    "createdAt": "2026-02-21T22:37:21.645Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713443800-172",
+    "createdAt": "2026-02-21T22:37:23.800Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713446723-9291",
+    "createdAt": "2026-02-21T22:37:26.723Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713456706-5683",
+    "createdAt": "2026-02-21T22:37:36.706Z",
+    "area": "SUBMISSIONS",
+    "action": "UPDATE_SUBMISSION",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Submission patched through /api/submissions/[id].",
+    "metadata": {
+      "stage": "FUNDING",
+      "status": "DRAFT"
+    }
+  },
+  {
+    "id": "gov-audit-1771713457351-6591",
+    "createdAt": "2026-02-21T22:37:37.351Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 funding request submitted",
+    "metadata": {
+      "recipientEmail": "",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771713457422-2314",
+    "createdAt": "2026-02-21T22:37:37.422Z",
+    "area": "WORKFLOW",
+    "action": "SUBMIT_FUNDING_REQUEST",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ravi Reviewer",
+    "actorEmail": "reviewer@portal.local",
+    "actorRole": "PROJECT_GOVERNANCE_USER",
+    "details": "Workflow action completed. Stage=FUNDING, Status=SPONSOR_REVIEW."
+  },
+  {
+    "id": "gov-audit-1771713501660-6247",
+    "createdAt": "2026-02-21T22:38:21.660Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Approval recorded for stage BUSINESS.",
+    "metadata": {
+      "stage": "BUSINESS",
+      "actingAs": "DELEGATE"
+    }
+  },
+  {
+    "id": "gov-audit-1771713502645-6692",
+    "createdAt": "2026-02-21T22:38:22.645Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Approval recorded for stage TECHNOLOGY.",
+    "metadata": {
+      "stage": "TECHNOLOGY",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771713503819-2241",
+    "createdAt": "2026-02-21T22:38:23.819Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Approval recorded for stage FINANCE.",
+    "metadata": {
+      "stage": "FINANCE",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771713504866-8478",
+    "createdAt": "2026-02-21T22:38:24.866Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Approval recorded for stage BENEFITS.",
+    "metadata": {
+      "stage": "BENEFITS",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771714242386-7658",
+    "createdAt": "2026-02-21T22:50:42.386Z",
+    "area": "ADMIN",
+    "action": "UPDATE_USER_ROLE",
+    "entityType": "user",
+    "entityId": "tester@portal.local",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Updated user settings for tester@portal.local.",
+    "metadata": {
+      "name": "Dee-Anne Tester",
+      "roleType": "BASIC_USER",
+      "isActive": true,
+      "jobTitle": "Tester",
+      "department": "Transformation & Project Governance"
+    }
+  },
+  {
+    "id": "gov-audit-1771715960518-6790",
+    "createdAt": "2026-02-21T23:19:20.518Z",
+    "area": "WORKFLOW",
+    "action": "NOTIFICATION_SENT",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Workflow System",
+    "actorEmail": "system@portal.local",
+    "details": "SP-2026-207 funding request approved",
+    "metadata": {
+      "recipientEmail": "reviewer@portal.local",
+      "href": "/submissions/SP-2026-207/edit"
+    }
+  },
+  {
+    "id": "gov-audit-1771716059644-9207",
+    "createdAt": "2026-02-21T23:20:59.644Z",
+    "area": "WORKFLOW",
+    "action": "PM_ASSIGNMENT_REQUESTED",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Project manager assignment request sent to Morgan PM Admin.",
+    "metadata": {
+      "managerEmail": "pmadmin@portal.local"
+    }
+  },
+  {
+    "id": "gov-audit-1771716944174-7433",
+    "createdAt": "2026-02-21T23:35:44.174Z",
+    "area": "WORKFLOW",
+    "action": "PM_ASSIGNMENT_REQUESTED",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Project manager assignment request sent to Morgan PM Admin.",
+    "metadata": {
+      "managerEmail": "pmadmin@portal.local"
+    }
+  },
+  {
+    "id": "gov-audit-1771716966197-6970",
+    "createdAt": "2026-02-21T23:36:06.197Z",
+    "area": "WORKFLOW",
+    "action": "APPROVE_PROJECT_STAGE",
+    "entityType": "submission",
+    "entityId": "SP-2026-207",
+    "outcome": "SUCCESS",
+    "actorName": "Morgan PM Admin",
+    "actorEmail": "pmadmin@portal.local",
+    "actorRole": "PROJECT_MANAGEMENT_HUB_ADMIN",
+    "details": "Approval recorded for stage PROJECT_MANAGER.",
+    "metadata": {
+      "stage": "PROJECT_MANAGER",
+      "actingAs": "SPONSOR"
+    }
+  },
+  {
+    "id": "gov-audit-1771717136626-8873",
+    "createdAt": "2026-02-21T23:38:56.626Z",
+    "area": "WORKFLOW",
+    "action": "CREATE_CHANGE_REQUEST_DRAFT",
+    "entityType": "change_request",
+    "entityId": "CR-2026-9666",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Change Request draft created for SP-2026-207.",
+    "metadata": {
+      "projectId": "SP-2026-207",
+      "changeType": "SCHEDULE_CHANGE",
+      "severity": "Moderate",
+      "severityScore": 39
+    }
+  },
+  {
+    "id": "gov-audit-1771717228182-4003",
+    "createdAt": "2026-02-21T23:40:28.182Z",
+    "area": "WORKFLOW",
+    "action": "SUBMIT_CHANGE_REQUEST",
+    "entityType": "change_request",
+    "entityId": "CR-2026-9666",
+    "outcome": "SUCCESS",
+    "actorName": "Ada Admin",
+    "actorEmail": "admin@portal.local",
+    "actorRole": "ADMIN",
+    "details": "Submitted change request for project SP-2026-207.",
+    "metadata": {
+      "projectId": "SP-2026-207",
+      "approvers": 1
+    }
+  }
+]

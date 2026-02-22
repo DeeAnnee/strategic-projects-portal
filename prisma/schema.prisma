@@ -1,0 +1,232 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoleType {
+  BASIC_USER
+  FINANCE_GOVERNANCE_USER
+  PROJECT_GOVERNANCE_USER
+  SPO_COMMITTEE_HUB_USER
+  PROJECT_MANAGEMENT_HUB_ADMIN
+  PROJECT_MANAGEMENT_HUB_BASIC_USER
+  ADMIN
+}
+
+enum ApprovalStage {
+  BUSINESS
+  TECHNOLOGY
+  FINANCE
+  BENEFITS
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ApprovalActingAs {
+  SPONSOR
+  DELEGATE
+}
+
+enum CopilotMessageRole {
+  user
+  assistant
+  system
+}
+
+enum CopilotArtifactType {
+  TASKS
+  RISKS
+  KPIS
+  EXEC_SUMMARY
+}
+
+model User {
+  id            String   @id @default(uuid()) @db.Uuid
+  azureObjectId String   @unique
+  name          String
+  email         String   @unique
+  jobTitle      String?
+  department    String?
+  roleType      RoleType
+  isActive      Boolean  @default(true)
+  passwordHash  String?
+  photoUrl      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  createdProjects Project[]          @relation("ProjectCreatedBy")
+  assignments     ProjectAssignment[]
+  approvals       Approval[]         @relation("ApprovalDecider")
+  auditLogs       AuditLog[]         @relation("AuditActor")
+}
+
+model Project {
+  id             String   @id
+  name           String
+  title          String
+  summary        String?
+  description    String?
+  status         String?
+  stage          String?
+  ownerName      String?
+  ownerEmail     String?
+  startDate      DateTime?
+  endDate        DateTime?
+  targetGoLive   DateTime?
+  createdByUserId String? @db.Uuid
+
+  businessSponsorObjectId  String?
+  businessDelegateObjectId String?
+  technologySponsorObjectId String?
+  financeSponsorObjectId   String?
+  benefitsSponsorObjectId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdBy   User?                @relation("ProjectCreatedBy", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  assignments ProjectAssignment[]
+  approvals   Approval[]
+  auditLogs   AuditLog[]
+
+  conversations CopilotConversation[]
+  artifacts     CopilotArtifact[]
+  copilotAudit  CopilotAuditLog[]
+
+  @@index([ownerEmail])
+  @@index([createdByUserId])
+}
+
+model ProjectAssignment {
+  id            String   @id @default(cuid())
+  projectId     String
+  userId        String   @db.Uuid
+  assignmentType String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([userId])
+  @@unique([projectId, userId, assignmentType])
+}
+
+model Approval {
+  id             String           @id @default(cuid())
+  projectId      String
+  stage          ApprovalStage
+  status         ApprovalStatus   @default(PENDING)
+  decidedByUserId String?         @db.Uuid
+  actingAs       ApprovalActingAs?
+  comment        String?
+  decidedAt      DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  decidedBy User?   @relation("ApprovalDecider", fields: [decidedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([projectId, stage])
+  @@index([status, stage])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?  @db.Uuid
+  projectId   String?
+  actionType  String
+  entityType  String
+  entityId    String
+  oldValue    Json?
+  newValue    Json?
+  createdAt   DateTime @default(now())
+
+  actorUser User?    @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId, createdAt])
+  @@index([entityType, entityId, createdAt])
+  @@index([projectId, createdAt])
+}
+
+model CopilotConversation {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project   Project?             @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  messages  CopilotMessage[]
+  artifacts CopilotArtifact[]
+
+  @@index([userId, projectId, createdAt])
+  @@index([createdAt])
+}
+
+model CopilotMessage {
+  id             String            @id @default(cuid())
+  conversationId String
+  role           CopilotMessageRole
+  content        String
+  json           Json?
+  createdAt      DateTime          @default(now())
+
+  conversation CopilotConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  feedback     CopilotFeedback[]
+
+  @@index([conversationId, createdAt])
+}
+
+model CopilotArtifact {
+  id             String              @id @default(cuid())
+  conversationId String
+  projectId      String?
+  type           CopilotArtifactType
+  payload        Json
+  createdAt      DateTime            @default(now())
+
+  conversation CopilotConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  project      Project?            @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, projectId, createdAt])
+}
+
+model CopilotFeedback {
+  id        String   @id @default(cuid())
+  messageId String
+  rating    Int
+  tags      Json?
+  comment   String?
+  createdAt DateTime @default(now())
+
+  message CopilotMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId, createdAt])
+}
+
+model CopilotAuditLog {
+  id             String   @id @default(cuid())
+  userId         String
+  projectId      String?
+  conversationId String?
+  action         String
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([userId, projectId, createdAt])
+  @@index([conversationId, createdAt])
+}
