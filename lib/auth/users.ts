@@ -7,6 +7,7 @@ import { normalizeRoleType } from "@/lib/auth/roles";
 import { canAccessModule, projectVisibilityScope } from "@/lib/auth/rbac";
 import { isStagingAppEnv } from "@/lib/runtime/app-env";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
+import { safePersistJson } from "@/lib/storage/json-file";
 import { STAGING_TEST_ACCOUNTS, type TestAccount } from "@/lib/staging/test-accounts";
 
 export type PortalUser = {
@@ -59,14 +60,6 @@ let inMemoryUsers: PortalUser[] | null = null;
 const nowIso = () => new Date().toISOString();
 const normalizeEmail = (value?: string | null) => (value ?? "").trim().toLowerCase();
 const normalizeText = (value?: string | null) => (value ?? "").trim();
-
-const isReadonlyFsError = (error: unknown) => {
-  if (!error || typeof error !== "object" || !("code" in error)) {
-    return false;
-  }
-  const code = String((error as NodeJS.ErrnoException).code ?? "");
-  return code === "EROFS" || code === "EACCES" || code === "EPERM";
-};
 
 const deriveAzureObjectId = (row: LegacyUserShape, email: string, id: string) =>
   normalizeText(row.azure_object_id) || normalizeText(row.azureObjectId) || `legacy-${email || id}`;
@@ -215,13 +208,7 @@ const seedStagingUsers = (): PortalUser[] => {
 
 const writeStore = async (users: PortalUser[]) => {
   inMemoryUsers = shouldUseMemoryStoreCache() ? users.map((user) => ({ ...user })) : null;
-  try {
-    await fs.writeFile(storeFile, JSON.stringify(users, null, 2), "utf8");
-  } catch (error) {
-    if (!isReadonlyFsError(error)) {
-      throw error;
-    }
-  }
+  await safePersistJson(storeFile, users);
 };
 
 const mergeMissingStagingUsers = async (users: PortalUser[]) => {

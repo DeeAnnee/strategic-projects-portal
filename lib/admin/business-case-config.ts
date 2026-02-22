@@ -9,17 +9,10 @@ import {
   type PayGradeMonthlySalaryMap
 } from "@/lib/admin/business-case-config-defs";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
+import { safePersistJson } from "@/lib/storage/json-file";
 
 const storeFile = getDataStorePath("business-case-config.json");
 let inMemoryBusinessCaseConfig: BusinessCaseConfig | null = null;
-
-const isReadonlyFsError = (error: unknown) => {
-  if (!error || typeof error !== "object" || !("code" in error)) {
-    return false;
-  }
-  const code = String((error as NodeJS.ErrnoException).code ?? "");
-  return code === "EROFS" || code === "EACCES" || code === "EPERM";
-};
 
 const cleanList = (values: string[]) => {
   const deduped = new Set<string>();
@@ -120,13 +113,7 @@ const readRawStore = async (): Promise<Partial<BusinessCaseConfig> | null> => {
 
 const writeStore = async (data: BusinessCaseConfig) => {
   inMemoryBusinessCaseConfig = shouldUseMemoryStoreCache() ? data : null;
-  try {
-    await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
-  } catch (error) {
-    if (!isReadonlyFsError(error)) {
-      throw error;
-    }
-  }
+  await safePersistJson(storeFile, data);
 };
 
 export const getBusinessCaseConfig = async (): Promise<BusinessCaseConfig> => {

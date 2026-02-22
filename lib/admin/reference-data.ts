@@ -6,6 +6,7 @@ import {
   type ReferenceDataKey
 } from "@/lib/admin/reference-data-config";
 import { getDataStorePath, shouldUseMemoryStoreCache } from "@/lib/storage/data-store-path";
+import { safePersistJson } from "@/lib/storage/json-file";
 
 export {
   defaultReferenceData,
@@ -15,14 +16,6 @@ export type { ReferenceData, ReferenceDataKey } from "@/lib/admin/reference-data
 
 const storeFile = getDataStorePath("reference-data.json");
 let inMemoryReferenceData: ReferenceData | null = null;
-
-const isReadonlyFsError = (error: unknown) => {
-  if (!error || typeof error !== "object" || !("code" in error)) {
-    return false;
-  }
-  const code = String((error as NodeJS.ErrnoException).code ?? "");
-  return code === "EROFS" || code === "EACCES" || code === "EPERM";
-};
 
 const cleanValues = (values: string[]) => {
   const deduped = new Set<string>();
@@ -82,13 +75,7 @@ const readRawStore = async (): Promise<Partial<ReferenceData> | null> => {
 
 const writeStore = async (data: ReferenceData) => {
   inMemoryReferenceData = shouldUseMemoryStoreCache() ? data : null;
-  try {
-    await fs.writeFile(storeFile, JSON.stringify(data, null, 2), "utf8");
-  } catch (error) {
-    if (!isReadonlyFsError(error)) {
-      throw error;
-    }
-  }
+  await safePersistJson(storeFile, data);
 };
 
 export const getReferenceData = async (): Promise<ReferenceData> => {
