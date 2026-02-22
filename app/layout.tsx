@@ -6,7 +6,12 @@ import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "Strategic Projects Portal",
-  description: "Business Case and Placemat management portal"
+  description: "Business Case and Placemat management portal",
+  icons: {
+    icon: "/branding/portal-app-icon.svg",
+    shortcut: "/branding/portal-app-icon.svg",
+    apple: "/branding/portal-app-icon.svg"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -8,6 +8,7 @@ import type { Route } from "next";
 import { usePathname } from "next/navigation";
 
 import FloatingCopilot from "@/components/ai/floating-copilot";
+import NotificationBell from "@/components/notification-bell";
 import ThemeToggle from "@/components/theme-toggle";
 import { canAccessModule, type ModuleName } from "@/lib/auth/rbac";
 
@@ -32,9 +33,33 @@ type NavItem = {
 };
 
 const IconBrand = ({ className = "h-6 w-6" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4.6 12 12 4.6 19.4 12 12 19.4 4.6 12Z" />
-    <path d="M2.8 12 12 2.8 21.2 12 12 21.2 2.8 12Z" />
+  <svg className={className} viewBox="0 0 512 512" aria-hidden="true">
+    <defs>
+      <linearGradient id="portal-nav-icon-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#B00A30" />
+        <stop offset="100%" stopColor="#870824" />
+      </linearGradient>
+    </defs>
+    <rect width="512" height="512" rx="120" fill="url(#portal-nav-icon-bg)" />
+    <circle cx="256" cy="256" r="120" fill="none" stroke="#FFFFFF" strokeWidth="32" />
+    <path
+      d="M300 180 L300 340
+      M300 180
+      C360 180, 360 250, 300 250"
+      fill="none"
+      stroke="#FFFFFF"
+      strokeWidth="32"
+      strokeLinecap="round"
+    />
+    <path
+      d="M200 200
+      C160 200, 160 240, 200 240
+      C240 240, 240 280, 200 280"
+      fill="none"
+      stroke="#FFFFFF"
+      strokeWidth="32"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
@@ -280,6 +305,11 @@ export default function PortalShell({ session, children }: Props) {
     };
   }, [loadNotifications]);
 
+  const unreadNotificationCount = useMemo(
+    () => notifications.reduce((count, item) => count + (item.isRead ? 0 : 1), 0),
+    [notifications]
+  );
+
   return (
     <div className="min-h-screen bg-slate-100 text-neutral-900">
       <div className={`grid min-h-screen w-full grid-cols-1 ${collapsed ? "md:grid-cols-[96px_1fr]" : "md:grid-cols-[310px_1fr]"}`}>
@@ -450,24 +480,16 @@ export default function PortalShell({ session, children }: Props) {
                 >
                   <IconHome className="h-[17px] w-[17px]" />
                 </Link>
-                <button
-                  type="button"
-                  className="notification-trigger-btn relative"
-                  onClick={() => {
+                <NotificationBell
+                  unreadCount={unreadNotificationCount}
+                  isOpen={notificationOpen}
+                  onOpenNotifications={() => {
                     setSettingsOpen(false);
                     setProfileOpen(false);
                     setNotificationOpen((prev) => !prev);
                     void loadNotifications(false);
                   }}
-                  title="Notification center"
-                >
-                  <IconBell className="h-[18px] w-[18px]" />
-                  {notifications.filter((n) => !n.isRead).length > 0 ? (
-                    <span className="absolute -right-1 -top-1 rounded-full accent-bg px-1.5 text-[10px] font-bold">
-                      {notifications.filter((n) => !n.isRead).length}
-                    </span>
-                  ) : null}
-                </button>
+                />
                 <button
                   type="button"
                   className="settings-trigger-btn"
