@@ -251,16 +251,13 @@ export default function PmExecutiveDashboard({ canAssignProjectManagers = false 
       setLoading(true);
       setError(null);
       try {
-        const [summaryData, projectsData, stageHealthData, slaData, scheduleData, risksData, resourcesData] =
-          await Promise.all([
-            fetchJson<PmSummaryResponse>(`/api/pm-dashboard/summary?${query}`),
-            fetchJson<PmProjectsResponse>(`/api/pm-dashboard/projects?${query}`),
-            fetchJson<PmStageHealthChartResponse>(`/api/pm-dashboard/charts/stage-health?${query}`),
-            fetchJson<PmSlaChartResponse>(`/api/pm-dashboard/charts/sla?${query}`),
-            fetchJson<PmScheduleChartResponse>(`/api/pm-dashboard/charts/schedule?${query}`),
-            fetchJson<PmRiskChartsResponse>(`/api/pm-dashboard/charts/risks?${query}`),
-            fetchJson<PmResourcesChartsResponse>(`/api/pm-dashboard/charts/resources?${query}`)
-          ]);
+        const summaryData = await fetchJson<PmSummaryResponse>(`/api/pm-dashboard/summary?${query}`);
+        const projectsData = await fetchJson<PmProjectsResponse>(`/api/pm-dashboard/projects?${query}`);
+        const stageHealthData = await fetchJson<PmStageHealthChartResponse>(`/api/pm-dashboard/charts/stage-health?${query}`);
+        const slaData = await fetchJson<PmSlaChartResponse>(`/api/pm-dashboard/charts/sla?${query}`);
+        const scheduleData = await fetchJson<PmScheduleChartResponse>(`/api/pm-dashboard/charts/schedule?${query}`);
+        const risksData = await fetchJson<PmRiskChartsResponse>(`/api/pm-dashboard/charts/risks?${query}`);
+        const resourcesData = await fetchJson<PmResourcesChartsResponse>(`/api/pm-dashboard/charts/resources?${query}`);
 
         if (!active) return;
         setSummary(summaryData);

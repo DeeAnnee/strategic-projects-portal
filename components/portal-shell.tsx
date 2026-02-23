@@ -295,11 +295,22 @@ export default function PortalShell({ session, children }: Props) {
   useEffect(() => {
     void loadNotifications(false);
     const interval = setInterval(() => {
+      if (document.visibilityState !== "visible") {
+        return;
+      }
       void loadNotifications(true);
-    }, 15000);
+    }, 30000);
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void loadNotifications(false);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
       clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       if (toastTimerRef.current) {
         clearTimeout(toastTimerRef.current);
       }

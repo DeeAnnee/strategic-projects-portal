@@ -69,7 +69,7 @@ describe("json-file persistence mode", () => {
   it("returns explicit DB write error in production and never writes local JSON", async () => {
     process.env.APP_ENV = "production";
     process.env.DATABASE_URL = "postgresql://unit-test";
-    mockExecuteRawUnsafe.mockResolvedValueOnce(1).mockRejectedValueOnce(new Error("db write failed"));
+    mockExecuteRawUnsafe.mockRejectedValueOnce(new Error("db write failed"));
 
     const { safePersistJson } = await import("@/lib/storage/json-file");
     await expect(safePersistJson("/tmp/submissions.json", { ok: true })).rejects.toMatchObject({
@@ -85,7 +85,6 @@ describe("json-file persistence mode", () => {
   it("uses DB-only reads in Vercel preview and surfaces DB read failures", async () => {
     process.env.VERCEL_ENV = "preview";
     process.env.DATABASE_URL = "postgresql://unit-test";
-    mockExecuteRawUnsafe.mockResolvedValue(1);
     mockQueryRawUnsafe.mockRejectedValue(new Error("db read failed"));
 
     const { safeReadJsonText } = await import("@/lib/storage/json-file");
@@ -101,7 +100,6 @@ describe("json-file persistence mode", () => {
   it("throws ENOENT when DB row is missing in required mode instead of reading filesystem", async () => {
     process.env.APP_ENV = "staging";
     process.env.DATABASE_URL = "postgresql://unit-test";
-    mockExecuteRawUnsafe.mockResolvedValue(1);
     mockQueryRawUnsafe.mockResolvedValue([]);
 
     const { safeReadJsonText } = await import("@/lib/storage/json-file");
@@ -112,4 +110,3 @@ describe("json-file persistence mode", () => {
     expect(mockReadFile).not.toHaveBeenCalled();
   });
 });
-

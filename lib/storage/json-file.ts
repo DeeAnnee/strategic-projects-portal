@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 const READONLY_FS_ERROR_CODES = new Set(["EROFS", "EACCES", "EPERM"]);
 const DB_REQUIRED_APP_ENVS = new Set(["staging", "production"]);
 const DB_REQUIRED_VERCEL_ENVS = new Set(["preview", "production"]);
-let jsonStoreAvailabilityPromise: Promise<boolean> | null = null;
 
 export const isReadonlyFsError = (error: unknown) => {
   if (!error || typeof error !== "object" || !("code" in error)) {
@@ -84,33 +83,42 @@ const getDataStoreMode = (): DataStoreMode => {
   return "FILE";
 };
 
-const ensureJsonStoreTable = async () => {
-  if (!hasDatabaseUrl()) {
-    return false;
-  }
-  if (!jsonStoreAvailabilityPromise) {
-    jsonStoreAvailabilityPromise = (async () => {
-      try {
-        await prisma.$executeRawUnsafe(`
-          CREATE TABLE IF NOT EXISTS "JsonStore" (
-            "key" TEXT PRIMARY KEY,
-            "payload" JSONB NOT NULL,
-            "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-            "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
-          )
-        `);
-        return true;
-      } catch {
-        return false;
-      }
-    })();
-  }
+const isJsonStoreMissingError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  return (
+    /JsonStore/i.test(message) &&
+    /(does not exist|undefined table|42P01|no such table|relation)/i.test(message)
+  );
+};
 
-  const available = await jsonStoreAvailabilityPromise;
-  if (!available) {
-    jsonStoreAvailabilityPromise = null;
+const isTransientDbError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  return /max clients reached|connection pool|timed out fetching a new connection|can't reach database server|connection terminated|timeout/i.test(
+    message
+  );
+};
+
+const delay = (ms: number) =>
+  new Promise<void>((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+const withDatabaseRetry = async <T>(
+  operation: () => Promise<T>,
+  maxAttempts = 3
+): Promise<T> => {
+  let attempt = 0;
+  while (true) {
+    try {
+      return await operation();
+    } catch (error) {
+      attempt += 1;
+      if (attempt >= maxAttempts || !isTransientDbError(error)) {
+        throw error;
+      }
+      await delay(75 * attempt);
+    }
   }
-  return available;
 };
 
 const toPersistenceError = (
@@ -157,17 +165,13 @@ const readFromDatabaseStore = async (
   mode: Exclude<DataStoreMode, "FILE">
 ): Promise<string | null> => {
   const strict = mode === "REQUIRED_DATABASE";
-  if (!(await ensureJsonStoreTable())) {
-    if (strict) {
-      throw toPersistenceError("PERSISTENCE_DB_INIT_FAILED");
-    }
-    return null;
-  }
   try {
     const key = getStoreKey(filePath);
-    const rows = await prisma.$queryRawUnsafe<Array<{ payload: unknown }>>(
-      `SELECT "payload" FROM "JsonStore" WHERE "key" = $1 LIMIT 1`,
-      key
+    const rows = await withDatabaseRetry(() =>
+      prisma.$queryRawUnsafe<Array<{ payload: unknown }>>(
+        `SELECT "payload" FROM "JsonStore" WHERE "key" = $1 LIMIT 1`,
+        key
+      )
     );
     if (!rows.length) {
       return null;
@@ -175,6 +179,12 @@ const readFromDatabaseStore = async (
     return JSON.stringify(rows[0].payload);
   } catch (error) {
     if (strict) {
+      if (isJsonStoreMissingError(error)) {
+        throw toPersistenceError(
+          "PERSISTENCE_DB_INIT_FAILED",
+          "JsonStore table is missing. Run Prisma migrations in the target environment."
+        );
+      }
       throw toPersistenceError(
         "PERSISTENCE_DB_READ_FAILED",
         error instanceof Error ? error.message : "Unknown database error."
@@ -190,25 +200,27 @@ const writeToDatabaseStore = async (
   mode: Exclude<DataStoreMode, "FILE">
 ): Promise<boolean> => {
   const strict = mode === "REQUIRED_DATABASE";
-  if (!(await ensureJsonStoreTable())) {
-    if (strict) {
-      throw toPersistenceError("PERSISTENCE_DB_INIT_FAILED");
-    }
-    return false;
-  }
   try {
     const key = getStoreKey(filePath);
-    await prisma.$executeRawUnsafe(
-      `INSERT INTO "JsonStore" ("key", "payload", "createdAt", "updatedAt")
-       VALUES ($1, $2::jsonb, NOW(), NOW())
-       ON CONFLICT ("key")
-       DO UPDATE SET "payload" = EXCLUDED."payload", "updatedAt" = NOW()`,
-      key,
-      JSON.stringify(payload)
+    await withDatabaseRetry(() =>
+      prisma.$executeRawUnsafe(
+        `INSERT INTO "JsonStore" ("key", "payload", "createdAt", "updatedAt")
+         VALUES ($1, $2::jsonb, NOW(), NOW())
+         ON CONFLICT ("key")
+         DO UPDATE SET "payload" = EXCLUDED."payload", "updatedAt" = NOW()`,
+        key,
+        JSON.stringify(payload)
+      )
     );
     return true;
   } catch (error) {
     if (strict) {
+      if (isJsonStoreMissingError(error)) {
+        throw toPersistenceError(
+          "PERSISTENCE_DB_INIT_FAILED",
+          "JsonStore table is missing. Run Prisma migrations in the target environment."
+        );
+      }
       throw toPersistenceError(
         "PERSISTENCE_DB_WRITE_FAILED",
         error instanceof Error ? error.message : "Unknown database error."
