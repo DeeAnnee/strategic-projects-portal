@@ -81,7 +81,7 @@ export default function ReportsHome() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">Reports Studio</p>
             <h2 className="mt-1 text-3xl font-semibold text-slate-900">Self-Service Reports</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Build World Bank-style table reports with reusable templates, analytics, and insights.
+              Build table reports with reusable templates, analytics, and insights.
             </p>
           </div>
           <div className="flex items-center gap-2">
