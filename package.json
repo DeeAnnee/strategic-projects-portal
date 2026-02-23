@@ -13,7 +13,7 @@
     "test": "vitest run",
     "db:seed": "node prisma/seed.cjs",
     "db:migrate:deploy": "npx prisma migrate deploy",
-    "db:seed:staging": "node --experimental-strip-types prisma/seed.ts",
+    "db:seed:staging": "node prisma/seed-staging.cjs",
     "staging:credentials": "node scripts/generate-staging-credentials.mjs"
   },
   "dependencies": {
