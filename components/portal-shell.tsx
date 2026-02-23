@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
@@ -513,7 +514,13 @@ export default function PortalShell({ session, children }: Props) {
                   title="Account"
                 >
                   {userImage ? (
-                    <img src={userImage} alt={session.user.name ?? "User"} className="profile-avatar-thumb" />
+                    <Image
+                      src={userImage}
+                      alt={session.user.name ?? "User"}
+                      className="profile-avatar-thumb"
+                      width={34}
+                      height={34}
+                    />
                   ) : (
                     <span className="profile-avatar-initials">{getInitials(session.user.name)}</span>
                   )}
@@ -609,7 +616,13 @@ export default function PortalShell({ session, children }: Props) {
                 <div className="mt-4 flex items-center gap-4">
                   <div className="profile-avatar-large">
                     {userImage ? (
-                      <img src={userImage} alt={session.user.name ?? "User"} className="h-full w-full object-cover" />
+                      <Image
+                        src={userImage}
+                        alt={session.user.name ?? "User"}
+                        className="h-full w-full object-cover"
+                        width={88}
+                        height={88}
+                      />
                     ) : (
                       <span className="text-2xl font-semibold">{getInitials(session.user.name)}</span>
                     )}
